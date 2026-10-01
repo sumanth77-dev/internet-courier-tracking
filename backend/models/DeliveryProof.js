@@ -7,7 +7,6 @@ const deliveryProofSchema = new mongoose.Schema(
       ref: 'Shipment',
       required: [true, 'Shipment ID is required'],
       unique: true,
-      index: true,
     },
     courierId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -35,10 +34,6 @@ const deliveryProofSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-
-// Indexes
-deliveryProofSchema.index({ shipmentId: 1 });
-deliveryProofSchema.index({ courierId: 1 });
 
 const DeliveryProof = mongoose.model('DeliveryProof', deliveryProofSchema);
 

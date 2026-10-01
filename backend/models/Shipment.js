@@ -117,7 +117,6 @@ const shipmentSchema = new mongoose.Schema(
 );
 
 // Indexes for common queries
-shipmentSchema.index({ trackingId: 1 });
 shipmentSchema.index({ customerId: 1, status: 1 });
 shipmentSchema.index({ courierId: 1, status: 1 });
 
