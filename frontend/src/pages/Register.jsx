@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import AuthLayout from '../components/auth/AuthLayout';
+import { Package, Eye, EyeOff, AlertCircle } from 'lucide-react';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +13,8 @@ const Register = () => {
     confirmPassword: '',
   });
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -39,7 +43,6 @@ const Register = () => {
 
     const { name, email, phone, password, confirmPassword } = formData;
 
-    // Frontend validations
     if (!name.trim()) {
       setError('Full name is required');
       return;
@@ -77,145 +80,176 @@ const Register = () => {
       });
 
       if (result.success) {
-        // Successful registration defaults to customer role
         navigate('/customer', { replace: true });
       } else {
         setError(result.message || 'Registration failed');
       }
     } catch (err) {
-      setError('An unexpected error occurred. Please try again.');
+      setError('Unable to create account. Please verify network connection.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4 py-12">
-      <div className="max-w-md w-full bg-white rounded-2xl shadow-xl border border-slate-100 p-8">
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-indigo-600 text-white font-bold text-2xl shadow-lg shadow-indigo-200 mb-3">
-            ✨
-          </div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">
-            Create an Account
-          </h1>
-          <p className="text-sm text-slate-500 mt-1">
-            Register as a customer to track your deliveries
-          </p>
+    <AuthLayout cardWidth="max-w-[420px]">
+      {/* Small Header */}
+      <div className="text-center mb-5">
+        <div className="w-10 h-10 mx-auto rounded-lg bg-[#172033] text-[#D97706] flex items-center justify-center mb-2.5">
+          <Package className="w-5 h-5" />
+        </div>
+        <h1 className="text-base font-bold text-[#172033] tracking-tight">
+          Create your account
+        </h1>
+        <p className="text-xs text-[#667085] mt-1">Start tracking your shipments.</p>
+      </div>
+
+      {/* Small Unobtrusive Role Note */}
+      <p className="text-[11px] text-[#667085] bg-[#F4F6F8] border border-[#D9DEE5] rounded-md px-3 py-1.5 mb-4 text-center">
+        Customer accounts can be created here. Courier and Admin accounts are managed by the system.
+      </p>
+
+      {/* Error Alert */}
+      {error && (
+        <div className="mb-4 p-2.5 rounded-lg bg-red-50 border border-red-200 flex items-start gap-2 text-xs text-[#B91C1C]">
+          <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+          <span className="font-medium">{error}</span>
+        </div>
+      )}
+
+      {/* Form */}
+      <form onSubmit={handleSubmit} className="space-y-3.5" noValidate>
+        {/* Full Name */}
+        <div>
+          <label className="block text-xs font-semibold text-[#172033] mb-1">
+            Full Name
+          </label>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="Sumanth Kumar"
+            required
+            className="w-full h-10 px-3 rounded-lg border border-[#D9DEE5] text-[#172033] placeholder-[#667085]/60 text-sm focus:outline-none focus:border-[#172033] focus:ring-1 focus:ring-[#172033] transition"
+          />
         </div>
 
-        {error && (
-          <div className="mb-6 p-4 rounded-xl bg-rose-50 border border-rose-200 flex items-start gap-3">
-            <span className="text-rose-600 text-lg">⚠️</span>
-            <div className="flex-1 text-sm text-rose-700 font-medium">
-              {error}
-            </div>
-          </div>
-        )}
+        {/* Email */}
+        <div>
+          <label className="block text-xs font-semibold text-[#172033] mb-1">
+            Email
+          </label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="name@example.com"
+            required
+            className="w-full h-10 px-3 rounded-lg border border-[#D9DEE5] text-[#172033] placeholder-[#667085]/60 text-sm focus:outline-none focus:border-[#172033] focus:ring-1 focus:ring-[#172033] transition"
+          />
+        </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-          <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5">
-              Full Name
-            </label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Sumanth Kumar"
-              required
-              className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 transition text-sm"
-            />
-          </div>
+        {/* Phone */}
+        <div>
+          <label className="block text-xs font-semibold text-[#172033] mb-1">
+            Phone
+          </label>
+          <input
+            type="tel"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            placeholder="9876543210"
+            required
+            className="w-full h-10 px-3 rounded-lg border border-[#D9DEE5] text-[#172033] placeholder-[#667085]/60 text-sm focus:outline-none focus:border-[#172033] focus:ring-1 focus:ring-[#172033] transition"
+          />
+        </div>
 
+        {/* Passwords Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {/* Password */}
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5">
-              Email Address
-            </label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="name@example.com"
-              required
-              className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 transition text-sm"
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5">
-              Phone Number
-            </label>
-            <input
-              type="tel"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              placeholder="9876543210"
-              required
-              className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 transition text-sm"
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5">
+            <label className="block text-xs font-semibold text-[#172033] mb-1">
               Password
             </label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="At least 6 characters"
-              required
-              className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 transition text-sm"
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Min 6 chars"
+                required
+                className="w-full h-10 pl-3 pr-8 rounded-lg border border-[#D9DEE5] text-[#172033] placeholder-[#667085]/60 text-xs sm:text-sm focus:outline-none focus:border-[#172033] focus:ring-1 focus:ring-[#172033] transition"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-0 pr-2.5 flex items-center text-[#667085] hover:text-[#172033]"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+              >
+                {showPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+              </button>
+            </div>
           </div>
 
+          {/* Confirm Password */}
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5">
+            <label className="block text-xs font-semibold text-[#172033] mb-1">
               Confirm Password
             </label>
-            <input
-              type="password"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              placeholder="Re-enter password"
-              required
-              className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 transition text-sm"
-            />
+            <div className="relative">
+              <input
+                type={showConfirmPassword ? 'text' : 'password'}
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                placeholder="Re-enter"
+                required
+                className="w-full h-10 pl-3 pr-8 rounded-lg border border-[#D9DEE5] text-[#172033] placeholder-[#667085]/60 text-xs sm:text-sm focus:outline-none focus:border-[#172033] focus:ring-1 focus:ring-[#172033] transition"
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute inset-y-0 right-0 pr-2.5 flex items-center text-[#667085] hover:text-[#172033]"
+                aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
+              >
+                {showConfirmPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+              </button>
+            </div>
           </div>
-
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full mt-2 py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 active:scale-[0.99] text-white font-medium text-sm shadow-lg shadow-indigo-600/20 transition duration-150 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
-          >
-            {isSubmitting ? (
-              <>
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                <span>Creating account...</span>
-              </>
-            ) : (
-              <span>Create Account</span>
-            )}
-          </button>
-        </form>
-
-        <div className="mt-8 pt-6 border-t border-slate-100 text-center text-sm text-slate-600">
-          Already have an account?{' '}
-          <Link
-            to="/login"
-            className="font-semibold text-indigo-600 hover:text-indigo-700 transition"
-          >
-            Sign in
-          </Link>
         </div>
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full h-11 mt-1 rounded-lg bg-[#172033] hover:bg-[#0F172A] active:scale-[0.99] text-white font-medium text-sm transition duration-150 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer shadow-xs"
+        >
+          {isSubmitting ? (
+            <>
+              <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              <span>Creating Account...</span>
+            </>
+          ) : (
+            <span>Create Account</span>
+          )}
+        </button>
+      </form>
+
+      {/* Switch to Login */}
+      <div className="mt-5 pt-4 border-t border-[#D9DEE5] text-center text-xs text-[#667085]">
+        Already have an account?{' '}
+        <Link
+          to="/login"
+          className="font-semibold text-[#D97706] hover:text-[#B45309] transition ml-1"
+        >
+          Sign In
+        </Link>
       </div>
-    </div>
+    </AuthLayout>
   );
 };
 

@@ -1,12 +1,26 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import ProtectedRoute from './routes/ProtectedRoute';
+import ProtectedRoute, { CustomerRoute, AdminRoute, CourierRoute } from './routes/ProtectedRoute';
 
+// Auth Pages
 import Login from './pages/Login';
 import Register from './pages/Register';
+
+// Customer Pages
 import CustomerDashboard from './pages/CustomerDashboard';
+import MyShipments from './pages/customer/MyShipments';
+import CreateShipment from './pages/customer/CreateShipment';
+import ShipmentDetails from './pages/customer/ShipmentDetails';
+
+// Admin Pages
 import AdminDashboard from './pages/AdminDashboard';
+import AllShipments from './pages/admin/AllShipments';
+import AdminShipmentDetails from './pages/admin/AdminShipmentDetails';
+
+// Courier Pages
 import CourierDashboard from './pages/CourierDashboard';
+import AssignedShipments from './pages/courier/AssignedShipments';
+import CourierShipmentDetails from './pages/courier/CourierShipmentDetails';
 
 // Helper component for root index redirection
 const RootRedirect = () => {
@@ -14,8 +28,8 @@ const RootRedirect = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
-        <div className="w-10 h-10 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
+      <div className="min-h-screen flex items-center justify-center bg-[#F4F6F8]">
+        <div className="w-9 h-9 border-3 border-[#172033] border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -38,33 +52,89 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
-          {/* Protected Customer Routes */}
+          {/* Customer Routes (Role: customer) */}
           <Route
             path="/customer"
             element={
-              <ProtectedRoute allowedRoles={['customer']}>
+              <CustomerRoute>
                 <CustomerDashboard />
+              </CustomerRoute>
+            }
+          />
+          <Route
+            path="/customer/shipments"
+            element={
+              <CustomerRoute>
+                <MyShipments />
+              </CustomerRoute>
+            }
+          />
+          <Route
+            path="/customer/shipments/create"
+            element={
+              <CustomerRoute>
+                <CreateShipment />
+              </CustomerRoute>
+            }
+          />
+          <Route
+            path="/customer/shipments/:trackingId"
+            element={
+              <ProtectedRoute allowedRoles={['customer', 'admin']}>
+                <ShipmentDetails />
               </ProtectedRoute>
             }
           />
 
-          {/* Protected Admin Routes */}
+          {/* Admin Routes (Role: admin) */}
           <Route
             path="/admin"
             element={
-              <ProtectedRoute allowedRoles={['admin']}>
+              <AdminRoute>
                 <AdminDashboard />
-              </ProtectedRoute>
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/shipments"
+            element={
+              <AdminRoute>
+                <AllShipments />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/shipments/:id"
+            element={
+              <AdminRoute>
+                <AdminShipmentDetails />
+              </AdminRoute>
             }
           />
 
-          {/* Protected Courier Routes */}
+          {/* Courier Routes (Role: courier) */}
           <Route
             path="/courier"
             element={
-              <ProtectedRoute allowedRoles={['courier']}>
+              <CourierRoute>
                 <CourierDashboard />
-              </ProtectedRoute>
+              </CourierRoute>
+            }
+          />
+          <Route
+            path="/courier/shipments"
+            element={
+              <CourierRoute>
+                <AssignedShipments />
+              </CourierRoute>
+            }
+          />
+          <Route
+            path="/courier/shipments/:id"
+            element={
+              <CourierRoute>
+                <CourierShipmentDetails />
+              </CourierRoute>
             }
           />
 
@@ -78,3 +148,4 @@ function App() {
 }
 
 export default App;
+

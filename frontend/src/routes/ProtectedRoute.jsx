@@ -12,9 +12,9 @@ const ProtectedRoute = ({ allowedRoles, children }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50">
-        <div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
-        <p className="mt-4 text-sm font-medium text-slate-600">Restoring session...</p>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#F4F6F8]">
+        <div className="w-10 h-10 border-3 border-[#172033] border-t-transparent rounded-full animate-spin"></div>
+        <p className="mt-3 text-xs font-semibold text-[#667085]">Restoring session...</p>
       </div>
     );
   }
@@ -35,4 +35,19 @@ const ProtectedRoute = ({ allowedRoles, children }) => {
   return children;
 };
 
+// Explicit role-based route wrappers
+export const CustomerRoute = ({ children }) => (
+  <ProtectedRoute allowedRoles={['customer']}>{children}</ProtectedRoute>
+);
+
+export const AdminRoute = ({ children }) => (
+  <ProtectedRoute allowedRoles={['admin']}>{children}</ProtectedRoute>
+);
+
+export const CourierRoute = ({ children }) => (
+  <ProtectedRoute allowedRoles={['courier']}>{children}</ProtectedRoute>
+);
+
 export default ProtectedRoute;
+
+
