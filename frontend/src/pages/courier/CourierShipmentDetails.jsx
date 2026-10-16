@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import DashboardLayout from '../../components/layout/DashboardLayout';
 import StatusBadge from '../../components/common/StatusBadge';
@@ -6,26 +6,28 @@ import ShipmentTimeline from '../../components/shipment/ShipmentTimeline';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 import ErrorMessage from '../../components/common/ErrorMessage';
 import UpdateStatusModal from '../../components/shipment/UpdateStatusModal';
+import CourierLocationPanel from '../../components/tracking/CourierLocationPanel';
+import { ProofOfDeliveryModal } from '../../components/delivery/ProofOfDeliveryModal';
+import { ProofOfDeliveryCard } from '../../components/delivery/ProofOfDeliveryCard';
+import useCourierLocation from '../../hooks/useCourierLocation';
+import useTrackingSocket from '../../hooks/useTrackingSocket';
 import api from '../../services/api';
 import {
   ArrowLeft,
   MapPin,
   Box,
   User,
-  Phone,
-  Mail,
-  Navigation,
-  RefreshCw,
   AlertCircle,
-  Radio,
   CheckCircle,
+  Compass,
+  ShieldCheck,
 } from 'lucide-react';
 
 const NEXT_STAGE_LABELS = {
   Assigned: 'Mark as Picked Up',
   'Picked Up': 'Mark as In Transit',
   'In Transit': 'Mark Out for Delivery',
-  'Out for Delivery': 'Confirm Delivery Completed',
+  'Out for Delivery': 'Complete Delivery (POD)',
 };
 
 const NEXT_STAGE_STATUS = {
@@ -43,12 +45,17 @@ const CourierShipmentDetails = () => {
   const [error, setError] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
   const [statusModalOpen, setStatusModalOpen] = useState(false);
+  const [podModalOpen, setPodModalOpen] = useState(false);
 
-  useEffect(() => {
-    fetchDeliveryDetails();
-  }, [id]);
+  // GPS & Socket Tracking Hooks
+  const courierLocation = useCourierLocation();
+  const trackingSocket = useTrackingSocket({
+    shipmentId: shipment?._id || shipment?.id || id,
+    role: 'courier',
+    autoJoin: false,
+  });
 
-  const fetchDeliveryDetails = async () => {
+  const fetchDeliveryDetails = useCallback(async () => {
     setLoading(true);
     setError('');
     try {
@@ -65,17 +72,60 @@ const CourierShipmentDetails = () => {
     } finally {
       setLoading(false);
     }
+  }, [id]);
+
+  useEffect(() => {
+    fetchDeliveryDetails();
+  }, [fetchDeliveryDetails]);
+
+  const handleStartSharing = async () => {
+    const sId = shipment?._id || shipment?.id || id;
+    const ok = courierLocation.startTracking();
+    if (ok !== false) {
+      await trackingSocket.startCourierTracking(sId);
+    }
   };
+
+  const handleStopSharing = async () => {
+    const sId = shipment?._id || shipment?.id || id;
+    courierLocation.stopTracking();
+    await trackingSocket.stopTracking(sId);
+  };
+
+  // Stream throttled GPS location updates to backend via Socket.IO
+  useEffect(() => {
+    if (courierLocation.isTracking && courierLocation.coords && shipment) {
+      const sId = shipment._id || shipment.id || id;
+      trackingSocket.sendLocationUpdate({
+        shipmentId: sId,
+        latitude: courierLocation.coords.latitude,
+        longitude: courierLocation.coords.longitude,
+        accuracy: courierLocation.coords.accuracy,
+      });
+    }
+  }, [courierLocation.coords, courierLocation.isTracking, shipment, id, trackingSocket]);
 
   const handleStatusUpdated = (updated) => {
     setShipment(updated);
     setSuccessMsg(`Status updated successfully to '${updated.status}'`);
     setTimeout(() => setSuccessMsg(''), 4000);
+
+    // If delivered or cancelled, automatically halt tracking
+    if (['Delivered', 'Cancelled'].includes(updated.status)) {
+      handleStopSharing();
+    }
   };
 
   // Quick 1-click status progression following the linear state machine
   const handleQuickAdvance = async () => {
     if (!shipment) return;
+
+    // Out for Delivery requires full Proof of Delivery (Photo + OTP verification)
+    if (shipment.status === 'Out for Delivery') {
+      setPodModalOpen(true);
+      return;
+    }
+
     const nextStatus = NEXT_STAGE_STATUS[shipment.status];
     if (!nextStatus) return;
 
@@ -153,6 +203,7 @@ const CourierShipmentDetails = () => {
   const isCompleted = shipment?.status === 'Delivered';
   const isCancelled = shipment?.status === 'Cancelled';
   const canAdvance = NEXT_STAGE_STATUS[shipment?.status];
+  const isTrackableState = ['Assigned', 'Picked Up', 'In Transit', 'Out for Delivery'].includes(shipment?.status);
 
   return (
     <DashboardLayout title={`Delivery Task — ${shipment.trackingId}`}>
@@ -180,26 +231,36 @@ const CourierShipmentDetails = () => {
             </div>
           </div>
 
-          {/* Quick Status Action Button */}
-          {canAdvance && (
-            <button
-              onClick={handleQuickAdvance}
-              disabled={updatingFast}
-              className="px-4 py-2 bg-[#D97706] hover:bg-[#B45309] text-white text-xs sm:text-sm font-semibold rounded-lg shadow-xs transition duration-150 flex items-center gap-2 disabled:opacity-60 cursor-pointer self-start sm:self-auto"
+          {/* Action Buttons */}
+          <div className="flex items-center gap-2 self-start sm:self-auto flex-wrap">
+            <Link
+              to={`/courier/simulator?shipmentId=${shipment._id || shipment.id || id}`}
+              className="px-3.5 py-2 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 text-xs sm:text-sm font-semibold rounded-lg shadow-xs transition duration-150 flex items-center gap-1.5"
             >
-              {updatingFast ? (
-                <>
-                  <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  <span>Updating...</span>
-                </>
-              ) : (
-                <>
-                  <span>{NEXT_STAGE_LABELS[shipment.status]}</span>
-                  <CheckCircle className="w-4 h-4" />
-                </>
-              )}
-            </button>
-          )}
+              <Compass className="w-4 h-4 text-amber-700" />
+              <span>Demo Simulator</span>
+            </Link>
+
+            {canAdvance && (
+              <button
+                onClick={handleQuickAdvance}
+                disabled={updatingFast}
+                className="px-4 py-2 bg-[#D97706] hover:bg-[#B45309] text-white text-xs sm:text-sm font-semibold rounded-lg shadow-xs transition duration-150 flex items-center gap-2 disabled:opacity-60 cursor-pointer"
+              >
+                {updatingFast ? (
+                  <>
+                    <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <span>Updating...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>{NEXT_STAGE_LABELS[shipment.status]}</span>
+                    <CheckCircle className="w-4 h-4" />
+                  </>
+                )}
+              </button>
+            )}
+          </div>
         </div>
 
         {error && <ErrorMessage message={error} />}
@@ -223,18 +284,61 @@ const CourierShipmentDetails = () => {
           />
         </div>
 
-        {/* Location Sharing Placeholder Section */}
-        <div className="bg-white rounded-xl border border-[#D9DEE5] p-6 shadow-xs text-center">
-          <div className="w-10 h-10 rounded-lg bg-[#172033]/5 text-[#172033] flex items-center justify-center mx-auto mb-2">
-            <Radio className="w-5 h-5 text-[#D97706]" />
+        {/* Out for Delivery Action Banner */}
+        {shipment.status === 'Out for Delivery' && (
+          <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-400 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+            <div className="flex items-start gap-3">
+              <div className="p-2 rounded-lg bg-amber-500/20 text-[#D97706] shrink-0 mt-0.5">
+                <ShieldCheck className="w-5 h-5 text-[#D97706]" />
+              </div>
+              <div>
+                <h3 className="text-xs font-bold text-[#172033] uppercase tracking-wider flex items-center gap-1.5">
+                  <span>Destination Reached — Proof of Delivery Required</span>
+                </h3>
+                <p className="text-xs text-[#263449] mt-0.5 leading-relaxed">
+                  Collect the 6-digit delivery OTP from the customer and take a package delivery photo to verify and complete delivery.
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setPodModalOpen(true)}
+              className="px-4 py-2.5 rounded-lg bg-[#D97706] hover:bg-[#B45309] text-white text-xs font-semibold shadow-xs transition flex items-center justify-center gap-1.5 shrink-0 cursor-pointer"
+            >
+              <ShieldCheck className="w-4 h-4" />
+              <span>Complete Delivery (POD)</span>
+            </button>
           </div>
-          <h3 className="text-sm font-bold text-[#172033] mb-1">
-            Location Sharing
-          </h3>
-          <p className="text-xs text-[#667085] max-w-md mx-auto">
-            Live location sharing will be available when GPS tracking is enabled.
-          </p>
-        </div>
+        )}
+
+        {/* Proof of Delivery Card (Visible when Delivered) */}
+        {shipment.status === 'Delivered' && (
+          <ProofOfDeliveryCard shipment={shipment} />
+        )}
+
+        {/* Live GPS Location Sharing Panel */}
+        {isTrackableState ? (
+          <CourierLocationPanel
+            status={courierLocation.status}
+            coords={courierLocation.coords}
+            error={courierLocation.error}
+            isTracking={courierLocation.isTracking}
+            isStarting={courierLocation.isStarting}
+            onStartTracking={handleStartSharing}
+            onStopTracking={handleStopSharing}
+            connectionStatus={trackingSocket.connectionStatus}
+          />
+        ) : (
+          <div className="bg-white rounded-xl border border-[#D9DEE5] p-5 shadow-xs text-center">
+            <p className="text-xs text-[#667085]">
+              {isCompleted
+                ? 'Delivery completed. Live location tracking is closed for this shipment.'
+                : isCancelled
+                ? 'Shipment cancelled. Live location sharing is disabled.'
+                : 'Location sharing is not available for this shipment status.'}
+            </p>
+          </div>
+        )}
 
         {/* Details Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -355,6 +459,14 @@ const CourierShipmentDetails = () => {
         shipment={shipment}
         onSuccess={handleStatusUpdated}
         role="courier"
+      />
+
+      {/* Proof of Delivery Modal */}
+      <ProofOfDeliveryModal
+        isOpen={podModalOpen}
+        onClose={() => setPodModalOpen(false)}
+        shipment={shipment}
+        onDeliveryComplete={handleStatusUpdated}
       />
     </DashboardLayout>
   );

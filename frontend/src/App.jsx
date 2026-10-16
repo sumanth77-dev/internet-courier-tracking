@@ -21,6 +21,7 @@ import AdminShipmentDetails from './pages/admin/AdminShipmentDetails';
 import CourierDashboard from './pages/CourierDashboard';
 import AssignedShipments from './pages/courier/AssignedShipments';
 import CourierShipmentDetails from './pages/courier/CourierShipmentDetails';
+import GpsSimulator from './pages/courier/GpsSimulator';
 
 // Helper component for root index redirection
 const RootRedirect = () => {
@@ -134,6 +135,14 @@ function App() {
             element={
               <CourierRoute>
                 <CourierShipmentDetails />
+              </CourierRoute>
+            }
+          />
+          <Route
+            path="/courier/simulator"
+            element={
+              <CourierRoute>
+                <GpsSimulator />
               </CourierRoute>
             }
           />

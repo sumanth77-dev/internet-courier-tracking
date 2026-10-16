@@ -1,52 +1,192 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import DashboardLayout from '../../components/layout/DashboardLayout';
 import StatusBadge from '../../components/common/StatusBadge';
 import ShipmentTimeline from '../../components/shipment/ShipmentTimeline';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
-import ErrorMessage from '../../components/common/ErrorMessage';
+import LiveTrackingMap from '../../components/tracking/LiveTrackingMap';
+import useTrackingSocket from '../../hooks/useTrackingSocket';
+import { getDrivingRoute } from '../../services/routingService';
 import api from '../../services/api';
+import { CustomerDeliveryOtpCard } from '../../components/delivery/CustomerDeliveryOtpCard';
+import { ProofOfDeliveryCard } from '../../components/delivery/ProofOfDeliveryCard';
 import {
   ArrowLeft,
   MapPin,
   Box,
   User,
-  Calendar,
-  Compass,
   Phone,
   Mail,
   AlertCircle,
-  Radio,
+  CheckCircle2,
+  Clock,
+  Ban,
+  Route,
 } from 'lucide-react';
+
+const TRACKABLE_STATUSES = ['Assigned', 'Picked Up', 'In Transit', 'Out for Delivery'];
+const STATUS_SYNC_INTERVAL_MS = 4000; // Synchronize active status every 4s without full page reload
 
 const ShipmentDetails = () => {
   const { trackingId } = useParams();
   const [shipment, setShipment] = useState(null);
+  const [currentLocation, setCurrentLocation] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [roadRoute, setRoadRoute] = useState(null);
 
-  useEffect(() => {
-    fetchShipmentDetails();
-  }, [trackingId]);
+  // Live Socket.IO Tracking Hook - auto-joins with actual MongoDB _id once shipment loads
+  const trackingSocket = useTrackingSocket({
+    shipmentId: shipment?._id || null,
+    role: 'customer',
+    autoJoin: shipment ? TRACKABLE_STATUSES.includes(shipment.status) : false,
+  });
 
-  const fetchShipmentDetails = async () => {
-    setLoading(true);
-    setError('');
+  const fetchShipmentDetails = useCallback(async (isInitial = false) => {
+    if (isInitial) setLoading(true);
     try {
       const res = await api.get(`/shipments/${trackingId}`);
       if (res.data?.success && res.data.data?.shipment) {
         setShipment(res.data.data.shipment);
-      } else {
+        setError('');
+      } else if (isInitial) {
         setError(res.data?.message || 'Shipment not found');
       }
     } catch (err) {
-      setError(
-        err.response?.data?.message || 'Unable to retrieve shipment details'
-      );
+      if (isInitial) {
+        setError(
+          err.response?.data?.message || 'Unable to retrieve shipment details'
+        );
+      }
     } finally {
-      setLoading(false);
+      if (isInitial) setLoading(false);
     }
-  };
+  }, [trackingId]);
+
+  // Initial fetch
+  useEffect(() => {
+    fetchShipmentDetails(true);
+  }, [fetchShipmentDetails]);
+
+  // Fetch latest saved location from backend separately from live updates
+  useEffect(() => {
+    let isMounted = true;
+    if (!shipment?._id || !TRACKABLE_STATUSES.includes(shipment.status)) return;
+
+    const fetchInitialLocation = async () => {
+      try {
+        const res = await api.get(`/shipments/${shipment._id}/location`);
+        if (isMounted && res.data?.success && res.data.data?.location) {
+          const loc = res.data.data.location;
+          const locObj = {
+            shipmentId: loc.shipmentId,
+            trackingId: loc.trackingId,
+            latitude: Number(loc.latitude),
+            longitude: Number(loc.longitude),
+            accuracy: loc.accuracy !== null ? Number(loc.accuracy) : null,
+            timestamp: new Date(loc.timestamp),
+          };
+          setCurrentLocation((prev) => {
+            if (prev?.timestamp && new Date(prev.timestamp).getTime() > new Date(loc.timestamp).getTime()) {
+              return prev;
+            }
+            return locObj;
+          });
+        }
+      } catch (err) {
+        console.warn('[CustomerTracking] Could not fetch latest location:', err.message);
+      }
+    };
+
+    fetchInitialLocation();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [shipment?._id, shipment?.status]);
+
+  // Merge live socket location updates into currentLocation
+  useEffect(() => {
+    if (trackingSocket.liveLocation) {
+      setCurrentLocation(trackingSocket.liveLocation);
+    }
+  }, [trackingSocket.liveLocation]);
+
+  // Update shipment status immediately when live status broadcast arrives
+  useEffect(() => {
+    if (trackingSocket.liveStatusUpdate) {
+      const update = trackingSocket.liveStatusUpdate;
+      setShipment((prev) => {
+        if (!prev) return prev;
+        if (
+          update.shipmentId &&
+          update.shipmentId.toString() !== prev._id?.toString() &&
+          update.trackingId !== prev.trackingId
+        ) {
+          return prev;
+        }
+        return {
+          ...prev,
+          status: update.status || prev.status,
+          pickedUpAt: update.pickedUpAt || prev.pickedUpAt,
+          deliveredAt: update.deliveredAt || prev.deliveredAt,
+          updatedAt: update.updatedAt || prev.updatedAt,
+        };
+      });
+    }
+  }, [trackingSocket.liveStatusUpdate]);
+
+  // On socket reconnect, re-fetch shipment to avoid stale state
+  const prevConnStatusRef = useRef(trackingSocket.connectionStatus);
+  useEffect(() => {
+    if (prevConnStatusRef.current === 'reconnecting' && trackingSocket.connectionStatus === 'connected') {
+      fetchShipmentDetails(false);
+    }
+    prevConnStatusRef.current = trackingSocket.connectionStatus;
+  }, [trackingSocket.connectionStatus, fetchShipmentDetails]);
+
+  // Active status background sync fallback interval
+  useEffect(() => {
+    if (!shipment || !TRACKABLE_STATUSES.includes(shipment.status)) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      fetchShipmentDetails(false);
+    }, STATUS_SYNC_INTERVAL_MS);
+
+    return () => clearInterval(interval);
+  }, [shipment?.status, fetchShipmentDetails]);
+
+  // Fetch OSRM Road Route between Pickup and Delivery coordinates
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchRoute = async () => {
+      if (
+        shipment?.pickupAddress?.latitude &&
+        shipment?.deliveryAddress?.latitude
+      ) {
+        try {
+          const route = await getDrivingRoute(
+            shipment.pickupAddress,
+            shipment.deliveryAddress
+          );
+          if (isMounted) {
+            setRoadRoute(route);
+          }
+        } catch (err) {
+          console.warn('Customer road route fetching warning:', err.message);
+        }
+      }
+    };
+
+    fetchRoute();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [shipment?.pickupAddress, shipment?.deliveryAddress]);
 
   const formatDate = (dateStr) => {
     if (!dateStr) return '—';
@@ -97,6 +237,10 @@ const ShipmentDetails = () => {
   }
 
   const courier = shipment.courierId || shipment.courier;
+  const isTrackable = TRACKABLE_STATUSES.includes(shipment.status);
+  const isPending = shipment.status === 'Pending';
+  const isDelivered = shipment.status === 'Delivered';
+  const isCancelled = shipment.status === 'Cancelled';
 
   return (
     <DashboardLayout title={`Shipment ${shipment.trackingId}`}>
@@ -137,18 +281,55 @@ const ShipmentDetails = () => {
           />
         </div>
 
-        {/* Live Tracking Map Placeholder Section */}
-        <div className="bg-white rounded-xl border border-[#D9DEE5] p-6 shadow-xs text-center">
-          <div className="w-10 h-10 rounded-lg bg-[#172033]/5 text-[#172033] flex items-center justify-center mx-auto mb-2">
-            <Compass className="w-5 h-5 text-[#D97706]" />
+        {/* Customer Delivery OTP Card (When Out for Delivery) */}
+        {shipment.status === 'Out for Delivery' && (
+          <CustomerDeliveryOtpCard shipment={shipment} isOwner={true} />
+        )}
+
+        {/* Proof of Delivery Card (When Delivered) */}
+        {isDelivered && (
+          <ProofOfDeliveryCard shipment={shipment} />
+        )}
+
+        {/* Live Tracking Map Section / Status Inactive Fallbacks */}
+        {isTrackable ? (
+          <LiveTrackingMap
+            liveLocation={currentLocation || trackingSocket.liveLocation}
+            pickupAddress={shipment.pickupAddress}
+            deliveryAddress={shipment.deliveryAddress}
+            fullRoute={roadRoute?.coordinates || []}
+            routeDistanceKm={roadRoute?.distanceKm}
+            routeDurationMinutes={roadRoute?.durationMinutes}
+            connectionStatus={trackingSocket.connectionStatus}
+            trackingId={shipment.trackingId}
+            courierName={courier?.name}
+            height="480px"
+          />
+        ) : isPending ? (
+          <div className="bg-white rounded-xl border border-[#D9DEE5] p-6 shadow-xs text-center">
+            <div className="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center mx-auto mb-2">
+              <Clock className="w-5 h-5 text-[#D97706]" />
+            </div>
+            <h3 className="text-sm font-bold text-[#172033] mb-1">
+              Awaiting Courier Assignment
+            </h3>
+            <p className="text-xs text-[#667085] max-w-md mx-auto">
+              Live tracking will become available once the courier begins the delivery.
+            </p>
           </div>
-          <h3 className="text-sm font-bold text-[#172033] mb-1">
-            Live Tracking
-          </h3>
-          <p className="text-xs text-[#667085] max-w-md mx-auto">
-            Live location tracking will appear here when the shipment is in transit.
-          </p>
-        </div>
+        ) : isDelivered ? null : isCancelled ? (
+          <div className="bg-white rounded-xl border border-[#D9DEE5] p-6 shadow-xs text-center">
+            <div className="w-10 h-10 rounded-lg bg-red-50 text-red-600 flex items-center justify-center mx-auto mb-2">
+              <Ban className="w-5 h-5 text-red-600" />
+            </div>
+            <h3 className="text-sm font-bold text-[#172033] mb-1">
+              Shipment Cancelled
+            </h3>
+            <p className="text-xs text-[#667085] max-w-md mx-auto">
+              Tracking is unavailable for cancelled shipments.
+            </p>
+          </div>
+        ) : null}
 
         {/* Two-Column Details Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -214,6 +395,14 @@ const ShipmentDetails = () => {
                     {shipment.packageDetails?.weight} kg
                   </span>
                 </div>
+                {roadRoute && (
+                  <div className="flex justify-between py-1 border-b border-[#D9DEE5]/60">
+                    <span className="text-[#667085]">Driving Route:</span>
+                    <span className="font-semibold text-[#172033]">
+                      {roadRoute.distanceKm} km (~{roadRoute.durationMinutes} min)
+                    </span>
+                  </div>
+                )}
                 <div className="flex justify-between py-1">
                   <span className="text-[#667085]">Last Updated:</span>
                   <span className="font-semibold text-[#172033]">

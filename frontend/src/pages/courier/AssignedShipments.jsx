@@ -132,12 +132,20 @@ const AssignedShipments = () => {
             showCustomer={true}
             viewLinkPrefix="/courier/shipments"
             renderActions={(s) => (
-              <Link
-                to={`/courier/shipments/${s._id || s.id || s.trackingId}`}
-                className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-[#172033] hover:text-[#D97706] bg-white border border-[#D9DEE5] hover:bg-[#F4F6F8] rounded-md transition shadow-xs"
-              >
-                View Delivery
-              </Link>
+              <div className="flex items-center justify-end gap-1.5">
+                <Link
+                  to={`/courier/shipments/${s._id || s.id || s.trackingId}`}
+                  className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold text-[#172033] hover:text-[#D97706] bg-white border border-[#D9DEE5] hover:bg-[#F4F6F8] rounded-md transition shadow-xs"
+                >
+                  View
+                </Link>
+                <Link
+                  to={`/courier/simulator?shipmentId=${s._id || s.id || s.trackingId}`}
+                  className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold text-amber-900 bg-amber-50 hover:bg-amber-100 border border-amber-300 rounded-md transition shadow-xs"
+                >
+                  Demo
+                </Link>
+              </div>
             )}
           />
         )}

@@ -1,4 +1,3 @@
-import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import {
@@ -7,8 +6,7 @@ import {
   Package,
   Truck,
   LogOut,
-  Shield,
-  User as UserIcon,
+  Sparkles,
 } from 'lucide-react';
 
 const Sidebar = ({ onClose }) => {
@@ -37,6 +35,7 @@ const Sidebar = ({ onClose }) => {
         return [
           { to: '/courier', label: 'Dashboard', icon: LayoutDashboard, end: true },
           { to: '/courier/shipments', label: 'Assigned Shipments', icon: Truck },
+          { to: '/courier/simulator', label: 'GPS Simulator', icon: Sparkles },
         ];
       default:
         return [];

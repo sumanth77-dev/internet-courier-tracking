@@ -158,9 +158,12 @@ const AllShipments = () => {
               <div className="flex items-center justify-end gap-1.5">
                 <Link
                   to={`/admin/shipments/${s._id || s.trackingId}`}
-                  className="px-2.5 py-1 text-xs font-semibold text-[#172033] hover:text-[#D97706] bg-white border border-[#D9DEE5] hover:bg-[#F4F6F8] rounded-md transition shadow-xs"
+                  className="px-2.5 py-1 text-xs font-semibold text-[#172033] hover:text-[#D97706] bg-white border border-[#D9DEE5] hover:bg-[#F4F6F8] rounded-md transition shadow-xs flex items-center gap-1"
                 >
-                  View
+                  {['Assigned', 'Picked Up', 'In Transit', 'Out for Delivery'].includes(s.status) && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                  )}
+                  <span>{['Assigned', 'Picked Up', 'In Transit', 'Out for Delivery'].includes(s.status) ? 'Track' : 'View'}</span>
                 </Link>
 
                 {/* Assign Courier button */}

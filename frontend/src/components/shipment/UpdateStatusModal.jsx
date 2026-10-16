@@ -7,7 +7,7 @@ const COURIER_TRANSITIONS = {
   Assigned: ['Picked Up'],
   'Picked Up': ['In Transit'],
   'In Transit': ['Out for Delivery'],
-  'Out for Delivery': ['Delivered'],
+  'Out for Delivery': [], // Requires Proof of Delivery with OTP & Photo
   Delivered: [],
   Cancelled: [],
 };
@@ -17,7 +17,7 @@ const ADMIN_TRANSITIONS = {
   Assigned: ['Picked Up', 'Cancelled'],
   'Picked Up': ['In Transit', 'Cancelled'],
   'In Transit': ['Out for Delivery', 'Cancelled'],
-  'Out for Delivery': ['Delivered', 'Cancelled'],
+  'Out for Delivery': ['Cancelled'], // Delivered requires verified Proof of Delivery
   Delivered: [],
   Cancelled: [],
 };
@@ -109,7 +109,9 @@ const UpdateStatusModal = ({
           </label>
           {allowedTransitions.length === 0 ? (
             <div className="p-3 rounded-lg bg-[#F4F6F8] border border-[#D9DEE5] text-xs text-[#667085]">
-              This shipment is in terminal state ({currentStatus}) and cannot be transitioned further.
+              {currentStatus === 'Out for Delivery'
+                ? 'Shipment is Out for Delivery. Transitioning to Delivered requires Proof of Delivery (Package Photo + Customer OTP verification).'
+                : `This shipment is in terminal state (${currentStatus}) and cannot be transitioned further.`}
             </div>
           ) : (
             <select
