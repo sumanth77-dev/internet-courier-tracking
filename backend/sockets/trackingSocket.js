@@ -94,6 +94,7 @@ const initializeTrackingSocket = (io) => {
   io.use(authenticateSocket);
 
   io.on('connection', (socket) => {
+    console.log(`[TrackingSocket] Client connected: socketId=${socket.id}, role=${socket.user?.role}, userId=${socket.user?.userId}`);
     // In-memory rate limiting tracker for this socket connection
     let lastLocationUpdateTime = 0;
 
@@ -144,6 +145,7 @@ const initializeTrackingSocket = (io) => {
 
         const roomName = `shipment:${shipment._id}`;
         socket.join(roomName);
+        console.log(`[TrackingSocket] Courier room join: courierId=${socket.user.userId}, shipmentId=${shipment._id} (${shipment.trackingId}), room=${roomName}`);
 
         return reply(socket, 'courier:startTracking', callback, {
           success: true,
@@ -282,7 +284,9 @@ const initializeTrackingSocket = (io) => {
           timestamp: savedLocation.timestamp.toISOString(),
         };
 
+        console.log(`[TrackingSocket] Location received & saved: courierId=${socket.user.userId}, shipmentId=${shipment._id}, lat=${latitude}, lng=${longitude}, accuracy=${accuracy}, locId=${savedLocation._id}`);
         io.to(roomName).emit('location:update', broadcastPayload);
+        console.log(`[TrackingSocket] Broadcasted location:update to ${roomName}: lat=${broadcastPayload.latitude}, lng=${broadcastPayload.longitude}`);
 
         return reply(socket, 'courier:locationUpdate', callback, {
           success: true,
@@ -344,6 +348,7 @@ const initializeTrackingSocket = (io) => {
 
         const roomName = `shipment:${shipment._id}`;
         socket.join(roomName);
+        console.log(`[TrackingSocket] Customer room join: customerId=${socket.user.userId}, shipmentId=${shipment._id} (${shipment.trackingId}), room=${roomName}`);
 
         return reply(socket, 'customer:startTracking', callback, {
           success: true,
@@ -394,6 +399,7 @@ const initializeTrackingSocket = (io) => {
 
         const roomName = `shipment:${shipment._id}`;
         socket.join(roomName);
+        console.log(`[TrackingSocket] Admin room join: adminId=${socket.user.userId}, shipmentId=${shipment._id} (${shipment.trackingId}), room=${roomName}`);
 
         return reply(socket, 'admin:startTracking', callback, {
           success: true,
@@ -424,6 +430,7 @@ const initializeTrackingSocket = (io) => {
           const shipment = await findShipmentByIdOrTracking(shipmentId);
           const targetId = shipment ? shipment._id.toString() : shipmentId;
           socket.leave(`shipment:${targetId}`);
+          console.log(`[TrackingSocket] Stop tracking: socketId=${socket.id}, shipmentId=${targetId}`);
         }
 
         return reply(socket, 'tracking:stop', callback, {
@@ -442,6 +449,7 @@ const initializeTrackingSocket = (io) => {
     // 6. DISCONNECT
     // ==========================================
     socket.on('disconnect', (reason) => {
+      console.log(`[TrackingSocket] Client disconnected: socketId=${socket.id}, reason=${reason}`);
       // Clean up in-memory socket state without deleting MongoDB records or modifying ownership
       lastLocationUpdateTime = 0;
     });

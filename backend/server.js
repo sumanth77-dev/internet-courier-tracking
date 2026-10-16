@@ -22,9 +22,15 @@ const io = new Server(httpServer, {
     },
 });
 
+// Attach io to express app
+app.set("io", io);
+
+const path = require("path");
+
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Routes
 app.use("/api/auth", authRoutes);

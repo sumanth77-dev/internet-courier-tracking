@@ -7,6 +7,7 @@ const deliveryProofSchema = new mongoose.Schema(
       ref: 'Shipment',
       required: [true, 'Shipment ID is required'],
       unique: true,
+      index: true,
     },
     courierId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -19,10 +20,28 @@ const deliveryProofSchema = new mongoose.Schema(
       required: [true, 'Proof photo URL is required'],
       trim: true,
     },
+    recipientName: {
+      type: String,
+      trim: true,
+      default: null,
+    },
+    recipientType: {
+      type: String,
+      enum: ['Customer', 'Family Member', 'Authorized Recipient', 'Neighbor', 'Other'],
+      default: 'Customer',
+    },
     confirmation: {
       type: Boolean,
       required: [true, 'Delivery confirmation is required'],
       default: false,
+    },
+    verificationMethod: {
+      type: String,
+      default: 'OTP',
+    },
+    verificationStatus: {
+      type: String,
+      default: 'Verified',
     },
     deliveredAt: {
       type: Date,
