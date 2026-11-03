@@ -50,7 +50,7 @@ const ShipmentTable = ({
                 ? `${s.deliveryAddress.city}, ${s.deliveryAddress.state}`
                 : '—';
               const customerName = s.customerId?.name || s.customer?.name || 'Customer';
-              const courierName = s.courierId?.name || s.courier?.name || 'Unassigned';
+              const courierName = s.courierId?.name || s.courier?.name || (s.courierId ? 'Assigned' : 'Unassigned');
 
               return (
                 <tr key={s._id || s.id} className="hover:bg-[#F4F6F8]/60 transition">
@@ -116,7 +116,7 @@ const ShipmentTable = ({
             ? `${s.deliveryAddress.city}, ${s.deliveryAddress.state}`
             : '—';
           const customerName = s.customerId?.name || s.customer?.name || 'Customer';
-          const courierName = s.courierId?.name || s.courier?.name || 'Unassigned';
+          const courierName = s.courierId?.name || s.courier?.name || (s.courierId ? 'Assigned' : 'Unassigned');
 
           return (
             <div key={s._id || s.id} className="p-4 space-y-2.5">

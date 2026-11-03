@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import api from '../../services/api';
 import {
   Camera,
@@ -41,6 +41,15 @@ export const ProofOfDeliveryModal = ({
 
   const fileInputRef = useRef(null);
 
+  // Clean up any generated blob object URLs upon unmount or change
+  useEffect(() => {
+    return () => {
+      if (photoPreview && photoPreview.startsWith('blob:')) {
+        URL.revokeObjectURL(photoPreview);
+      }
+    };
+  }, [photoPreview]);
+
   if (!isOpen || !shipment) return null;
 
   const handleFileChange = (e) => {
@@ -59,16 +68,21 @@ export const ProofOfDeliveryModal = ({
       return;
     }
 
+    // Revoke previous object URL if any
+    if (photoPreview && photoPreview.startsWith('blob:')) {
+      URL.revokeObjectURL(photoPreview);
+    }
+
     setError('');
     setPhotoFile(file);
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setPhotoPreview(reader.result);
-    };
-    reader.readAsDataURL(file);
+    const objectUrl = URL.createObjectURL(file);
+    setPhotoPreview(objectUrl);
   };
 
   const handleRemovePhoto = () => {
+    if (photoPreview && photoPreview.startsWith('blob:')) {
+      URL.revokeObjectURL(photoPreview);
+    }
     setPhotoFile(null);
     setPhotoPreview(null);
     if (fileInputRef.current) {

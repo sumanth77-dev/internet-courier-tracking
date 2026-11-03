@@ -2,46 +2,46 @@ import React from 'react';
 
 const STATUS_CONFIG = {
   Pending: {
-    bg: 'bg-amber-50',
-    text: 'text-amber-800',
-    border: 'border-amber-200',
-    dot: 'bg-amber-500',
-  },
-  Assigned: {
     bg: 'bg-slate-100',
-    text: 'text-slate-800',
+    text: 'text-slate-700',
     border: 'border-slate-300',
     dot: 'bg-slate-500',
   },
+  Assigned: {
+    bg: 'bg-sky-50',
+    text: 'text-sky-800',
+    border: 'border-sky-200',
+    dot: 'bg-sky-500',
+  },
   'Picked Up': {
+    bg: 'bg-indigo-50',
+    text: 'text-indigo-800',
+    border: 'border-indigo-200',
+    dot: 'bg-indigo-600',
+  },
+  'In Transit': {
     bg: 'bg-blue-50',
     text: 'text-blue-800',
     border: 'border-blue-200',
     dot: 'bg-blue-600',
   },
-  'In Transit': {
-    bg: 'bg-[#172033]/10',
-    text: 'text-[#172033]',
-    border: 'border-[#172033]/20',
-    dot: 'bg-[#172033]',
-  },
   'Out for Delivery': {
-    bg: 'bg-amber-100',
-    text: 'text-amber-900',
+    bg: 'bg-amber-50',
+    text: 'text-amber-800',
     border: 'border-amber-300',
-    dot: 'bg-[#D97706]',
+    dot: 'bg-[#F59E0B]',
   },
   Delivered: {
     bg: 'bg-emerald-50',
     text: 'text-emerald-800',
-    border: 'border-emerald-200',
-    dot: 'bg-[#15803D]',
+    border: 'border-emerald-300',
+    dot: 'bg-[#16845B]',
   },
   Cancelled: {
-    bg: 'bg-red-50',
-    text: 'text-red-800',
-    border: 'border-red-200',
-    dot: 'bg-[#B91C1C]',
+    bg: 'bg-rose-50',
+    text: 'text-rose-800',
+    border: 'border-rose-200',
+    dot: 'bg-[#C0392B]',
   },
 };
 

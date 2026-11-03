@@ -548,6 +548,30 @@ const assignCourier = async (req, res) => {
     shipment.status = 'Assigned';
     await shipment.save();
 
+    // Populate customer and courier references so frontend receives authoritative details immediately
+    await shipment.populate([
+      { path: 'customerId', select: 'name email phone' },
+      { path: 'courierId', select: 'name email phone' },
+    ]);
+
+    // Broadcast status and assignment update to tracking room if Socket.IO is initialized
+    const io = req.app.get('io');
+    if (io) {
+      const statusPayload = {
+        shipmentId: shipment._id.toString(),
+        trackingId: shipment.trackingId,
+        status: 'Assigned',
+        courier: {
+          id: courier._id,
+          name: courier.name,
+          email: courier.email,
+          phone: courier.phone,
+        },
+        updatedAt: shipment.updatedAt ? shipment.updatedAt.toISOString() : new Date().toISOString(),
+      };
+      io.to(`shipment:${shipment._id}`).emit('shipment:statusUpdate', statusPayload);
+    }
+
     return res.status(200).json({
       success: true,
       message: 'Courier assigned to shipment successfully',
@@ -1340,6 +1364,97 @@ const getShipmentProofOfDelivery = async (req, res) => {
   }
 };
 
+/**
+ * @desc    Get delivery proof photo securely with authentication and role-based authorization
+ * @route   GET /api/shipments/:id/proof-photo, GET /api/shipments/proof-photo/:filename
+ * @access  Private (Role: customer owner, assigned courier, admin)
+ */
+const getDeliveryProofPhoto = async (req, res) => {
+  try {
+    const { id, filename } = req.params;
+    let proof = null;
+    let shipment = null;
+
+    if (filename) {
+      const safeFilename = path.basename(filename);
+      proof = await DeliveryProof.findOne({
+        photoUrl: { $regex: safeFilename, $options: 'i' },
+      });
+      if (proof) {
+        shipment = await Shipment.findById(proof.shipmentId);
+      }
+    } else if (id) {
+      const query = mongoose.Types.ObjectId.isValid(id)
+        ? { _id: id }
+        : { trackingId: id.toUpperCase() };
+
+      shipment = await Shipment.findOne(query);
+      if (shipment) {
+        proof = await DeliveryProof.findOne({ shipmentId: shipment._id });
+      }
+    }
+
+    if (!shipment || !proof) {
+      return res.status(404).json({
+        success: false,
+        message: 'Delivery proof photo not found',
+      });
+    }
+
+    // Role-based visibility check:
+    const shipmentCustomerId =
+      shipment.customerId?._id?.toString() || shipment.customerId?.toString();
+    const shipmentCourierId =
+      shipment.courierId?._id?.toString() || shipment.courierId?.toString();
+    const currentUserId = req.user?.userId?.toString();
+
+    // Customers can ONLY view proof for their own shipments
+    if (req.user.role === 'customer' && shipmentCustomerId !== currentUserId) {
+      return res.status(403).json({
+        success: false,
+        message: 'Forbidden: You do not have permission to access another customer\'s delivery photo',
+      });
+    }
+
+    // Couriers can ONLY view proof for shipments assigned to them
+    if (req.user.role === 'courier' && shipmentCourierId !== currentUserId) {
+      return res.status(403).json({
+        success: false,
+        message: 'Forbidden: You are not assigned to this shipment',
+      });
+    }
+
+    // Resolve safe filename on server storage to prevent directory traversal
+    const safeBaseName = path.basename(proof.photoUrl);
+    const photoFilePath = path.join(__dirname, '../uploads/delivery-proofs', safeBaseName);
+
+    if (!fs.existsSync(photoFilePath)) {
+      return res.status(404).json({
+        success: false,
+        message: 'Delivery proof photo file is missing on storage',
+      });
+    }
+
+    // Determine correct content-type header
+    const ext = path.extname(safeBaseName).toLowerCase();
+    const mimeMap = {
+      '.jpg': 'image/jpeg',
+      '.jpeg': 'image/jpeg',
+      '.png': 'image/png',
+      '.webp': 'image/webp',
+    };
+    res.setHeader('Content-Type', mimeMap[ext] || 'image/jpeg');
+    res.setHeader('Cache-Control', 'private, max-age=86400');
+    return res.sendFile(photoFilePath);
+  } catch (error) {
+    console.error('Get Delivery Proof Photo Error:', error.message);
+    return res.status(500).json({
+      success: false,
+      message: 'Internal server error while retrieving delivery proof photo',
+    });
+  }
+};
+
 module.exports = {
   createShipment,
   getMyShipments,
@@ -1358,4 +1473,5 @@ module.exports = {
   getDeliveryOtpStatus,
   submitProofOfDelivery,
   getShipmentProofOfDelivery,
+  getDeliveryProofPhoto,
 };

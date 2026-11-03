@@ -23,6 +23,9 @@ import AssignedShipments from './pages/courier/AssignedShipments';
 import CourierShipmentDetails from './pages/courier/CourierShipmentDetails';
 import GpsSimulator from './pages/courier/GpsSimulator';
 
+// Profile Page
+import Profile from './pages/Profile';
+
 // Helper component for root index redirection
 const RootRedirect = () => {
   const { user, isAuthenticated, loading } = useAuth();
@@ -87,6 +90,15 @@ function App() {
             }
           />
 
+          <Route
+            path="/customer/profile"
+            element={
+              <CustomerRoute>
+                <Profile />
+              </CustomerRoute>
+            }
+          />
+
           {/* Admin Routes (Role: admin) */}
           <Route
             path="/admin"
@@ -109,6 +121,14 @@ function App() {
             element={
               <AdminRoute>
                 <AdminShipmentDetails />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/profile"
+            element={
+              <AdminRoute>
+                <Profile />
               </AdminRoute>
             }
           />
@@ -144,6 +164,24 @@ function App() {
               <CourierRoute>
                 <GpsSimulator />
               </CourierRoute>
+            }
+          />
+          <Route
+            path="/courier/profile"
+            element={
+              <CourierRoute>
+                <Profile />
+              </CourierRoute>
+            }
+          />
+
+          {/* Unified Authenticated Profile Route */}
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute allowedRoles={['customer', 'courier', 'admin']}>
+                <Profile />
+              </ProtectedRoute>
             }
           />
 

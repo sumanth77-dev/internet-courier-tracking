@@ -196,17 +196,21 @@ const AdminDashboard = () => {
                   <span>{['Assigned', 'Picked Up', 'In Transit', 'Out for Delivery'].includes(s.status) ? 'Track' : 'View'}</span>
                 </Link>
 
-                {/* Assign Courier button (Allowed for Pending or Assigned) */}
+                {/* Assign / Reassign Courier button (Allowed for Pending or Assigned) */}
                 {['Pending', 'Assigned'].includes(s.status) && (
                   <button
                     onClick={() => {
                       setSelectedShipment(s);
                       setAssignModalOpen(true);
                     }}
-                    className="px-2 py-1 text-[11px] font-semibold text-white bg-[#172033] hover:bg-[#0F172A] rounded-md transition shadow-xs cursor-pointer"
-                    title="Assign Courier"
+                    className={`px-2.5 py-1 text-[11px] font-semibold rounded-md transition shadow-xs cursor-pointer ${
+                      s.courierId || s.status === 'Assigned'
+                        ? 'text-[#172033] bg-[#E1E7EF] hover:bg-[#D0D7E2] border border-[#CBD5E1]'
+                        : 'text-white bg-[#172033] hover:bg-[#0F172A]'
+                    }`}
+                    title={s.courierId || s.status === 'Assigned' ? 'Reassign Courier' : 'Assign Courier'}
                   >
-                    Assign
+                    {s.courierId || s.status === 'Assigned' ? 'Reassign' : 'Assign'}
                   </button>
                 )}
 
@@ -230,20 +234,30 @@ const AdminDashboard = () => {
       </div>
 
       {/* Modals */}
-      <AssignCourierModal
-        isOpen={assignModalOpen}
-        onClose={() => setAssignModalOpen(false)}
-        shipment={selectedShipment}
-        onSuccess={handleShipmentUpdated}
-      />
+      {selectedShipment && (
+        <>
+          <AssignCourierModal
+            isOpen={assignModalOpen}
+            onClose={() => {
+              setAssignModalOpen(false);
+              setSelectedShipment(null);
+            }}
+            shipment={selectedShipment}
+            onSuccess={handleShipmentUpdated}
+          />
 
-      <UpdateStatusModal
-        isOpen={statusModalOpen}
-        onClose={() => setStatusModalOpen(false)}
-        shipment={selectedShipment}
-        onSuccess={handleShipmentUpdated}
-        role="admin"
-      />
+          <UpdateStatusModal
+            isOpen={statusModalOpen}
+            onClose={() => {
+              setStatusModalOpen(false);
+              setSelectedShipment(null);
+            }}
+            shipment={selectedShipment}
+            onSuccess={handleShipmentUpdated}
+            role="admin"
+          />
+        </>
+      )}
     </DashboardLayout>
   );
 };

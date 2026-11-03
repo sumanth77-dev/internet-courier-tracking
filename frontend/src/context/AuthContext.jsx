@@ -127,6 +127,30 @@ export const AuthProvider = ({ children }) => {
   };
 
   /**
+   * Directly update user state in context
+   * @param {Object} updatedUser
+   */
+  const updateUser = (updatedUser) => {
+    setUser((prev) => ({ ...prev, ...updatedUser }));
+  };
+
+  /**
+   * Refetch current authenticated user profile from backend
+   */
+  const refreshUser = async () => {
+    try {
+      const res = await api.get('/auth/me');
+      if (res.data?.success && res.data.data?.user) {
+        setUser(res.data.data.user);
+        return { success: true, user: res.data.data.user };
+      }
+    } catch (err) {
+      console.warn('Failed to refresh user profile:', err.message);
+    }
+    return { success: false };
+  };
+
+  /**
    * Logout user
    */
   const logout = () => {
@@ -144,6 +168,8 @@ export const AuthProvider = ({ children }) => {
         login,
         register,
         logout,
+        updateUser,
+        refreshUser,
         isAuthenticated: !!token && !!user,
       }}
     >

@@ -15,11 +15,11 @@ const Button = ({
     'inline-flex items-center justify-center font-medium rounded-lg transition duration-150 active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer';
 
   const variants = {
-    primary: 'bg-[#172033] hover:bg-[#0F172A] text-white shadow-xs',
-    accent: 'bg-[#D97706] hover:bg-[#B45309] text-white shadow-xs',
-    secondary: 'bg-white hover:bg-[#F4F6F8] text-[#172033] border border-[#D9DEE5] shadow-xs',
-    danger: 'bg-[#B91C1C] hover:bg-[#991B1B] text-white shadow-xs',
-    ghost: 'text-[#667085] hover:text-[#172033] hover:bg-[#172033]/5',
+    primary: 'bg-[#17243A] hover:bg-[#24364B] text-white shadow-xs',
+    accent: 'bg-[#F59E0B] hover:bg-[#D97706] text-white shadow-xs',
+    secondary: 'bg-white hover:bg-[#F5F7FA] text-[#17243A] border border-[#E1E7EF] shadow-xs',
+    danger: 'bg-[#C0392B] hover:bg-[#991B1B] text-white shadow-xs',
+    ghost: 'text-[#65748B] hover:text-[#17243A] hover:bg-[#F5F7FA]',
   };
 
   const sizes = {

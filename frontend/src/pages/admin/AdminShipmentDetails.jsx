@@ -190,6 +190,7 @@ const AdminShipmentDetails = () => {
 
   const handleShipmentUpdated = (updated) => {
     setShipment(updated);
+    fetchShipmentDetails(false);
   };
 
   const formatDate = (dateStr) => {
@@ -275,7 +276,11 @@ const AdminShipmentDetails = () => {
             {['Pending', 'Assigned'].includes(shipment.status) && (
               <button
                 onClick={() => setAssignModalOpen(true)}
-                className="px-3 py-1.5 rounded-lg bg-[#172033] hover:bg-[#0F172A] text-white text-xs font-semibold shadow-xs transition cursor-pointer"
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold shadow-xs transition cursor-pointer ${
+                  courier
+                    ? 'text-[#172033] bg-[#E1E7EF] hover:bg-[#D0D7E2] border border-[#CBD5E1]'
+                    : 'text-white bg-[#172033] hover:bg-[#0F172A]'
+                }`}
               >
                 {courier ? 'Reassign Courier' : 'Assign Courier'}
               </button>
@@ -481,20 +486,24 @@ const AdminShipmentDetails = () => {
       </div>
 
       {/* Modals */}
-      <AssignCourierModal
-        isOpen={assignModalOpen}
-        onClose={() => setAssignModalOpen(false)}
-        shipment={shipment}
-        onSuccess={handleShipmentUpdated}
-      />
+      {shipment && (
+        <>
+          <AssignCourierModal
+            isOpen={assignModalOpen}
+            onClose={() => setAssignModalOpen(false)}
+            shipment={shipment}
+            onSuccess={handleShipmentUpdated}
+          />
 
-      <UpdateStatusModal
-        isOpen={statusModalOpen}
-        onClose={() => setStatusModalOpen(false)}
-        shipment={shipment}
-        onSuccess={handleShipmentUpdated}
-        role="admin"
-      />
+          <UpdateStatusModal
+            isOpen={statusModalOpen}
+            onClose={() => setStatusModalOpen(false)}
+            shipment={shipment}
+            onSuccess={handleShipmentUpdated}
+            role="admin"
+          />
+        </>
+      )}
     </DashboardLayout>
   );
 };

@@ -207,9 +207,176 @@ const getMe = async (req, res) => {
   }
 };
 
+/**
+ * @desc    Update authenticated user profile (name, email, phone)
+ * @route   PATCH /api/auth/profile
+ * @access  Private
+ */
+const updateProfile = async (req, res) => {
+  try {
+    const { name, email, phone } = req.body;
+    const userId = req.user.userId;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+      });
+    }
+
+    // Role, permissions and ID cannot be changed by profile update
+    if (req.body.role && req.body.role !== user.role) {
+      return res.status(403).json({
+        success: false,
+        message: 'Forbidden: Changing account role or privileges is not permitted',
+      });
+    }
+
+    // Validate and update name
+    if (name !== undefined) {
+      const trimmedName = name.trim();
+      if (!trimmedName || trimmedName.length < 2) {
+        return res.status(400).json({
+          success: false,
+          message: 'Full name must be at least 2 characters long',
+        });
+      }
+      user.name = trimmedName;
+    }
+
+    // Validate and update email
+    if (email !== undefined) {
+      const normalizedEmail = email.trim().toLowerCase();
+      const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+      if (!emailRegex.test(normalizedEmail)) {
+        return res.status(400).json({
+          success: false,
+          message: 'Please provide a valid email address',
+        });
+      }
+
+      // Check if email already taken by another user
+      if (normalizedEmail !== user.email) {
+        const existingUser = await User.findOne({
+          email: normalizedEmail,
+          _id: { $ne: userId },
+        });
+
+        if (existingUser) {
+          return res.status(409).json({
+            success: false,
+            message: 'An account with this email address already exists',
+          });
+        }
+        user.email = normalizedEmail;
+      }
+    }
+
+    // Validate and update phone
+    if (phone !== undefined) {
+      const trimmedPhone = phone.trim();
+      const phoneRegex = /^[\d\s+\-()]{7,20}$/;
+      if (!phoneRegex.test(trimmedPhone)) {
+        return res.status(400).json({
+          success: false,
+          message: 'Please provide a valid contact phone number (at least 7 digits)',
+        });
+      }
+      user.phone = trimmedPhone;
+    }
+
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      message: 'Profile updated successfully',
+      data: {
+        user: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          phone: user.phone,
+          role: user.role,
+          createdAt: user.createdAt,
+          updatedAt: user.updatedAt,
+        },
+      },
+    });
+  } catch (error) {
+    console.error('Update Profile Error:', error.message);
+    return res.status(500).json({
+      success: false,
+      message: 'Internal server error while updating profile',
+    });
+  }
+};
+
+/**
+ * @desc    Change password for authenticated user
+ * @route   PATCH /api/auth/change-password
+ * @access  Private
+ */
+const changePassword = async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    const userId = req.user.userId;
+
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({
+        success: false,
+        message: 'Both current password and new password are required',
+      });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({
+        success: false,
+        message: 'New password must be at least 6 characters long',
+      });
+    }
+
+    // Fetch user with password field
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+      });
+    }
+
+    // Verify current password
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      return res.status(400).json({
+        success: false,
+        message: 'Current password is incorrect',
+      });
+    }
+
+    // Hash and store new password
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(newPassword, salt);
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      message: 'Password changed successfully',
+    });
+  } catch (error) {
+    console.error('Change Password Error:', error.message);
+    return res.status(500).json({
+      success: false,
+      message: 'Internal server error while changing password',
+    });
+  }
+};
+
 module.exports = {
   register,
   login,
   getMe,
+  updateProfile,
+  changePassword,
 };
 

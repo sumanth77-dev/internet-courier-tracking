@@ -7,22 +7,19 @@ const jwt = require('jsonwebtoken');
 const authenticate = (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
+    let token = null;
 
-    // 1. Check if Authorization header is present and starts with 'Bearer '
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({
-        success: false,
-        message: 'Access denied. No authentication token provided.',
-      });
+    // 1. Check Authorization header or query parameter
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      token = authHeader.split(' ')[1];
+    } else if (req.query && req.query.token) {
+      token = req.query.token;
     }
-
-    // 2. Extract token
-    const token = authHeader.split(' ')[1];
 
     if (!token) {
       return res.status(401).json({
         success: false,
-        message: 'Access denied. Malformed authentication token.',
+        message: 'Access denied. No authentication token provided.',
       });
     }
 

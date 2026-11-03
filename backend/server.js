@@ -27,10 +27,20 @@ app.set("io", io);
 
 const path = require("path");
 
+const { authenticate } = require("./middleware/authMiddleware");
+const { getDeliveryProofPhoto } = require("./controllers/shipmentController");
+
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Protected delivery proof photo access (authorizes customer owner, assigned courier, or admin)
+app.get("/uploads/delivery-proofs/:filename", authenticate, getDeliveryProofPhoto);
+app.get("/api/uploads/delivery-proofs/:filename", authenticate, getDeliveryProofPhoto);
+
+// Static file fallback for general uploads
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/api/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Routes
 app.use("/api/auth", authRoutes);

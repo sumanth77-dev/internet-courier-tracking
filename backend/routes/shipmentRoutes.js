@@ -18,6 +18,7 @@ const {
   getDeliveryOtpStatus,
   submitProofOfDelivery,
   getShipmentProofOfDelivery,
+  getDeliveryProofPhoto,
 } = require('../controllers/shipmentController');
 const { authenticate, authorizeRoles } = require('../middleware/authMiddleware');
 const { handleProofPhotoUpload } = require('../middleware/uploadMiddleware');
@@ -95,6 +96,10 @@ router.get('/:trackingId/latest-location', authenticate, getLatestShipmentLocati
 
 // Authenticated users: Get Proof of Delivery for a delivered shipment
 router.get('/:id/proof-of-delivery', authenticate, getShipmentProofOfDelivery);
+
+// Authenticated users: Get Proof of Delivery Photo (by shipment/tracking ID or filename)
+router.get('/:id/proof-photo', authenticate, getDeliveryProofPhoto);
+router.get('/proof-photo/:filename', authenticate, getDeliveryProofPhoto);
 
 // Authenticated users: Track / view shipment by tracking ID or Mongo ID
 router.get('/:trackingId', authenticate, getShipmentByTrackingId);
