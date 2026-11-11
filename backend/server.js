@@ -50,7 +50,7 @@ app.use("/api/shipments", shipmentRoutes);
 app.get("/api/health", (req, res) => {
     res.status(200).json({
         success: true,
-        message: "Courier Tracking API is running",
+        message: "SkyRoute Real-Time Courier Tracking API is running",
     });
 });
 
@@ -64,7 +64,7 @@ const startServer = async () => {
     try {
         await connectDB();
 
-        httpServer.listen(PORT, () => {
+        httpServer.listen(PORT, "0.0.0.0",() => {
             console.log(`Server running on port ${PORT}`);
         });
     } catch (error) {

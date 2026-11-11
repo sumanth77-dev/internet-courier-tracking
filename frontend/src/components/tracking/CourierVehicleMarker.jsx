@@ -9,7 +9,6 @@ import { Truck, Navigation, Compass } from 'lucide-react';
  * preserving the exact geographic anchor point of the outer container.
  */
 const createVehicleDivIcon = (bearing = 0, isMoving = false, isLive = true) => {
-  // Normalize bearing in degrees
   const roundedBearing = Math.round(bearing);
 
   return L.divIcon({
@@ -19,7 +18,7 @@ const createVehicleDivIcon = (bearing = 0, isMoving = false, isLive = true) => {
         <!-- Live Ripple Pulse Ring -->
         ${
           isLive
-            ? `<div style="position: absolute; width: 48px; height: 48px; border-radius: 50%; background-color: rgba(217, 119, 6, 0.25); animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;"></div>`
+            ? `<div style="position: absolute; width: 48px; height: 48px; border-radius: 50%; background-color: rgba(24, 166, 160, 0.25); animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;"></div>`
             : ''
         }
         
@@ -29,9 +28,9 @@ const createVehicleDivIcon = (bearing = 0, isMoving = false, isLive = true) => {
           width: 36px;
           height: 36px;
           border-radius: 50%;
-          background: #172033;
-          border: 2.5px solid #D97706;
-          box-shadow: 0 4px 12px rgba(23, 32, 51, 0.35);
+          background: #142B45;
+          border: 2.5px solid #18A6A0;
+          box-shadow: 0 4px 12px rgba(20, 43, 69, 0.35);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -47,7 +46,7 @@ const createVehicleDivIcon = (bearing = 0, isMoving = false, isLive = true) => {
             height: 0;
             border-left: 4px solid transparent;
             border-right: 4px solid transparent;
-            border-bottom: 6px solid #D97706;
+            border-bottom: 6px solid #18A6A0;
           "></div>
 
           <!-- Clean Delivery Truck SVG Icon -->
@@ -88,19 +87,19 @@ export const CourierVehicleMarker = ({
     <Marker position={position} icon={icon} zIndexOffset={1000}>
       <Popup>
         <div className="p-1 text-xs">
-          <div className="font-bold text-[#172033] flex items-center gap-1.5 mb-1.5 border-b border-[#D9DEE5]/60 pb-1">
-            <Truck className="w-3.5 h-3.5 text-[#D97706]" />
+          <div className="font-bold text-[#182433] flex items-center gap-1.5 mb-1.5 border-b border-[#E2E8F0] pb-1">
+            <Truck className="w-3.5 h-3.5 text-[#18A6A0]" />
             <span>{courierName ? `${courierName} (Courier)` : 'Courier Live Delivery'}</span>
           </div>
-          <div className="text-[#667085] space-y-1 text-[11px]">
+          <div className="text-[#718096] space-y-1 text-[11px]">
             {trackingId && (
               <p>
-                Tracking ID: <strong className="text-[#172033] font-mono">{trackingId}</strong>
+                Tracking ID: <strong className="text-[#142B45] font-mono break-all">{trackingId}</strong>
               </p>
             )}
             <p>
-              Heading: <strong className="text-[#172033]">{Math.round(bearing)}°</strong>
-              <span className="text-[#667085] text-[10px] ml-1">
+              Heading: <strong className="text-[#182433]">{Math.round(bearing)}°</strong>
+              <span className="text-[#718096] text-[10px] ml-1">
                 ({isMoving ? 'Moving' : 'Stationary'})
               </span>
             </p>
@@ -109,11 +108,11 @@ export const CourierVehicleMarker = ({
             </p>
             {accuracy !== null && accuracy !== undefined && (
               <p>
-                GPS Accuracy: <strong className="text-[#172033]">±{Math.round(accuracy)} m</strong>
+                GPS Accuracy: <strong className="text-[#182433]">±{Math.round(accuracy)} m</strong>
               </p>
             )}
             <p className="pt-0.5">
-              Status: <span className="text-emerald-700 font-semibold">{isLive ? 'Live Tracking Active' : 'Last Known Point'}</span>
+              Status: <span className="text-[#16A36A] font-semibold">{isLive ? 'Live Tracking Active' : 'Last Known Point'}</span>
             </p>
           </div>
         </div>

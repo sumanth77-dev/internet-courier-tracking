@@ -245,33 +245,33 @@ const ShipmentDetails = () => {
   return (
     <DashboardLayout title={`Shipment ${shipment.trackingId}`}>
       <div className="space-y-5 max-w-5xl mx-auto">
-        {/* Navigation Breadcrumb & Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#D9DEE5]">
-          <div className="flex items-center gap-3">
+        {/* Deep Ocean Header Card */}
+        <div className="bg-[#0B1F33] text-white rounded-[22px] border border-[#176B87]/40 p-5 sm:p-6 shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5">
             <Link
               to="/customer/shipments"
-              className="p-1.5 rounded-lg border border-[#D9DEE5] text-[#667085] hover:text-[#172033] hover:bg-white transition"
+              className="p-2.5 rounded-xl border border-[#176B87]/60 bg-[#123B5D] text-white hover:bg-[#176B87] transition shadow-2xs"
               aria-label="Back to shipments"
             >
               <ArrowLeft className="w-4 h-4" />
             </Link>
             <div>
-              <div className="flex items-center gap-2">
-                <span className="font-mono text-base sm:text-lg font-bold text-[#172033]">
+              <div className="flex items-center gap-2.5 flex-wrap">
+                <span className="font-mono text-base sm:text-lg font-black text-[#00A6A6] break-tracking-id">
                   {shipment.trackingId}
                 </span>
                 <StatusBadge status={shipment.status} size="lg" />
               </div>
-              <p className="text-xs text-[#667085] mt-0.5">
-                Created: {formatDate(shipment.createdAt)}
+              <p className="text-xs text-[#DCE5EC] mt-0.5">
+                Booked: {formatDate(shipment.createdAt)}
               </p>
             </div>
           </div>
         </div>
 
         {/* Shipment Progress Timeline Card */}
-        <div className="bg-white rounded-xl border border-[#D9DEE5] p-5 sm:p-6 shadow-xs">
-          <h2 className="text-xs font-bold text-[#172033] uppercase tracking-wider mb-3">
+        <div className="bg-white rounded-2xl border border-[#DCE5EF] p-5 sm:p-6 shadow-2xs">
+          <h2 className="text-xs font-bold text-[#142B45] uppercase tracking-wider mb-4">
             Delivery Lifecycle Progress
           </h2>
           <ShipmentTimeline
@@ -306,106 +306,100 @@ const ShipmentDetails = () => {
             height="480px"
           />
         ) : isPending ? (
-          <div className="bg-white rounded-xl border border-[#D9DEE5] p-6 shadow-xs text-center">
-            <div className="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center mx-auto mb-2">
-              <Clock className="w-5 h-5 text-[#D97706]" />
+          <div className="bg-[#FFF4E8] rounded-2xl border border-[#FCE3C8] p-8 shadow-2xs text-center space-y-2">
+            <div className="w-12 h-12 rounded-xl bg-[#D99024] text-white flex items-center justify-center mx-auto mb-2 shadow-2xs">
+              <Clock className="w-6 h-6 text-white" />
             </div>
-            <h3 className="text-sm font-bold text-[#172033] mb-1">
+            <h3 className="text-base font-bold text-[#182433]">
               Awaiting Courier Assignment
             </h3>
-            <p className="text-xs text-[#667085] max-w-md mx-auto">
-              Live tracking will become available once the courier begins the delivery.
+            <p className="text-xs text-[#7A531A] max-w-md mx-auto leading-relaxed">
+              Live GPS tracking and estimated arrival times will activate once the dispatch team assigns a courier and pickup begins.
             </p>
           </div>
         ) : isDelivered ? null : isCancelled ? (
-          <div className="bg-white rounded-xl border border-[#D9DEE5] p-6 shadow-xs text-center">
-            <div className="w-10 h-10 rounded-lg bg-red-50 text-red-600 flex items-center justify-center mx-auto mb-2">
-              <Ban className="w-5 h-5 text-red-600" />
+          <div className="bg-[#FDF2F2] rounded-2xl border border-[#F8D2D2] p-8 shadow-2xs text-center space-y-2">
+            <div className="w-12 h-12 rounded-xl bg-[#D94B4B] text-white flex items-center justify-center mx-auto mb-2 shadow-2xs">
+              <Ban className="w-6 h-6 text-white" />
             </div>
-            <h3 className="text-sm font-bold text-[#172033] mb-1">
+            <h3 className="text-base font-bold text-[#8B1E1E]">
               Shipment Cancelled
             </h3>
-            <p className="text-xs text-[#667085] max-w-md mx-auto">
-              Tracking is unavailable for cancelled shipments.
+            <p className="text-xs text-[#7A3E3E] max-w-md mx-auto">
+              Live tracking is unavailable for cancelled shipments.
             </p>
           </div>
         ) : null}
 
         {/* Two-Column Details Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
           {/* Pickup and Delivery Addresses */}
-          <div className="bg-white rounded-xl border border-[#D9DEE5] p-5 shadow-xs space-y-4">
-            <div className="flex items-center gap-2 pb-2 border-b border-[#D9DEE5]/60">
-              <MapPin className="w-4 h-4 text-[#172033]" />
-              <h3 className="text-xs font-bold text-[#172033] uppercase tracking-wider">
+          <div className="bg-white rounded-2xl border border-[#DCE5EF] p-5 sm:p-6 shadow-2xs space-y-4">
+            <div className="flex items-center gap-2 pb-3 border-b border-[#DCE5EF]">
+              <MapPin className="w-4 h-4 text-[#18A6A0]" />
+              <h3 className="text-xs font-bold text-[#142B45] uppercase tracking-wider">
                 Route Addresses
               </h3>
             </div>
 
             <div className="space-y-3 text-xs">
-              <div className="p-3 rounded-lg bg-[#F4F6F8] border border-[#D9DEE5]">
-                <span className="font-semibold text-[#172033] block mb-1">
-                  Pickup Address (Origin)
+              <div className="p-3.5 rounded-xl bg-[#EAF2FA] border border-[#CFE1F4]">
+                <span className="font-bold text-[#245B78] block mb-1">
+                  Pickup Location (Origin)
                 </span>
-                <p className="text-[#263449]">{shipment.pickupAddress?.addressLine}</p>
-                <p className="text-[#667085] mt-0.5">
+                <p className="text-[#182433]">{shipment.pickupAddress?.addressLine}</p>
+                <p className="text-[#64748B] mt-0.5">
                   {shipment.pickupAddress?.city}, {shipment.pickupAddress?.state} - {shipment.pickupAddress?.postalCode}
-                </p>
-                <p className="text-[11px] text-[#667085] font-mono mt-1">
-                  GPS: {shipment.pickupAddress?.latitude}, {shipment.pickupAddress?.longitude}
                 </p>
               </div>
 
-              <div className="p-3 rounded-lg bg-[#F4F6F8] border border-[#D9DEE5]">
-                <span className="font-semibold text-[#D97706] block mb-1">
-                  Delivery Address (Destination)
+              <div className="p-3.5 rounded-xl bg-[#EAF5F8] border border-[#CFEAEF]">
+                <span className="font-bold text-[#126965] block mb-1">
+                  Delivery Destination
                 </span>
-                <p className="text-[#263449]">{shipment.deliveryAddress?.addressLine}</p>
-                <p className="text-[#667085] mt-0.5">
+                <p className="text-[#182433]">{shipment.deliveryAddress?.addressLine}</p>
+                <p className="text-[#64748B] mt-0.5">
                   {shipment.deliveryAddress?.city}, {shipment.deliveryAddress?.state} - {shipment.deliveryAddress?.postalCode}
-                </p>
-                <p className="text-[11px] text-[#667085] font-mono mt-1">
-                  GPS: {shipment.deliveryAddress?.latitude}, {shipment.deliveryAddress?.longitude}
                 </p>
               </div>
             </div>
           </div>
 
           {/* Package Details & Courier Info */}
-          <div className="space-y-4">
+          <div className="space-y-4 sm:space-y-5">
             {/* Package Spec Card */}
-            <div className="bg-white rounded-xl border border-[#D9DEE5] p-5 shadow-xs">
-              <div className="flex items-center gap-2 pb-2 border-b border-[#D9DEE5]/60 mb-3">
-                <Box className="w-4 h-4 text-[#172033]" />
-                <h3 className="text-xs font-bold text-[#172033] uppercase tracking-wider">
+            <div className="bg-[#F1EFFA]/60 rounded-2xl border border-[#DFDAF4] p-5 sm:p-6 shadow-2xs">
+              <div className="flex items-center gap-2 pb-3 border-b border-[#DFDAF4] mb-3.5">
+                <Box className="w-4 h-4 text-[#52438F]" />
+                <h3 className="text-xs font-bold text-[#52438F] uppercase tracking-wider">
                   Package Details
                 </h3>
               </div>
 
-              <div className="space-y-2 text-xs">
-                <div className="flex justify-between py-1 border-b border-[#D9DEE5]/60">
-                  <span className="text-[#667085]">Description:</span>
-                  <span className="font-semibold text-[#172033]">
+              <div className="space-y-2.5 text-xs">
+                <div className="flex justify-between py-1 border-b border-[#DFDAF4]/60">
+                  <span className="text-[#64748B]">Description:</span>
+                  <span className="font-semibold text-[#142B45]">
                     {shipment.packageDetails?.description || 'Standard Package'}
                   </span>
                 </div>
-                <div className="flex justify-between py-1 border-b border-[#D9DEE5]/60">
-                  <span className="text-[#667085]">Declared Weight:</span>
-                  <span className="font-semibold text-[#172033]">
+                <div className="flex justify-between py-1 border-b border-[#DFDAF4]/60">
+                  <span className="text-[#64748B]">Declared Weight:</span>
+                  <span className="font-semibold text-[#142B45]">
                     {shipment.packageDetails?.weight} kg
                   </span>
                 </div>
                 {roadRoute && (
-                  <div className="flex justify-between py-1 border-b border-[#D9DEE5]/60">
-                    <span className="text-[#667085]">Driving Route:</span>
-                    <span className="font-semibold text-[#172033]">
+                  <div className="flex justify-between py-1 border-b border-[#DFDAF4]/60">
+                    <span className="text-[#64748B]">Estimated Route:</span>
+                    <span className="font-semibold text-[#142B45]">
                       {roadRoute.distanceKm} km (~{roadRoute.durationMinutes} min)
                     </span>
                   </div>
                 )}
                 <div className="flex justify-between py-1">
-                  <span className="text-[#667085]">Last Updated:</span>
-                  <span className="font-semibold text-[#172033]">
+                  <span className="text-[#64748B]">Last Update:</span>
+                  <span className="font-semibold text-[#142B45]">
                     {formatDate(shipment.updatedAt)}
                   </span>
                 </div>
@@ -413,35 +407,35 @@ const ShipmentDetails = () => {
             </div>
 
             {/* Assigned Courier Card */}
-            <div className="bg-white rounded-xl border border-[#D9DEE5] p-5 shadow-xs">
-              <div className="flex items-center gap-2 pb-2 border-b border-[#D9DEE5]/60 mb-3">
-                <User className="w-4 h-4 text-[#172033]" />
-                <h3 className="text-xs font-bold text-[#172033] uppercase tracking-wider">
+            <div className="bg-white rounded-2xl border border-[#DCE5EF] p-5 sm:p-6 shadow-2xs">
+              <div className="flex items-center gap-2 pb-3 border-b border-[#DCE5EF] mb-3.5">
+                <User className="w-4 h-4 text-[#18A6A0]" />
+                <h3 className="text-xs font-bold text-[#142B45] uppercase tracking-wider">
                   Assigned Courier
                 </h3>
               </div>
 
               {courier ? (
-                <div className="space-y-2 text-xs">
-                  <div className="flex items-center gap-2 font-semibold text-[#172033]">
+                <div className="space-y-2.5 text-xs">
+                  <div className="flex items-center gap-2 font-bold text-[#142B45]">
                     <span>{courier.name}</span>
                   </div>
                   {courier.phone && (
-                    <div className="flex items-center gap-2 text-[#667085]">
-                      <Phone className="w-3.5 h-3.5 text-[#172033]" />
+                    <div className="flex items-center gap-2 text-[#64748B]">
+                      <Phone className="w-3.5 h-3.5 text-[#142B45]" />
                       <span>{courier.phone}</span>
                     </div>
                   )}
                   {courier.email && (
-                    <div className="flex items-center gap-2 text-[#667085]">
-                      <Mail className="w-3.5 h-3.5 text-[#172033]" />
+                    <div className="flex items-center gap-2 text-[#64748B]">
+                      <Mail className="w-3.5 h-3.5 text-[#142B45]" />
                       <span>{courier.email}</span>
                     </div>
                   )}
                 </div>
               ) : (
-                <p className="text-xs text-[#667085] italic">
-                  A courier has not been assigned to this delivery yet. The dispatch center will assign a driver soon.
+                <p className="text-xs text-[#64748B] italic leading-relaxed">
+                  A courier has not been assigned to this delivery yet. The SkyRoute dispatch team will assign an available agent shortly.
                 </p>
               )}
             </div>

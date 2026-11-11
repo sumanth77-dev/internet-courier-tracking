@@ -1,7 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import StatusBadge from '../common/StatusBadge';
-import { ChevronRight, MapPin, Calendar, User as UserIcon } from 'lucide-react';
+import {
+  ChevronRight,
+  MapPin,
+  Calendar,
+  User as UserIcon,
+  Truck,
+  ArrowRight,
+  Eye,
+  Navigation,
+} from 'lucide-react';
 
 const ShipmentTable = ({
   shipments = [],
@@ -28,76 +37,97 @@ const ShipmentTable = ({
   };
 
   return (
-    <div className="bg-white rounded-xl border border-[#D9DEE5] overflow-hidden shadow-xs">
-      {/* Desktop Table View */}
-      <div className="hidden md:block overflow-x-auto">
-        <table className="w-full text-left text-xs sm:text-sm text-[#172033]">
-          <thead className="bg-[#F4F6F8] border-b border-[#D9DEE5] text-[11px] font-bold text-[#667085] uppercase tracking-wider">
+    <div className="bg-white rounded-2xl border border-[#D5DEE7] overflow-hidden shadow-2xs">
+      {/* Desktop / Laptop Table View */}
+      <div className="hidden lg:block overflow-x-auto">
+        <table className="w-full min-w-[1050px] text-left text-xs sm:text-sm text-[#142B45] border-collapse">
+          <thead className="bg-[#E8EEF4] border-b border-[#D5DEE7] text-[11px] font-bold text-[#123B5D] uppercase tracking-wider select-none">
             <tr>
-              <th className="px-5 py-3.5">Tracking ID</th>
-              <th className="px-5 py-3.5">Destination</th>
-              {showCustomer && <th className="px-5 py-3.5">Customer</th>}
-              {showCourier && <th className="px-5 py-3.5">Courier</th>}
-              <th className="px-5 py-3.5">Status</th>
-              <th className="px-5 py-3.5">Created</th>
-              <th className="px-5 py-3.5 text-right">Action</th>
+              <th className="px-5 py-3.5 min-w-[160px]">Tracking ID</th>
+              <th className="px-5 py-3.5 min-w-[190px]">Route</th>
+              {showCustomer && <th className="px-5 py-3.5 min-w-[140px]">Customer</th>}
+              {showCourier && <th className="px-5 py-3.5 min-w-[150px]">Courier</th>}
+              <th className="px-5 py-3.5 min-w-[130px]">Status</th>
+              <th className="px-5 py-3.5 min-w-[100px] whitespace-nowrap">Date</th>
+              <th className="px-5 py-3.5 min-w-[220px] text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#D9DEE5]/60 font-normal">
+          <tbody className="divide-y divide-[#D5DEE7] font-normal">
             {shipments.map((s) => {
               const trackingId = s.trackingId || s.id;
-              const destination = s.deliveryAddress
-                ? `${s.deliveryAddress.city}, ${s.deliveryAddress.state}`
-                : '—';
+              const origin = s.pickupAddress?.city || 'Origin';
+              const destination = s.deliveryAddress?.city || 'Destination';
               const customerName = s.customerId?.name || s.customer?.name || 'Customer';
               const courierName = s.courierId?.name || s.courier?.name || (s.courierId ? 'Assigned' : 'Unassigned');
 
               return (
-                <tr key={s._id || s.id} className="hover:bg-[#F4F6F8]/60 transition">
-                  <td className="px-5 py-3.5 font-mono font-bold text-[#172033]">
+                <tr key={s._id || s.id} className="hover:bg-[#F0F3F7] transition-colors duration-100 group">
+                  {/* Tracking ID */}
+                  <td className="px-5 py-3.5 min-w-[160px] whitespace-nowrap align-middle">
                     <Link
                       to={`${viewLinkPrefix}/${trackingId}`}
-                      className="hover:text-[#D97706] transition"
+                      className="font-mono font-bold text-[#142B45] hover:text-[#00A6A6] transition-colors inline-block"
+                      title={trackingId}
                     >
                       {trackingId}
                     </Link>
                   </td>
-                  <td className="px-5 py-3.5">
-                    <div className="flex items-center gap-1.5 text-[#263449]">
-                      <MapPin className="w-3.5 h-3.5 text-[#667085] shrink-0" />
-                      <span>{destination}</span>
+
+                  {/* Route */}
+                  <td className="px-5 py-3.5 min-w-[190px] whitespace-nowrap align-middle">
+                    <div className="flex items-center gap-1.5 text-xs font-medium text-[#142B45]">
+                      <span className="text-[#607487] max-w-[95px] truncate" title={origin}>{origin}</span>
+                      <ArrowRight className="w-3.5 h-3.5 text-[#00A6A6] shrink-0" />
+                      <span className="font-semibold text-[#142B45] max-w-[115px] truncate" title={destination}>{destination}</span>
                     </div>
                   </td>
+
+                  {/* Customer (Optional) */}
                   {showCustomer && (
-                    <td className="px-5 py-3.5 text-[#263449] font-medium">
-                      {customerName}
+                    <td className="px-5 py-3.5 min-w-[140px] whitespace-nowrap align-middle text-[#142B45] font-medium">
+                      <div className="flex items-center gap-1.5 max-w-[130px] truncate" title={customerName}>
+                        <UserIcon className="w-3.5 h-3.5 text-[#607487] shrink-0" />
+                        <span className="truncate">{customerName}</span>
+                      </div>
                     </td>
                   )}
+
+                  {/* Courier (Optional) */}
                   {showCourier && (
-                    <td className="px-5 py-3.5 text-[#263449]">
+                    <td className="px-5 py-3.5 min-w-[150px] whitespace-nowrap align-middle text-[#142B45]">
                       {s.courierId || s.courier ? (
-                        <span className="font-semibold text-[#172033]">{courierName}</span>
+                        <div className="flex items-center gap-1.5 max-w-[140px] truncate" title={courierName}>
+                          <Truck className="w-3.5 h-3.5 text-[#00A6A6] shrink-0" />
+                          <span className="font-semibold text-[#142B45] truncate">{courierName}</span>
+                        </div>
                       ) : (
-                        <span className="text-[#667085] italic">Unassigned</span>
+                        <span className="text-[#8A9BAA] text-xs italic">Unassigned</span>
                       )}
                     </td>
                   )}
-                  <td className="px-5 py-3.5">
+
+                  {/* Status Badge */}
+                  <td className="px-5 py-3.5 min-w-[130px] whitespace-nowrap align-middle">
                     <StatusBadge status={s.status} />
                   </td>
-                  <td className="px-5 py-3.5 text-[#667085] text-xs">
+
+                  {/* Date */}
+                  <td className="px-5 py-3.5 min-w-[100px] text-[#607487] text-xs whitespace-nowrap align-middle">
                     {formatDate(s.createdAt)}
                   </td>
-                  <td className="px-5 py-3.5 text-right">
+
+                  {/* Action Column */}
+                  <td className="px-5 py-3.5 min-w-[220px] text-right whitespace-nowrap align-middle">
                     {renderActions ? (
                       renderActions(s)
                     ) : (
                       <Link
                         to={`${viewLinkPrefix}/${trackingId}`}
-                        className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold text-[#172033] hover:text-[#D97706] bg-white border border-[#D9DEE5] hover:bg-[#F4F6F8] rounded-md transition shadow-xs"
+                        className="h-8 px-3 text-xs font-semibold text-[#142B45] hover:text-[#00A6A6] bg-white border border-[#D5DEE7] hover:bg-[#F0F3F7] rounded-[11px] transition duration-150 shadow-2xs inline-flex items-center justify-center gap-1.5 whitespace-nowrap"
                       >
+                        <Eye className="w-3.5 h-3.5 opacity-70" />
                         <span>View</span>
-                        <ChevronRight className="w-3.5 h-3.5" />
+                        <ChevronRight className="w-3.5 h-3.5 opacity-60" />
                       </Link>
                     )}
                   </td>
@@ -108,58 +138,83 @@ const ShipmentTable = ({
         </table>
       </div>
 
-      {/* Mobile Card View */}
-      <div className="md:hidden divide-y divide-[#D9DEE5]/60">
+      {/* Mobile & Tablet Card Layout (Optimized for <1024px) */}
+      <div className="lg:hidden divide-y divide-[#D5DEE7]">
         {shipments.map((s) => {
           const trackingId = s.trackingId || s.id;
-          const destination = s.deliveryAddress
-            ? `${s.deliveryAddress.city}, ${s.deliveryAddress.state}`
-            : '—';
+          const origin = s.pickupAddress ? `${s.pickupAddress.city || ''}, ${s.pickupAddress.state || ''}` : 'Origin';
+          const destination = s.deliveryAddress ? `${s.deliveryAddress.city || ''}, ${s.deliveryAddress.state || ''}` : 'Destination';
           const customerName = s.customerId?.name || s.customer?.name || 'Customer';
           const courierName = s.courierId?.name || s.courier?.name || (s.courierId ? 'Assigned' : 'Unassigned');
 
           return (
-            <div key={s._id || s.id} className="p-4 space-y-2.5">
-              <div className="flex items-center justify-between">
-                <span className="font-mono font-bold text-sm text-[#172033]">
+            <div key={s._id || s.id} className="p-4 sm:p-5 space-y-3.5 hover:bg-[#F0F3F7]/50 transition">
+              {/* Card Header: Tracking ID + Status */}
+              <div className="flex items-center justify-between gap-2">
+                <Link
+                  to={`${viewLinkPrefix}/${trackingId}`}
+                  className="font-mono font-bold text-sm text-[#142B45] hover:text-[#00A6A6] transition break-all"
+                >
                   {trackingId}
-                </span>
-                <StatusBadge status={s.status} />
+                </Link>
+                <StatusBadge status={s.status} size="sm" />
               </div>
 
-              <div className="text-xs text-[#667085] space-y-1">
-                <div className="flex items-center gap-1.5 text-[#263449]">
-                  <MapPin className="w-3.5 h-3.5 text-[#667085] shrink-0" />
-                  <span>{destination}</span>
-                </div>
-                {showCustomer && (
-                  <div className="flex items-center gap-1.5 text-[#263449]">
-                    <UserIcon className="w-3.5 h-3.5 text-[#667085] shrink-0" />
-                    <span>Customer: {customerName}</span>
+              {/* Route Summary */}
+              <div className="p-3 rounded-xl bg-[#F0F3F7] border border-[#D5DEE7] text-xs space-y-1.5">
+                <div className="flex items-start gap-2">
+                  <div className="w-2 h-2 rounded-full bg-[#607487] shrink-0 mt-1" />
+                  <div className="min-w-0">
+                    <span className="text-[10px] font-bold uppercase text-[#607487] block leading-none mb-0.5">Pickup</span>
+                    <span className="font-medium text-[#142B45] break-words">{origin}</span>
                   </div>
-                )}
+                </div>
+
+                <div className="ml-1 w-0.5 h-3 bg-[#B6C7D6]" />
+
+                <div className="flex items-start gap-2">
+                  <div className="w-2 h-2 rounded-full bg-[#00A6A6] shrink-0 mt-1" />
+                  <div className="min-w-0">
+                    <span className="text-[10px] font-bold uppercase text-[#00A6A6] block leading-none mb-0.5">Drop-off</span>
+                    <span className="font-semibold text-[#142B45] break-words">{destination}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Metadata Grid */}
+              <div className="grid grid-cols-2 gap-2 text-xs text-[#607487]">
+                <div className="flex items-center gap-1.5 truncate">
+                  <Calendar className="w-3.5 h-3.5 text-[#607487] shrink-0" />
+                  <span className="truncate">{formatDate(s.createdAt)}</span>
+                </div>
+
                 {showCourier && (
-                  <div className="flex items-center gap-1.5 text-[#263449]">
-                    <UserIcon className="w-3.5 h-3.5 text-[#667085] shrink-0" />
-                    <span>Courier: {courierName}</span>
+                  <div className="flex items-center gap-1.5 truncate justify-end">
+                    <Truck className="w-3.5 h-3.5 text-[#00A6A6] shrink-0" />
+                    <span className="font-semibold text-[#142B45] truncate">{courierName}</span>
                   </div>
                 )}
-                <div className="flex items-center gap-1.5 text-[#667085]">
-                  <Calendar className="w-3.5 h-3.5 shrink-0" />
-                  <span>{formatDate(s.createdAt)}</span>
-                </div>
+
+                {showCustomer && (
+                  <div className="flex items-center gap-1.5 truncate justify-end">
+                    <UserIcon className="w-3.5 h-3.5 text-[#607487] shrink-0" />
+                    <span className="truncate">{customerName}</span>
+                  </div>
+                )}
               </div>
 
-              <div className="pt-2 flex items-center justify-end">
+              {/* Actions Container */}
+              <div className="pt-3 border-t border-[#D5DEE7] flex items-center justify-end gap-2 flex-wrap">
                 {renderActions ? (
                   renderActions(s)
                 ) : (
                   <Link
                     to={`${viewLinkPrefix}/${trackingId}`}
-                    className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] rounded-md shadow-xs"
+                    className="h-8 px-4 text-xs font-bold text-white bg-[#0B1F33] hover:bg-[#123B5D] rounded-[11px] transition duration-150 shadow-xs inline-flex items-center justify-center gap-1.5 w-full sm:w-auto"
                   >
-                    <span>View Details</span>
-                    <ChevronRight className="w-3.5 h-3.5" />
+                    <Eye className="w-3.5 h-3.5" />
+                    <span>View Shipment Details</span>
+                    <ChevronRight className="w-3.5 h-3.5 opacity-70" />
                   </Link>
                 )}
               </div>

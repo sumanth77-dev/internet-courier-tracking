@@ -24,6 +24,7 @@ import {
   Calendar,
   Activity,
   ChevronRight,
+  ShieldCheck,
 } from 'lucide-react';
 
 const CourierDashboard = () => {
@@ -94,7 +95,6 @@ const CourierDashboard = () => {
   }, [refreshAll]);
 
   const handleShipmentUpdated = (updated) => {
-    // If completed or cancelled, move to history
     if (['Delivered', 'Cancelled'].includes(updated.status)) {
       setActiveShipments((prev) => prev.filter((s) => s._id !== updated._id));
       setHistoryShipments((prev) => [updated, ...prev.filter((s) => s._id !== updated._id)]);
@@ -129,356 +129,408 @@ const CourierDashboard = () => {
 
   return (
     <DashboardLayout title="Courier Dashboard">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-        <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-[#172033] tracking-tight flex items-center gap-2">
-            <span>Welcome back, {user?.name || 'Courier'}</span>
-            <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-medium">
-              On Duty
-            </span>
-          </h1>
-          <p className="text-xs sm:text-sm text-[#667085] mt-0.5">
-            Manage live active shipments and simulate routes with real road GPS tracking.
-          </p>
-        </div>
-
-        <div className="flex items-center gap-2 self-start sm:self-auto">
-          <button
-            onClick={refreshAll}
-            className="p-2 rounded-lg bg-white border border-[#D9DEE5] text-[#667085] hover:text-[#172033] hover:bg-[#F4F6F8] transition cursor-pointer shadow-xs"
-            title="Refresh Deliveries"
-            aria-label="Refresh Deliveries"
-          >
-            <RefreshCw className="w-4 h-4" />
-          </button>
-
-          <Link
-            to="/courier/simulator"
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white text-xs sm:text-sm font-semibold rounded-lg shadow-xs transition"
-          >
-            <Compass className="w-4 h-4" />
-            <span>GPS Simulator</span>
-          </Link>
-        </div>
-      </div>
-
-      {error && (
-        <div className="mb-6">
-          <ErrorMessage message={error} onRetry={refreshAll} />
-        </div>
-      )}
-
-      {/* 5 Summary Metrics: Assigned, Picked Up, In Transit, Out for Delivery, Delivered */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-7">
-        <StatsCard
-          title="Assigned"
-          value={loadingActive ? '...' : assignedCount}
-          icon={Package}
-          color="navy"
-          subtitle="Ready for pickup"
-        />
-        <StatsCard
-          title="Picked Up"
-          value={loadingActive ? '...' : pickedUpCount}
-          icon={Clock}
-          color="blue"
-          subtitle="Collected"
-        />
-        <StatsCard
-          title="In Transit"
-          value={loadingActive ? '...' : inTransitCount}
-          icon={Truck}
-          color="navy"
-          subtitle="On the road"
-        />
-        <StatsCard
-          title="Out for Delivery"
-          value={loadingActive ? '...' : outForDeliveryCount}
-          icon={Navigation}
-          color="amber"
-          subtitle="Final leg"
-        />
-        <StatsCard
-          title="Delivered"
-          value={loadingHistory ? '...' : deliveredCount}
-          icon={CheckCircle}
-          color="green"
-          subtitle="Delivered history"
-        />
-      </div>
-
-      {/* SECTION 1: ACTIVE DELIVERIES */}
-      <div className="mb-9 space-y-4">
-        <div className="flex items-center justify-between border-b border-[#D9DEE5] pb-2.5">
-          <div className="flex items-center gap-2">
-            <Activity className="w-5 h-5 text-[#172033]" />
-            <h2 className="text-base font-bold text-[#172033] uppercase tracking-wider">
-              Active Deliveries ({activeShipments.length})
-            </h2>
+      <div className="space-y-6">
+        {/* Deep Ocean Hero Banner */}
+        <div className="bg-[#0B1F33] text-white rounded-[22px] border border-[#176B87]/40 p-5 sm:p-6 shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-start sm:items-center gap-3.5">
+            <div className="w-11 h-11 rounded-xl bg-[#123B5D] text-white border border-[#176B87]/50 flex items-center justify-center shrink-0 shadow-xs">
+              <Truck className="w-5 h-5 text-[#00A6A6]" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2 flex-wrap">
+                <h1 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+                  Welcome back, {user?.name || 'Courier Driver'}
+                </h1>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#145C47] text-[#A7F3D0] border border-[#167A56]/60">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#34D399] animate-pulse"></span>
+                  Active On Duty
+                </span>
+              </div>
+              <p className="text-xs sm:text-sm text-[#DCE5EC] mt-0.5">
+                Manage your assigned delivery route, stream live GPS coordinates, and complete verification.
+              </p>
+            </div>
           </div>
-          <Link
-            to="/courier/shipments"
-            className="inline-flex items-center gap-1 text-xs font-semibold text-[#172033] hover:text-[#D97706] transition"
-          >
-            <span>Assigned Deliveries List</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
+
+          <div className="flex items-center gap-2.5 self-start sm:self-auto w-full sm:w-auto">
+            <button
+              onClick={refreshAll}
+              className="p-2.5 rounded-xl bg-[#123B5D] border border-[#176B87]/60 text-[#DCE5EC] hover:text-white hover:bg-[#176B87] transition cursor-pointer shadow-xs"
+              title="Refresh Deliveries"
+              aria-label="Refresh Deliveries"
+            >
+              <RefreshCw className="w-4 h-4" />
+            </button>
+
+            <Link
+              to="/courier/simulator"
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-[#00A6A6] hover:bg-[#008F95] text-white text-xs sm:text-sm font-bold rounded-[11px] shadow-sm transition"
+            >
+              <Compass className="w-4 h-4 text-white" />
+              <span>GPS Simulator</span>
+            </Link>
+          </div>
         </div>
 
-        {loadingActive ? (
-          <div className="bg-white rounded-xl border border-[#D9DEE5] p-10 shadow-xs">
-            <LoadingSpinner message="Loading active deliveries..." />
-          </div>
-        ) : activeShipments.length === 0 ? (
-          <EmptyState
-            icon={Truck}
-            title="No active deliveries assigned"
-            description="You currently have no in-progress deliveries. New assigned tasks will appear here."
-          />
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {activeShipments.map((shipment) => {
-              const demoState = getDemoState(shipment._id);
-              const hasDemo = Boolean(demoState);
-              const progress = demoState ? Math.min(100, Math.max(0, Math.round(demoState.progress || 0))) : 0;
-              const remainingKm = demoState?.distanceRemaining
-                ? Number(demoState.distanceRemaining).toFixed(1)
-                : null;
-              const isPaused = demoState?.state === 'paused';
-              const isRunning = demoState?.state === 'running';
-
-              return (
-                <div
-                  key={shipment._id}
-                  className="bg-white rounded-xl border border-[#D9DEE5] hover:border-[#172033]/40 p-5 shadow-xs transition duration-150 flex flex-col justify-between"
-                >
-                  <div className="space-y-3">
-                    {/* Card Header: Tracking ID & Status */}
-                    <div className="flex items-start justify-between gap-2">
-                      <div>
-                        <span className="text-[11px] font-semibold text-[#667085] uppercase tracking-wider block">
-                          Tracking ID
-                        </span>
-                        <Link
-                          to={`/courier/shipments/${shipment._id}`}
-                          className="font-mono font-bold text-sm text-[#172033] hover:text-[#D97706] transition"
-                        >
-                          {shipment.trackingId}
-                        </Link>
-                      </div>
-                      <StatusBadge status={shipment.status} size="sm" />
-                    </div>
-
-                    {/* Route: Origin -> Destination */}
-                    <div className="p-3 bg-[#F4F6F8] rounded-lg border border-[#D9DEE5]/60 text-xs space-y-1.5">
-                      <div className="flex items-start gap-1.5">
-                        <MapPin className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                        <div>
-                          <span className="text-[10px] text-[#667085] uppercase block font-semibold">
-                            Pickup
-                          </span>
-                          <span className="font-semibold text-[#172033]">
-                            {shipment.pickupAddress?.city || 'Origin'}, {shipment.pickupAddress?.state || ''}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="border-l-2 border-dashed border-[#D9DEE5] ml-1.5 pl-3 py-0.5"></div>
-                      <div className="flex items-start gap-1.5">
-                        <MapPin className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
-                        <div>
-                          <span className="text-[10px] text-[#667085] uppercase block font-semibold">
-                            Delivery
-                          </span>
-                          <span className="font-semibold text-[#172033]">
-                            {shipment.deliveryAddress?.city || 'Destination'}, {shipment.deliveryAddress?.state || ''}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Demo / Simulation State if present */}
-                    {hasDemo && (
-                      <div className="p-3 bg-amber-50/60 rounded-lg border border-amber-200 text-xs space-y-2">
-                        <div className="flex items-center justify-between">
-                          <span className="inline-flex items-center gap-1 font-bold text-amber-900 text-[11px] uppercase tracking-wide">
-                            <Compass className="w-3.5 h-3.5 text-amber-700" />
-                            DEMO MODE {isRunning ? '(Active)' : isPaused ? '(Paused)' : ''}
-                          </span>
-                          <span className="font-mono font-bold text-amber-800">{progress}% complete</span>
-                        </div>
-
-                        {/* Progress Bar */}
-                        <div className="w-full h-1.5 bg-amber-200/80 rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-amber-600 transition-all duration-300 rounded-full"
-                            style={{ width: `${progress}%` }}
-                          />
-                        </div>
-
-                        <div className="flex items-center justify-between text-[11px] text-amber-800">
-                          <span>{remainingKm ? `${remainingKm} km remaining` : 'On road route'}</span>
-                          <span className="text-[#667085]">
-                            {demoState.lastUpdatedAt
-                              ? new Date(demoState.lastUpdatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-                              : 'Saved'}
-                          </span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Actions */}
-                  <div className="pt-4 mt-3 border-t border-[#D9DEE5]/80 flex items-center justify-between gap-2">
-                    <Link
-                      to={`/courier/shipments/${shipment._id}`}
-                      className="px-3 py-1.5 text-xs font-semibold text-[#172033] hover:text-[#D97706] bg-[#F4F6F8] hover:bg-[#E5E7EB] border border-[#D9DEE5] rounded-lg transition shadow-xs"
-                    >
-                      Track
-                    </Link>
-
-                    <div className="flex items-center gap-1.5">
-                      <Link
-                        to={`/courier/simulator?shipmentId=${shipment._id}`}
-                        className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-white bg-amber-600 hover:bg-amber-700 rounded-lg transition shadow-xs"
-                      >
-                        <Play className="w-3 h-3 fill-current" />
-                        <span>{hasDemo && progress > 0 ? 'Resume Demo' : 'Demo Mode'}</span>
-                      </Link>
-
-                      <button
-                        onClick={() => {
-                          setSelectedShipment(shipment);
-                          setStatusModalOpen(true);
-                        }}
-                        className="px-2.5 py-1.5 text-xs font-semibold text-white bg-[#172033] hover:bg-[#0F172A] rounded-lg transition cursor-pointer shadow-xs"
-                        title="Update status directly"
-                      >
-                        Advance
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+        {error && (
+          <div>
+            <ErrorMessage message={error} onRetry={refreshAll} />
           </div>
         )}
-      </div>
 
-      {/* SECTION 2: DELIVERY HISTORY */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between border-b border-[#D9DEE5] pb-2.5">
-          <div className="flex items-center gap-2">
-            <CheckCircle className="w-5 h-5 text-emerald-600" />
-            <h2 className="text-base font-bold text-[#172033] uppercase tracking-wider">
-              Delivery History ({historyShipments.length})
-            </h2>
-          </div>
-          <span className="text-xs text-[#667085]">
-            Past completed and delivered shipments
-          </span>
+        {/* 5 Summary KPI Cards with Solid Dark Deep Ocean Colors */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
+          <StatsCard
+            title="Assigned"
+            value={loadingActive ? '...' : assignedCount}
+            icon={Package}
+            color="assigned"
+            subtitle="Ready for pickup"
+          />
+          <StatsCard
+            title="Picked Up"
+            value={loadingActive ? '...' : pickedUpCount}
+            icon={Clock}
+            color="total"
+            subtitle="Collected parcel"
+          />
+          <StatsCard
+            title="In Transit"
+            value={loadingActive ? '...' : inTransitCount}
+            icon={Truck}
+            color="inTransit"
+            subtitle="En route"
+          />
+          <StatsCard
+            title="Out for Delivery"
+            value={loadingActive ? '...' : outForDeliveryCount}
+            icon={Navigation}
+            color="pending"
+            subtitle="Final delivery leg"
+          />
+          <StatsCard
+            title="Delivered"
+            value={loadingHistory ? '...' : deliveredCount}
+            icon={CheckCircle}
+            color="delivered"
+            subtitle="Completed total"
+          />
         </div>
 
-        {loadingHistory ? (
-          <div className="bg-white rounded-xl border border-[#D9DEE5] p-10 shadow-xs">
-            <LoadingSpinner message="Loading delivery history..." />
+        {/* SECTION 1: ACTIVE DELIVERIES */}
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Activity className="w-5 h-5 text-[#18A6A0]" />
+              <div>
+                <h2 className="text-base sm:text-lg font-bold text-[#182433] tracking-tight">
+                  Active Route Deliveries ({activeShipments.length})
+                </h2>
+                <p className="text-xs text-[#718096]">Assigned shipments ready for collection and delivery</p>
+              </div>
+            </div>
+            <Link
+              to="/courier/shipments"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#18A6A0] hover:text-[#245B78] transition"
+            >
+              <span>Queue View</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
-        ) : historyShipments.length === 0 ? (
-          <EmptyState
-            icon={CheckCircle}
-            title="No delivery history yet"
-            description="Completed and delivered shipments will be preserved here indefinitely."
-          />
-        ) : (
-          <div className="bg-white rounded-xl border border-[#D9DEE5] overflow-hidden shadow-xs">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs border-collapse">
-                <thead>
-                  <tr className="bg-[#F4F6F8] text-[#172033] uppercase text-[11px] font-bold tracking-wider border-b border-[#D9DEE5]">
-                    <th className="py-3 px-4">Tracking ID</th>
-                    <th className="py-3 px-4">Route</th>
-                    <th className="py-3 px-4">Recipient</th>
-                    <th className="py-3 px-4">Delivered At</th>
-                    <th className="py-3 px-4">Status</th>
-                    <th className="py-3 px-4 text-right">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#D9DEE5] text-[#263449]">
-                  {historyShipments.map((s) => {
-                    const deliveredTime = s.deliveredAt || s.updatedAt;
-                    return (
-                      <tr key={s._id} className="hover:bg-[#F4F6F8]/60 transition">
-                        <td className="py-3.5 px-4 font-mono font-bold text-[#172033]">
+
+          {loadingActive ? (
+            <div className="bg-white rounded-2xl border border-[#E2E8F0] p-12 shadow-xs">
+              <LoadingSpinner message="Retrieving assigned deliveries..." />
+            </div>
+          ) : activeShipments.length === 0 ? (
+            <EmptyState
+              icon={Truck}
+              title="No active deliveries assigned"
+              description="You currently have no in-progress deliveries. Newly dispatched shipments will appear here."
+            />
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {activeShipments.map((shipment) => {
+                const demoState = getDemoState(shipment._id);
+                const hasDemo = Boolean(demoState);
+                const progress = demoState ? Math.min(100, Math.max(0, Math.round(demoState.progress || 0))) : 0;
+                const remainingKm = demoState?.distanceRemaining
+                  ? Number(demoState.distanceRemaining).toFixed(1)
+                  : null;
+                const isPaused = demoState?.state === 'paused';
+                const isRunning = demoState?.state === 'running';
+
+                return (
+                  <div
+                    key={shipment._id}
+                    className="bg-white rounded-2xl border border-[#DCE5EF] hover:border-[#18A6A0]/60 p-5 shadow-2xs transition duration-150 flex flex-col justify-between"
+                  >
+                    <div className="space-y-3.5">
+                      {/* Card Header: Tracking ID & Status */}
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0">
+                          <span className="text-[10px] font-semibold text-[#64748B] uppercase tracking-wider block">
+                            Tracking ID
+                          </span>
+                          <Link
+                            to={`/courier/shipments/${shipment._id}`}
+                            className="font-mono font-bold text-sm text-[#142B45] hover:text-[#18A6A0] transition break-all"
+                          >
+                            {shipment.trackingId}
+                          </Link>
+                        </div>
+                        <StatusBadge status={shipment.status} size="sm" />
+                      </div>
+
+                      {/* Route: Origin -> Destination */}
+                      <div className="p-3 bg-[#F0F4F8] rounded-xl border border-[#DCE5EF] text-xs space-y-2">
+                        <div className="flex items-start gap-2">
+                          <div className="w-2 h-2 rounded-full bg-[#142B45] mt-1 shrink-0"></div>
+                          <div>
+                            <span className="text-[10px] text-[#64748B] uppercase block font-semibold">
+                              Pickup (Origin)
+                            </span>
+                            <span className="font-semibold text-[#182433]">
+                              {shipment.pickupAddress?.city || 'Origin'}, {shipment.pickupAddress?.state || ''}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="border-l border-dashed border-[#CBD5E1] ml-1 pl-3 py-0.5"></div>
+
+                        <div className="flex items-start gap-2">
+                          <div className="w-2 h-2 rounded-full bg-[#18A6A0] mt-1 shrink-0"></div>
+                          <div>
+                            <span className="text-[10px] text-[#64748B] uppercase block font-semibold">
+                              Destination
+                            </span>
+                            <span className="font-semibold text-[#182433]">
+                              {shipment.deliveryAddress?.city || 'Destination'}, {shipment.deliveryAddress?.state || ''}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Demo / Simulation State if present */}
+                      {hasDemo && (
+                        <div className="p-3 bg-[#FFF4E8] rounded-xl border border-[#FCE3C8] text-xs space-y-2">
+                          <div className="flex items-center justify-between">
+                            <span className="inline-flex items-center gap-1 font-bold text-[#9A5D12] text-[11px] uppercase tracking-wide">
+                              <Compass className="w-3.5 h-3.5 text-[#D99024]" />
+                              DEMO {isRunning ? '(Broadcasting)' : isPaused ? '(Paused)' : ''}
+                            </span>
+                            <span className="font-mono font-bold text-[#9A5D12]">{progress}% complete</span>
+                          </div>
+
+                          {/* Progress Bar */}
+                          <div className="w-full h-1.5 bg-[#FCE3C8] rounded-full overflow-hidden">
+                            <div
+                              className="h-full bg-[#D99024] transition-all duration-300 rounded-full"
+                              style={{ width: `${progress}%` }}
+                            />
+                          </div>
+
+                          <div className="flex items-center justify-between text-[11px] text-[#7A531A]">
+                            <span>{remainingKm ? `${remainingKm} km remaining` : 'On road route'}</span>
+                            <span className="text-[#64748B]">
+                              {demoState.lastUpdatedAt
+                                ? new Date(demoState.lastUpdatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                                : 'Saved'}
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Actions */}
+                    <div className="pt-4 mt-4 border-t border-[#DCE5EF] flex items-center justify-between gap-2 flex-wrap">
+                      <Link
+                        to={`/courier/shipments/${shipment._id}`}
+                        className="px-3 py-1.5 text-xs font-semibold text-[#142B45] hover:text-[#18A6A0] bg-[#F0F4F8] hover:bg-[#EAF2FA] border border-[#DCE5EF] rounded-xl transition shadow-2xs"
+                      >
+                        Details
+                      </Link>
+
+                      <div className="flex items-center gap-1.5">
+                        <Link
+                          to={`/courier/simulator?shipmentId=${shipment._id}`}
+                          className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-[#126965] bg-[#EAF5F8] hover:bg-[#CFEAEF] border border-[#CFEAEF] rounded-xl transition shadow-2xs"
+                        >
+                          <Play className="w-3 h-3 fill-current text-[#18A6A0]" />
+                          <span>{hasDemo && progress > 0 ? 'Resume' : 'Simulate'}</span>
+                        </Link>
+
+                        <button
+                          onClick={() => {
+                            setSelectedShipment(shipment);
+                            setStatusModalOpen(true);
+                          }}
+                          className="px-3 py-1.5 text-xs font-semibold text-white bg-[#142B45] hover:bg-[#245B78] rounded-xl transition cursor-pointer shadow-xs"
+                          title="Update status directly"
+                        >
+                          Advance
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+
+        {/* SECTION 2: DELIVERY HISTORY */}
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-[#16A36A]" />
+              <div>
+                <h2 className="text-base sm:text-lg font-bold text-[#182433] tracking-tight">
+                  Delivery History ({historyShipments.length})
+                </h2>
+                <p className="text-xs text-[#718096]">Completed and verified shipments in your service log</p>
+              </div>
+            </div>
+          </div>
+
+          {loadingHistory ? (
+            <div className="bg-white rounded-2xl border border-[#DCE5EF] p-12 shadow-2xs">
+              <LoadingSpinner message="Retrieving delivery history..." />
+            </div>
+          ) : historyShipments.length === 0 ? (
+            <EmptyState
+              icon={CheckCircle}
+              title="No delivery history yet"
+              description="Completed and delivered shipments will be archived here."
+            />
+          ) : (
+            <div className="bg-white rounded-2xl border border-[#DCE5EF] overflow-hidden shadow-2xs">
+              {/* Desktop Table View (>= md) */}
+              <div className="hidden md:block overflow-x-auto">
+                <table className="w-full text-left text-xs border-collapse">
+                  <thead>
+                    <tr className="bg-[#E9EEF5] text-[#245B78] uppercase text-[11px] font-bold tracking-wider border-b border-[#DCE5EF]">
+                      <th className="py-3.5 px-4">Tracking ID</th>
+                      <th className="py-3.5 px-4">Route</th>
+                      <th className="py-3.5 px-4">Recipient</th>
+                      <th className="py-3.5 px-4">Delivered At</th>
+                      <th className="py-3.5 px-4">Status</th>
+                      <th className="py-3.5 px-4 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[#E2E8F0] text-[#182433]">
+                    {historyShipments.map((s) => {
+                      const deliveredTime = s.deliveredAt || s.updatedAt;
+                      return (
+                        <tr key={s._id} className="hover:bg-[#F4F6F8]/60 transition">
+                          <td className="py-3.5 px-4 font-mono font-bold text-[#142B45]">
+                            <Link
+                              to={`/courier/shipments/${s._id}`}
+                              className="hover:text-[#18A6A0] transition break-all"
+                            >
+                              {s.trackingId}
+                            </Link>
+                          </td>
+                          <td className="py-3.5 px-4">
+                            <span className="font-semibold text-[#182433]">
+                              {s.pickupAddress?.city || 'Origin'}
+                            </span>
+                            <span className="mx-1.5 text-[#718096]">→</span>
+                            <span className="font-semibold text-[#182433]">
+                              {s.deliveryAddress?.city || 'Destination'}
+                            </span>
+                          </td>
+                          <td className="py-3.5 px-4">
+                            <div className="font-semibold text-[#182433]">
+                              {s.customerId?.name || 'Customer'}
+                            </div>
+                            <div className="text-[11px] text-[#718096] truncate max-w-[180px]">
+                              {s.deliveryAddress?.addressLine}
+                            </div>
+                          </td>
+                          <td className="py-3.5 px-4">
+                            <div className="flex items-center gap-1.5 text-[#718096]">
+                              <Calendar className="w-3.5 h-3.5 text-[#718096]" />
+                              <span>{formatDate(deliveredTime)}</span>
+                            </div>
+                          </td>
+                          <td className="py-3.5 px-4">
+                            <StatusBadge status={s.status} size="sm" />
+                          </td>
+                          <td className="py-3.5 px-4 text-right">
+                            <Link
+                              to={`/courier/shipments/${s._id}`}
+                              className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-[#142B45] hover:text-[#18A6A0] bg-white border border-[#E2E8F0] hover:bg-[#F4F6F8] rounded-lg transition shadow-xs"
+                            >
+                              <span>Details</span>
+                              <ChevronRight className="w-3 h-3" />
+                            </Link>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Mobile Card View (< md) */}
+              <div className="md:hidden divide-y divide-[#E2E8F0]">
+                {historyShipments.map((s) => {
+                  const deliveredTime = s.deliveredAt || s.updatedAt;
+                  return (
+                    <div key={s._id} className="p-4 space-y-3">
+                      <div className="flex items-start justify-between gap-2">
+                        <div>
                           <Link
                             to={`/courier/shipments/${s._id}`}
-                            className="hover:text-[#D97706] transition"
+                            className="font-mono font-bold text-sm text-[#142B45] hover:text-[#18A6A0] transition break-all"
                           >
                             {s.trackingId}
                           </Link>
-                        </td>
-                        <td className="py-3.5 px-4">
-                          <span className="font-semibold text-[#172033]">
-                            {s.pickupAddress?.city || 'Origin'}
-                          </span>
-                          <span className="mx-1 text-[#667085]">→</span>
-                          <span className="font-semibold text-[#172033]">
-                            {s.deliveryAddress?.city || 'Destination'}
-                          </span>
-                        </td>
-                        <td className="py-3.5 px-4">
-                          <div className="font-semibold text-[#172033]">
-                            {s.customerId?.name || 'Customer'}
+                          <div className="text-xs text-[#718096] mt-0.5">
+                            {formatDate(deliveredTime)}
                           </div>
-                          <div className="text-[11px] text-[#667085]">
-                            {s.deliveryAddress?.addressLine}
-                          </div>
-                        </td>
-                        <td className="py-3.5 px-4">
-                          <div className="flex items-center gap-1.5 text-[#172033]">
-                            <Calendar className="w-3.5 h-3.5 text-[#667085]" />
-                            <span>{formatDate(deliveredTime)}</span>
-                          </div>
-                        </td>
-                        <td className="py-3.5 px-4">
-                          <StatusBadge status={s.status} size="sm" />
-                        </td>
-                        <td className="py-3.5 px-4 text-right">
-                          <div className="flex items-center justify-end gap-2">
-                            <Link
-                              to={`/courier/shipments/${s._id}`}
-                              className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold text-[#172033] hover:text-[#D97706] bg-white border border-[#D9DEE5] hover:bg-[#F4F6F8] rounded-md transition shadow-xs"
-                            >
-                              <span>View Route</span>
-                              <ChevronRight className="w-3 h-3" />
-                            </Link>
+                        </div>
+                        <StatusBadge status={s.status} size="sm" />
+                      </div>
 
-                            <Link
-                              to={`/courier/simulator?shipmentId=${s._id}`}
-                              className="px-2 py-1 text-[11px] font-semibold text-[#667085] hover:text-[#172033] bg-[#F4F6F8] border border-[#D9DEE5] rounded-md transition"
-                              title="View Demo Simulation History"
-                            >
-                              Demo State
-                            </Link>
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+                      <div className="p-2.5 rounded-xl bg-[#F4F6F8] text-xs space-y-1">
+                        <div className="flex items-center gap-1 text-[#182433]">
+                          <span className="font-semibold">{s.pickupAddress?.city || 'Origin'}</span>
+                          <span className="text-[#718096]">→</span>
+                          <span className="font-semibold">{s.deliveryAddress?.city || 'Destination'}</span>
+                        </div>
+                        <div className="text-[#718096] text-[11px]">
+                          Recipient: {s.customerId?.name || 'Customer'}
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-end">
+                        <Link
+                          to={`/courier/shipments/${s._id}`}
+                          className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-[#142B45] hover:text-[#18A6A0] bg-white border border-[#E2E8F0] rounded-xl transition shadow-xs"
+                        >
+                          <span>View Details</span>
+                          <ChevronRight className="w-3 h-3" />
+                        </Link>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
 
-      {/* Status Update Modal */}
-      <UpdateStatusModal
-        isOpen={statusModalOpen}
-        onClose={() => setStatusModalOpen(false)}
-        shipment={selectedShipment}
-        onSuccess={handleShipmentUpdated}
-        role="courier"
-      />
+        {/* Status Update Modal */}
+        <UpdateStatusModal
+          isOpen={statusModalOpen}
+          onClose={() => setStatusModalOpen(false)}
+          shipment={selectedShipment}
+          onSuccess={handleShipmentUpdated}
+          role="courier"
+        />
+      </div>
     </DashboardLayout>
   );
 };

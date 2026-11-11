@@ -214,41 +214,45 @@ const Profile = () => {
     <DashboardLayout title="Account & Profile Settings">
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Profile Hero Header Card */}
-        <div className="bg-white rounded-2xl border border-[#E1E7EF] p-5 sm:p-6 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="bg-[#0B1F33] text-white rounded-[22px] border border-[#176B87]/40 p-5 sm:p-6 shadow-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-[#17243A] text-white flex items-center justify-center text-xl sm:text-2xl font-bold shadow-md shrink-0 border-2 border-white">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-[#123B5D] text-[#00A6A6] flex items-center justify-center text-xl sm:text-2xl font-bold shadow-2xs shrink-0 border-2 border-[#176B87]/60">
               {initials}
             </div>
             <div className="space-y-1">
               <div className="flex items-center gap-2.5 flex-wrap">
-                <h1 className="text-lg sm:text-xl font-bold text-[#17243A]">
+                <h1 className="text-lg sm:text-xl font-bold text-white tracking-tight">
                   {profileData.name || 'User Profile'}
                 </h1>
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold capitalize bg-[#17243A] text-white">
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold capitalize bg-[#123B5D] text-white border border-[#176B87]">
                   {profileData.role || authUser?.role}
                 </span>
               </div>
-              <p className="text-xs text-[#65748B] flex items-center gap-1.5 flex-wrap">
-                <Mail className="w-3.5 h-3.5 text-[#65748B]" />
-                <span>{profileData.email}</span>
+              <p className="text-xs text-[#DCE5EC] flex items-center gap-2 flex-wrap">
+                <span className="flex items-center gap-1">
+                  <Mail className="w-3.5 h-3.5 text-[#8A9BAA]" />
+                  <span className="break-all">{profileData.email}</span>
+                </span>
                 {profileData.phone && (
                   <>
-                    <span className="text-[#E1E7EF]">•</span>
-                    <Phone className="w-3.5 h-3.5 text-[#65748B]" />
-                    <span>{profileData.phone}</span>
+                    <span className="text-[#176B87]">•</span>
+                    <span className="flex items-center gap-1">
+                      <Phone className="w-3.5 h-3.5 text-[#8A9BAA]" />
+                      <span>{profileData.phone}</span>
+                    </span>
                   </>
                 )}
               </p>
               {profileData.createdAt && (
-                <p className="text-[11px] text-[#65748B] flex items-center gap-1">
-                  <Clock className="w-3 h-3 text-[#65748B]" />
+                <p className="text-[11px] text-[#8A9BAA] flex items-center gap-1">
+                  <Clock className="w-3 h-3 text-[#8A9BAA]" />
                   <span>Member since {formatDate(profileData.createdAt)}</span>
                 </p>
               )}
             </div>
           </div>
 
-          <div className="flex items-center gap-2 self-stretch sm:self-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-[#E1E7EF]">
+          <div className="flex items-center gap-2 self-stretch sm:self-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-[#176B87]/40">
             {!isEditing && (
               <button
                 type="button"
@@ -256,7 +260,7 @@ const Profile = () => {
                   setIsEditing(true);
                   setSearchParams({ tab: 'profile' });
                 }}
-                className="w-full sm:w-auto px-4 py-2 text-xs font-semibold text-white bg-[#17243A] hover:bg-[#24364B] rounded-lg transition shadow-xs cursor-pointer flex items-center justify-center gap-1.5"
+                className="w-full sm:w-auto px-4 py-2 text-xs font-bold text-white bg-[#00A6A6] hover:bg-[#008F95] rounded-[11px] transition shadow-xs cursor-pointer flex items-center justify-center gap-1.5"
               >
                 <User className="w-3.5 h-3.5" />
                 <span>Edit Profile</span>
@@ -266,14 +270,14 @@ const Profile = () => {
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex items-center gap-2 border-b border-[#E1E7EF] pb-1">
+        <div className="flex items-center gap-2 border-b border-[#D5DEE7] pb-2">
           <button
             type="button"
             onClick={() => setSearchParams({ tab: 'profile' })}
-            className={`px-4 py-2 text-xs font-semibold rounded-lg transition cursor-pointer flex items-center gap-2 ${
+            className={`px-4 py-2 text-xs font-semibold rounded-[11px] transition cursor-pointer flex items-center gap-2 border ${
               activeTab === 'profile' || activeTab === 'settings'
-                ? 'bg-[#17243A] text-white shadow-xs'
-                : 'text-[#65748B] hover:text-[#17243A] hover:bg-white'
+                ? 'bg-[#0B1F33] text-white border-[#0B1F33] shadow-xs'
+                : 'bg-[#E8EEF4] text-[#123B5D] hover:text-[#0B1F33] hover:bg-white border-[#D5DEE7]'
             }`}
           >
             <User className="w-4 h-4" />
@@ -282,10 +286,10 @@ const Profile = () => {
           <button
             type="button"
             onClick={() => setSearchParams({ tab: 'password' })}
-            className={`px-4 py-2 text-xs font-semibold rounded-lg transition cursor-pointer flex items-center gap-2 ${
+            className={`px-4 py-2 text-xs font-semibold rounded-[11px] transition cursor-pointer flex items-center gap-2 border ${
               activeTab === 'password'
-                ? 'bg-[#17243A] text-white shadow-xs'
-                : 'text-[#65748B] hover:text-[#17243A] hover:bg-white'
+                ? 'bg-[#0B1F33] text-white border-[#0B1F33] shadow-xs'
+                : 'bg-[#E8EEF4] text-[#123B5D] hover:text-[#0B1F33] hover:bg-white border-[#D5DEE7]'
             }`}
           >
             <KeyRound className="w-4 h-4" />
@@ -297,11 +301,11 @@ const Profile = () => {
         {(activeTab === 'profile' || activeTab === 'settings') && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Main Form */}
-            <div className="md:col-span-2 bg-white rounded-2xl border border-[#E1E7EF] p-5 sm:p-6 shadow-xs space-y-5">
-              <div className="flex items-center justify-between pb-3 border-b border-[#E1E7EF]">
+            <div className="md:col-span-2 bg-white rounded-2xl border border-[#DCE5EF] p-5 sm:p-6 shadow-2xs space-y-5">
+              <div className="flex items-center justify-between pb-3 border-b border-[#DCE5EF]">
                 <div>
-                  <h2 className="text-sm font-bold text-[#17243A]">Personal Information</h2>
-                  <p className="text-xs text-[#65748B]">Update your primary contact and profile information</p>
+                  <h2 className="text-sm font-bold text-[#142B45]">Personal Information</h2>
+                  <p className="text-xs text-[#64748B]">Update your primary contact and profile information</p>
                 </div>
                 {isEditing && (
                   <button
@@ -311,7 +315,7 @@ const Profile = () => {
                       setProfileError('');
                       fetchUserProfile();
                     }}
-                    className="p-1 rounded-lg text-[#65748B] hover:text-[#17243A] hover:bg-[#F5F7FA] transition cursor-pointer"
+                    className="p-1 rounded-lg text-[#64748B] hover:text-[#142B45] hover:bg-[#F0F4F8] transition cursor-pointer"
                     title="Cancel editing"
                   >
                     <X className="w-4 h-4" />
@@ -320,28 +324,28 @@ const Profile = () => {
               </div>
 
               {profileSuccess && (
-                <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-[#16845B] font-medium flex items-center gap-2">
+                <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-[#16A36A] font-medium flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 shrink-0" />
                   <span>{profileSuccess}</span>
                 </div>
               )}
 
               {profileError && (
-                <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-xs text-[#C0392B] font-medium flex items-center gap-2">
+                <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-xs text-[#DC5353] font-medium flex items-center gap-2">
                   <AlertCircle className="w-4 h-4 shrink-0" />
                   <span>{profileError}</span>
                 </div>
               )}
 
               {loadingProfile ? (
-                <div className="py-12 text-center text-xs text-[#65748B] flex items-center justify-center gap-2">
-                  <div className="w-5 h-5 border-2 border-[#17243A] border-t-transparent rounded-full animate-spin"></div>
+                <div className="py-12 text-center text-xs text-[#718096] flex items-center justify-center gap-2">
+                  <div className="w-5 h-5 border-2 border-[#18A6A0] border-t-transparent rounded-full animate-spin"></div>
                   <span>Loading user profile...</span>
                 </div>
               ) : (
                 <form onSubmit={handleProfileSubmit} className="space-y-4">
                   <div>
-                    <label className="block text-xs font-semibold text-[#17243A] mb-1.5 uppercase tracking-wider">
+                    <label className="block text-xs font-semibold text-[#182433] mb-1.5 uppercase tracking-wider">
                       Full Name
                     </label>
                     <input
@@ -352,13 +356,13 @@ const Profile = () => {
                       }
                       disabled={!isEditing || savingProfile}
                       placeholder="e.g. Jane Doe"
-                      className="w-full h-10 px-3 rounded-lg border border-[#E1E7EF] text-xs sm:text-sm text-[#17243A] bg-white focus:outline-none focus:border-[#17243A] focus:ring-1 focus:ring-[#17243A] disabled:bg-[#F5F7FA] disabled:text-[#65748B]"
+                      className="w-full h-10 px-3.5 rounded-xl border border-[#E2E8F0] text-xs sm:text-sm text-[#182433] bg-white focus:outline-none focus:border-[#18A6A0] focus:ring-1 focus:ring-[#18A6A0] disabled:bg-[#F4F6F8] disabled:text-[#718096] transition"
                       required
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-[#17243A] mb-1.5 uppercase tracking-wider">
+                    <label className="block text-xs font-semibold text-[#182433] mb-1.5 uppercase tracking-wider">
                       Email Address
                     </label>
                     <input
@@ -369,13 +373,13 @@ const Profile = () => {
                       }
                       disabled={!isEditing || savingProfile}
                       placeholder="name@example.com"
-                      className="w-full h-10 px-3 rounded-lg border border-[#E1E7EF] text-xs sm:text-sm text-[#17243A] bg-white focus:outline-none focus:border-[#17243A] focus:ring-1 focus:ring-[#17243A] disabled:bg-[#F5F7FA] disabled:text-[#65748B]"
+                      className="w-full h-10 px-3.5 rounded-xl border border-[#E2E8F0] text-xs sm:text-sm text-[#182433] bg-white focus:outline-none focus:border-[#18A6A0] focus:ring-1 focus:ring-[#18A6A0] disabled:bg-[#F4F6F8] disabled:text-[#718096] transition"
                       required
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-[#17243A] mb-1.5 uppercase tracking-wider">
+                    <label className="block text-xs font-semibold text-[#182433] mb-1.5 uppercase tracking-wider">
                       Contact Phone Number
                     </label>
                     <input
@@ -386,13 +390,13 @@ const Profile = () => {
                       }
                       disabled={!isEditing || savingProfile}
                       placeholder="e.g. +1 555-0199 or 9876543210"
-                      className="w-full h-10 px-3 rounded-lg border border-[#E1E7EF] text-xs sm:text-sm text-[#17243A] bg-white focus:outline-none focus:border-[#17243A] focus:ring-1 focus:ring-[#17243A] disabled:bg-[#F5F7FA] disabled:text-[#65748B]"
+                      className="w-full h-10 px-3.5 rounded-xl border border-[#E2E8F0] text-xs sm:text-sm text-[#182433] bg-white focus:outline-none focus:border-[#18A6A0] focus:ring-1 focus:ring-[#18A6A0] disabled:bg-[#F4F6F8] disabled:text-[#718096] transition"
                       required
                     />
                   </div>
 
                   {isEditing && (
-                    <div className="pt-3 flex items-center justify-end gap-2.5 border-t border-[#E1E7EF]">
+                    <div className="pt-3 flex items-center justify-end gap-2.5 border-t border-[#E2E8F0]">
                       <button
                         type="button"
                         onClick={() => {
@@ -401,14 +405,14 @@ const Profile = () => {
                           fetchUserProfile();
                         }}
                         disabled={savingProfile}
-                        className="px-4 py-2 text-xs font-semibold text-[#65748B] hover:text-[#17243A] hover:bg-[#F5F7FA] rounded-lg transition cursor-pointer"
+                        className="px-4 py-2 text-xs font-semibold text-[#718096] hover:text-[#182433] hover:bg-[#F4F6F8] rounded-xl transition cursor-pointer"
                       >
                         Cancel
                       </button>
                       <button
                         type="submit"
                         disabled={savingProfile}
-                        className="px-4 py-2 text-xs font-semibold text-white bg-[#17243A] hover:bg-[#24364B] rounded-lg transition flex items-center gap-1.5 shadow-xs cursor-pointer disabled:opacity-60"
+                        className="px-4 py-2 text-xs font-semibold text-white bg-[#18A6A0] hover:bg-[#138580] rounded-xl transition flex items-center gap-1.5 shadow-xs cursor-pointer disabled:opacity-60"
                       >
                         {savingProfile ? (
                           <>
@@ -430,125 +434,127 @@ const Profile = () => {
 
             {/* Account Details & Role Information Card */}
             <div className="space-y-4">
-              <div className="bg-white rounded-2xl border border-[#E1E7EF] p-5 shadow-xs space-y-3">
-                <div className="flex items-center gap-2 pb-2 border-b border-[#E1E7EF]">
-                  <Shield className="w-4 h-4 text-[#17243A]" />
-                  <h3 className="text-xs font-bold text-[#17243A] uppercase tracking-wider">
+              <div className="bg-[#F1EFFA]/60 rounded-2xl border border-[#DFDAF4] p-5 shadow-2xs space-y-3">
+                <div className="flex items-center gap-2 pb-2 border-b border-[#DFDAF4]">
+                  <div className="w-7 h-7 rounded-lg bg-[#52438F] text-white flex items-center justify-center">
+                    <Shield className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-xs font-bold text-[#52438F] uppercase tracking-wider">
                     Account Security & Role
                   </h3>
                 </div>
 
                 <div className="space-y-2.5 text-xs">
-                  <div className="flex justify-between py-1 border-b border-[#E1E7EF]/60">
-                    <span className="text-[#65748B]">Assigned Role:</span>
-                    <span className="font-semibold text-[#17243A] capitalize">
+                  <div className="flex justify-between py-1 border-b border-[#DFDAF4]/60">
+                    <span className="text-[#64748B]">Assigned Role:</span>
+                    <span className="font-semibold text-[#142B45] capitalize">
                       {profileData.role || authUser?.role}
                     </span>
                   </div>
-                  <div className="flex justify-between py-1 border-b border-[#E1E7EF]/60">
-                    <span className="text-[#65748B]">Account Status:</span>
-                    <span className="font-semibold text-[#16845B] flex items-center gap-1">
+                  <div className="flex justify-between py-1 border-b border-[#DFDAF4]/60">
+                    <span className="text-[#64748B]">Account Status:</span>
+                    <span className="font-semibold text-[#16875D] flex items-center gap-1">
                       <CheckCircle2 className="w-3 h-3" />
                       <span>Active</span>
                     </span>
                   </div>
-                  <div className="flex justify-between py-1 border-b border-[#E1E7EF]/60">
-                    <span className="text-[#65748B]">Account ID:</span>
-                    <span className="font-mono text-[11px] text-[#65748B] truncate max-w-[130px]">
+                  <div className="flex justify-between py-1 border-b border-[#DFDAF4]/60">
+                    <span className="text-[#64748B]">Account ID:</span>
+                    <span className="font-mono text-[11px] text-[#64748B] truncate max-w-[130px]">
                       {profileData.id || authUser?.id || '—'}
                     </span>
                   </div>
                   <div className="flex justify-between py-1">
-                    <span className="text-[#65748B]">Password:</span>
+                    <span className="text-[#64748B]">Password:</span>
                     <button
                       type="button"
                       onClick={() => setSearchParams({ tab: 'password' })}
-                      className="font-semibold text-[#17243A] hover:underline cursor-pointer"
+                      className="font-semibold text-[#18A6A0] hover:underline cursor-pointer"
                     >
                       Change Password
                     </button>
                   </div>
                 </div>
 
-                <div className="p-2.5 rounded-lg bg-[#F5F7FA] border border-[#E1E7EF] text-[11px] text-[#65748B] leading-relaxed">
+                <div className="p-3 rounded-xl bg-white border border-[#DFDAF4] text-[11px] text-[#5C567A] leading-relaxed">
                   Roles and permissions are governed by role-based access control. Profile updates do not alter account permissions.
                 </div>
               </div>
 
               {/* Role specific quick action shortcuts */}
-              <div className="bg-white rounded-2xl border border-[#E1E7EF] p-5 shadow-xs space-y-2">
-                <h4 className="text-xs font-bold text-[#17243A] uppercase tracking-wider mb-2">
-                  Portal Navigation
+              <div className="bg-white rounded-2xl border border-[#DCE5EF] p-5 shadow-2xs space-y-2">
+                <h4 className="text-xs font-bold text-[#142B45] uppercase tracking-wider mb-2">
+                  Portal Shortcuts
                 </h4>
                 {authUser?.role === 'customer' && (
-                  <div className="space-y-1.5 text-xs">
+                  <div className="space-y-1 text-xs">
                     <Link
                       to="/customer/shipments"
-                      className="flex items-center justify-between p-2 rounded-lg hover:bg-[#F5F7FA] text-[#17243A] font-semibold transition"
+                      className="flex items-center justify-between p-2.5 rounded-xl hover:bg-[#F4F6F8] text-[#182433] font-semibold transition"
                     >
                       <span className="flex items-center gap-2">
-                        <Package className="w-3.5 h-3.5 text-[#F59E0B]" />
+                        <Package className="w-4 h-4 text-[#18A6A0]" />
                         <span>My Shipments History</span>
                       </span>
-                      <ArrowRight className="w-3.5 h-3.5 text-[#65748B]" />
+                      <ArrowRight className="w-3.5 h-3.5 text-[#718096]" />
                     </Link>
                     <Link
                       to="/customer/shipments/create"
-                      className="flex items-center justify-between p-2 rounded-lg hover:bg-[#F5F7FA] text-[#17243A] font-semibold transition"
+                      className="flex items-center justify-between p-2.5 rounded-xl hover:bg-[#F4F6F8] text-[#182433] font-semibold transition"
                     >
                       <span className="flex items-center gap-2">
-                        <Package className="w-3.5 h-3.5 text-[#16845B]" />
+                        <Package className="w-4 h-4 text-[#16A36A]" />
                         <span>Book New Delivery</span>
                       </span>
-                      <ArrowRight className="w-3.5 h-3.5 text-[#65748B]" />
+                      <ArrowRight className="w-3.5 h-3.5 text-[#718096]" />
                     </Link>
                   </div>
                 )}
                 {authUser?.role === 'courier' && (
-                  <div className="space-y-1.5 text-xs">
+                  <div className="space-y-1 text-xs">
                     <Link
                       to="/courier/shipments"
-                      className="flex items-center justify-between p-2 rounded-lg hover:bg-[#F5F7FA] text-[#17243A] font-semibold transition"
+                      className="flex items-center justify-between p-2.5 rounded-xl hover:bg-[#F4F6F8] text-[#182433] font-semibold transition"
                     >
                       <span className="flex items-center gap-2">
-                        <Truck className="w-3.5 h-3.5 text-[#17243A]" />
+                        <Truck className="w-4 h-4 text-[#142B45]" />
                         <span>Assigned Shipments</span>
                       </span>
-                      <ArrowRight className="w-3.5 h-3.5 text-[#65748B]" />
+                      <ArrowRight className="w-3.5 h-3.5 text-[#718096]" />
                     </Link>
                     <Link
                       to="/courier/simulator"
-                      className="flex items-center justify-between p-2 rounded-lg hover:bg-[#F5F7FA] text-[#17243A] font-semibold transition"
+                      className="flex items-center justify-between p-2.5 rounded-xl hover:bg-[#F4F6F8] text-[#182433] font-semibold transition"
                     >
                       <span className="flex items-center gap-2">
-                        <Truck className="w-3.5 h-3.5 text-[#F59E0B]" />
+                        <Truck className="w-4 h-4 text-[#18A6A0]" />
                         <span>GPS Road Simulator</span>
                       </span>
-                      <ArrowRight className="w-3.5 h-3.5 text-[#65748B]" />
+                      <ArrowRight className="w-3.5 h-3.5 text-[#718096]" />
                     </Link>
                   </div>
                 )}
                 {authUser?.role === 'admin' && (
-                  <div className="space-y-1.5 text-xs">
+                  <div className="space-y-1 text-xs">
                     <Link
                       to="/admin/shipments"
-                      className="flex items-center justify-between p-2 rounded-lg hover:bg-[#F5F7FA] text-[#17243A] font-semibold transition"
+                      className="flex items-center justify-between p-2.5 rounded-xl hover:bg-[#F4F6F8] text-[#182433] font-semibold transition"
                     >
                       <span className="flex items-center gap-2">
-                        <Package className="w-3.5 h-3.5 text-[#17243A]" />
+                        <Package className="w-4 h-4 text-[#142B45]" />
                         <span>All Platform Shipments</span>
                       </span>
-                      <ArrowRight className="w-3.5 h-3.5 text-[#65748B]" />
+                      <ArrowRight className="w-3.5 h-3.5 text-[#718096]" />
                     </Link>
                     <Link
                       to="/admin"
-                      className="flex items-center justify-between p-2 rounded-lg hover:bg-[#F5F7FA] text-[#17243A] font-semibold transition"
+                      className="flex items-center justify-between p-2.5 rounded-xl hover:bg-[#F4F6F8] text-[#182433] font-semibold transition"
                     >
                       <span className="flex items-center gap-2">
-                        <Shield className="w-3.5 h-3.5 text-[#F59E0B]" />
+                        <Shield className="w-4 h-4 text-[#18A6A0]" />
                         <span>Dispatch Dashboard</span>
                       </span>
-                      <ArrowRight className="w-3.5 h-3.5 text-[#65748B]" />
+                      <ArrowRight className="w-3.5 h-3.5 text-[#718096]" />
                     </Link>
                   </div>
                 )}
@@ -559,23 +565,23 @@ const Profile = () => {
 
         {/* TAB 2: Change Password */}
         {activeTab === 'password' && (
-          <div className="max-w-xl mx-auto bg-white rounded-2xl border border-[#E1E7EF] p-5 sm:p-6 shadow-xs space-y-5">
-            <div className="pb-3 border-b border-[#E1E7EF]">
-              <h2 className="text-sm font-bold text-[#17243A]">Security & Password</h2>
-              <p className="text-xs text-[#65748B]">
+          <div className="max-w-xl mx-auto bg-white rounded-2xl border border-[#E2E8F0] p-5 sm:p-6 shadow-xs space-y-5">
+            <div className="pb-3 border-b border-[#E2E8F0]">
+              <h2 className="text-sm font-bold text-[#182433]">Security & Password</h2>
+              <p className="text-xs text-[#718096]">
                 Ensure your account stays secure by using a strong password of at least 6 characters.
               </p>
             </div>
 
             {passwordSuccess && (
-              <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-[#16845B] font-medium flex items-center gap-2">
+              <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-[#16A36A] font-medium flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 shrink-0" />
                 <span>{passwordSuccess}</span>
               </div>
             )}
 
             {passwordError && (
-              <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-xs text-[#C0392B] font-medium flex items-center gap-2">
+              <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-xs text-[#DC5353] font-medium flex items-center gap-2">
                 <AlertCircle className="w-4 h-4 shrink-0" />
                 <span>{passwordError}</span>
               </div>
@@ -584,7 +590,7 @@ const Profile = () => {
             <form onSubmit={handlePasswordSubmit} className="space-y-4">
               {/* Current Password */}
               <div>
-                <label className="block text-xs font-semibold text-[#17243A] mb-1.5 uppercase tracking-wider">
+                <label className="block text-xs font-semibold text-[#182433] mb-1.5 uppercase tracking-wider">
                   Current Password
                 </label>
                 <div className="relative">
@@ -598,13 +604,13 @@ const Profile = () => {
                       })
                     }
                     placeholder="Enter current password"
-                    className="w-full h-10 pl-3 pr-10 rounded-lg border border-[#E1E7EF] text-xs sm:text-sm text-[#17243A] bg-white focus:outline-none focus:border-[#17243A] focus:ring-1 focus:ring-[#17243A]"
+                    className="w-full h-10 pl-3.5 pr-10 rounded-xl border border-[#E2E8F0] text-xs sm:text-sm text-[#182433] bg-white focus:outline-none focus:border-[#18A6A0] focus:ring-1 focus:ring-[#18A6A0] transition"
                     required
                   />
                   <button
                     type="button"
                     onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#65748B] hover:text-[#17243A] cursor-pointer"
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#718096] hover:text-[#182433] cursor-pointer"
                   >
                     {showCurrentPassword ? (
                       <EyeOff className="w-4 h-4" />
@@ -617,7 +623,7 @@ const Profile = () => {
 
               {/* New Password */}
               <div>
-                <label className="block text-xs font-semibold text-[#17243A] mb-1.5 uppercase tracking-wider">
+                <label className="block text-xs font-semibold text-[#182433] mb-1.5 uppercase tracking-wider">
                   New Password
                 </label>
                 <div className="relative">
@@ -631,13 +637,13 @@ const Profile = () => {
                       })
                     }
                     placeholder="At least 6 characters"
-                    className="w-full h-10 pl-3 pr-10 rounded-lg border border-[#E1E7EF] text-xs sm:text-sm text-[#17243A] bg-white focus:outline-none focus:border-[#17243A] focus:ring-1 focus:ring-[#17243A]"
+                    className="w-full h-10 pl-3.5 pr-10 rounded-xl border border-[#E2E8F0] text-xs sm:text-sm text-[#182433] bg-white focus:outline-none focus:border-[#18A6A0] focus:ring-1 focus:ring-[#18A6A0] transition"
                     required
                   />
                   <button
                     type="button"
                     onClick={() => setShowNewPassword(!showNewPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#65748B] hover:text-[#17243A] cursor-pointer"
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#718096] hover:text-[#182433] cursor-pointer"
                   >
                     {showNewPassword ? (
                       <EyeOff className="w-4 h-4" />
@@ -650,7 +656,7 @@ const Profile = () => {
 
               {/* Confirm New Password */}
               <div>
-                <label className="block text-xs font-semibold text-[#17243A] mb-1.5 uppercase tracking-wider">
+                <label className="block text-xs font-semibold text-[#182433] mb-1.5 uppercase tracking-wider">
                   Confirm New Password
                 </label>
                 <div className="relative">
@@ -664,13 +670,13 @@ const Profile = () => {
                       })
                     }
                     placeholder="Repeat new password"
-                    className="w-full h-10 pl-3 pr-10 rounded-lg border border-[#E1E7EF] text-xs sm:text-sm text-[#17243A] bg-white focus:outline-none focus:border-[#17243A] focus:ring-1 focus:ring-[#17243A]"
+                    className="w-full h-10 pl-3.5 pr-10 rounded-xl border border-[#E2E8F0] text-xs sm:text-sm text-[#182433] bg-white focus:outline-none focus:border-[#18A6A0] focus:ring-1 focus:ring-[#18A6A0] transition"
                     required
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#65748B] hover:text-[#17243A] cursor-pointer"
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#718096] hover:text-[#182433] cursor-pointer"
                   >
                     {showConfirmPassword ? (
                       <EyeOff className="w-4 h-4" />
@@ -681,7 +687,7 @@ const Profile = () => {
                 </div>
               </div>
 
-              <div className="pt-3 flex items-center justify-end gap-2.5 border-t border-[#E1E7EF]">
+              <div className="pt-3 flex items-center justify-end gap-2.5 border-t border-[#E2E8F0]">
                 <button
                   type="button"
                   onClick={() => {
@@ -694,14 +700,14 @@ const Profile = () => {
                     setSearchParams({ tab: 'profile' });
                   }}
                   disabled={savingPassword}
-                  className="px-4 py-2 text-xs font-semibold text-[#65748B] hover:text-[#17243A] hover:bg-[#F5F7FA] rounded-lg transition cursor-pointer"
+                  className="px-4 py-2 text-xs font-semibold text-[#718096] hover:text-[#182433] hover:bg-[#F4F6F8] rounded-xl transition cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={savingPassword}
-                  className="px-4 py-2 text-xs font-semibold text-white bg-[#17243A] hover:bg-[#24364B] rounded-lg transition flex items-center gap-1.5 shadow-xs cursor-pointer disabled:opacity-60"
+                  className="px-4 py-2 text-xs font-semibold text-white bg-[#18A6A0] hover:bg-[#138580] rounded-xl transition flex items-center gap-1.5 shadow-xs cursor-pointer disabled:opacity-60"
                 >
                   {savingPassword ? (
                     <>

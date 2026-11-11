@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { io } from 'socket.io-client';
 
-const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000';
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://10.119.68.26:5000';
 const THROTTLE_INTERVAL_MS = 2500; // 2.5 seconds throttle to stay comfortably within backend ~1s rate limit
 const ACK_TIMEOUT_MS = 1500; // 1.5s fallback so UI action loops never freeze
 

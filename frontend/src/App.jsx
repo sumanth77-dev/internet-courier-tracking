@@ -2,6 +2,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider, useAuth } from './context/AuthContext';
 import ProtectedRoute, { CustomerRoute, AdminRoute, CourierRoute } from './routes/ProtectedRoute';
 
+// Public Landing Page
+import LandingPage from './pages/LandingPage';
+
 // Auth Pages
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -26,14 +29,14 @@ import GpsSimulator from './pages/courier/GpsSimulator';
 // Profile Page
 import Profile from './pages/Profile';
 
-// Helper component for root index redirection
-const RootRedirect = () => {
+// Helper component for /dashboard redirection based on authenticated role
+const DashboardRedirect = () => {
   const { user, isAuthenticated, loading } = useAuth();
 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#F4F6F8]">
-        <div className="w-9 h-9 border-3 border-[#172033] border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-9 h-9 border-3 border-[#142B45] border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -185,8 +188,9 @@ function App() {
             }
           />
 
-          {/* Root and Catch-All Redirections */}
-          <Route path="/" element={<RootRedirect />} />
+          {/* Public Landing Page & Dashboard Redirection */}
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/dashboard" element={<DashboardRedirect />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AuthProvider>

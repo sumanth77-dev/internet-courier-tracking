@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import StatsCard from '../components/common/StatsCard';
 import ShipmentTable from '../components/shipment/ShipmentTable';
+import AdminShipmentActions from '../components/shipment/AdminShipmentActions';
 import EmptyState from '../components/common/EmptyState';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import ErrorMessage from '../components/common/ErrorMessage';
@@ -18,7 +19,8 @@ import {
   ArrowRight,
   UserCheck,
   RefreshCw,
-  Eye,
+  Shield,
+  Layers,
 } from 'lucide-react';
 
 const AdminDashboard = () => {
@@ -68,196 +70,179 @@ const AdminDashboard = () => {
   ).length;
   const deliveredCount = shipments.filter((s) => s.status === 'Delivered').length;
 
-  const recentShipments = shipments.slice(0, 5);
+  const recentShipments = shipments.slice(0, 6);
 
   return (
     <DashboardLayout title="Admin Dashboard">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-        <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-[#172033] tracking-tight">
-            Administrator Console
-          </h1>
-          <p className="text-xs sm:text-sm text-[#667085] mt-0.5">
-            System dispatch, courier assignments, and delivery tracking.
-          </p>
-        </div>
-
-        <div className="flex items-center gap-2 self-start sm:self-auto">
-          <button
-            onClick={fetchAdminShipments}
-            className="p-2 rounded-lg bg-white border border-[#D9DEE5] text-[#667085] hover:text-[#172033] hover:bg-[#F4F6F8] transition cursor-pointer shadow-xs"
-            title="Refresh Data"
-            aria-label="Refresh Data"
-          >
-            <RefreshCw className="w-4 h-4" />
-          </button>
-          <Link
-            to="/admin/shipments"
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-[#172033] hover:bg-[#0F172A] text-white text-xs sm:text-sm font-semibold rounded-lg shadow-xs transition"
-          >
-            <span>All Shipments</span>
-            <ArrowRight className="w-3.5 h-3.5 text-[#D97706]" />
-          </Link>
-        </div>
-      </div>
-
-      {error && (
-        <div className="mb-6">
-          <ErrorMessage message={error} onRetry={fetchAdminShipments} />
-        </div>
-      )}
-
-      {/* 5 Summary Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-6">
-        <StatsCard
-          title="Total"
-          value={loading ? '...' : totalCount}
-          icon={Package}
-          color="navy"
-          subtitle="All records"
-        />
-        <StatsCard
-          title="Pending"
-          value={loading ? '...' : pendingCount}
-          icon={Clock}
-          color="amber"
-          subtitle="Awaiting courier"
-        />
-        <StatsCard
-          title="Assigned"
-          value={loading ? '...' : assignedCount}
-          icon={UserCheck}
-          color="blue"
-          subtitle="Assigned to driver"
-        />
-        <StatsCard
-          title="In Transit"
-          value={loading ? '...' : inTransitCount}
-          icon={Truck}
-          color="blue"
-          subtitle="En route"
-        />
-        <StatsCard
-          title="Delivered"
-          value={loading ? '...' : deliveredCount}
-          icon={CheckCircle2}
-          color="green"
-          subtitle="Completed"
-        />
-      </div>
-
-      {/* Recent Shipments Section */}
-      <div className="space-y-3.5">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-sm sm:text-base font-bold text-[#172033]">
-              Recent Shipments
-            </h2>
-            <p className="text-xs text-[#667085]">Overview of latest parcel activity</p>
+      <div className="space-y-6">
+        {/* Deep Ocean Header Banner */}
+        <div className="bg-[#0B1F33] text-white rounded-[22px] border border-[#176B87]/40 p-5 sm:p-6 shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-start sm:items-center gap-3.5">
+            <div className="w-11 h-11 rounded-xl bg-[#123B5D] text-white border border-[#176B87]/50 flex items-center justify-center shrink-0 shadow-xs">
+              <Shield className="w-5 h-5 text-[#00A6A6]" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2 flex-wrap">
+                <h1 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+                  Administrator Dispatch Console
+                </h1>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#145C47] text-[#A7F3D0] border border-[#167A56]/60">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#34D399] animate-pulse"></span>
+                  Live Control Active
+                </span>
+              </div>
+              <p className="text-xs sm:text-sm text-[#DCE5EC] mt-0.5">
+                Centralized shipment dispatch, courier assignments, and delivery tracking.
+              </p>
+            </div>
           </div>
 
-          {shipments.length > 0 && (
+          <div className="flex items-center gap-2.5 self-start sm:self-auto w-full sm:w-auto">
+            <button
+              onClick={fetchAdminShipments}
+              className="p-2.5 rounded-xl bg-[#123B5D] border border-[#176B87]/60 text-[#DCE5EC] hover:text-white hover:bg-[#176B87] transition cursor-pointer shadow-xs"
+              title="Refresh Data"
+              aria-label="Refresh Data"
+            >
+              <RefreshCw className="w-4 h-4" />
+            </button>
             <Link
               to="/admin/shipments"
-              className="inline-flex items-center gap-1 text-xs font-semibold text-[#172033] hover:text-[#D97706] transition"
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-[#00A6A6] hover:bg-[#008F95] text-white text-xs sm:text-sm font-bold rounded-[11px] shadow-sm transition"
             >
-              <span>View All ({totalCount})</span>
+              <Layers className="w-4 h-4 text-white" />
+              <span>All Shipments</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
+          </div>
+        </div>
+
+        {error && (
+          <div>
+            <ErrorMessage message={error} onRetry={fetchAdminShipments} />
+          </div>
+        )}
+
+        {/* 5 Summary KPI Cards with Solid Dark Deep Ocean Colors */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
+          <StatsCard
+            title="Total Shipments"
+            value={loading ? '...' : totalCount}
+            icon={Package}
+            color="total"
+            subtitle="Platform records"
+          />
+          <StatsCard
+            title="Pending Dispatch"
+            value={loading ? '...' : pendingCount}
+            icon={Clock}
+            color="pending"
+            subtitle="Awaiting courier"
+          />
+          <StatsCard
+            title="Assigned"
+            value={loading ? '...' : assignedCount}
+            icon={UserCheck}
+            color="assigned"
+            subtitle="Courier assigned"
+          />
+          <StatsCard
+            title="In Transit"
+            value={loading ? '...' : inTransitCount}
+            icon={Truck}
+            color="inTransit"
+            subtitle="Live on road"
+          />
+          <StatsCard
+            title="Delivered"
+            value={loading ? '...' : deliveredCount}
+            icon={CheckCircle2}
+            color="delivered"
+            subtitle="Completed orders"
+          />
+        </div>
+
+        {/* Recent Shipments Section */}
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-base sm:text-lg font-bold text-[#142B45] tracking-tight">
+                Recent Shipments
+              </h2>
+              <p className="text-xs text-[#64748B]">Latest parcel registrations and delivery milestones</p>
+            </div>
+
+            {shipments.length > 0 && (
+              <Link
+                to="/admin/shipments"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#18A6A0] hover:text-[#245B78] transition"
+              >
+                <span>View All ({totalCount})</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            )}
+          </div>
+
+          {loading ? (
+            <div className="bg-white rounded-2xl border border-[#E2E8F0] p-12">
+              <LoadingSpinner message="Retrieving shipments..." />
+            </div>
+          ) : shipments.length === 0 ? (
+            <EmptyState
+              icon={Package}
+              title="No shipments found"
+              description="There are currently no shipments registered in the system."
+            />
+          ) : (
+            <ShipmentTable
+              shipments={recentShipments}
+              showCustomer={true}
+              showCourier={true}
+              viewLinkPrefix="/admin/shipments"
+              renderActions={(s) => (
+                <AdminShipmentActions
+                  shipment={s}
+                  onAssign={(shipment) => {
+                    setSelectedShipment(shipment);
+                    setAssignModalOpen(true);
+                  }}
+                  onUpdateStatus={(shipment) => {
+                    setSelectedShipment(shipment);
+                    setStatusModalOpen(true);
+                  }}
+                  viewLinkPrefix="/admin/shipments"
+                />
+              )}
+            />
           )}
         </div>
 
-        {loading ? (
-          <div className="bg-white rounded-xl border border-[#D9DEE5] p-10">
-            <LoadingSpinner message="Loading shipments..." />
-          </div>
-        ) : shipments.length === 0 ? (
-          <EmptyState
-            icon={Package}
-            title="No shipments found"
-            description="There are currently no shipments registered in the system."
-          />
-        ) : (
-          <ShipmentTable
-            shipments={recentShipments}
-            showCustomer={true}
-            showCourier={true}
-            viewLinkPrefix="/admin/shipments"
-            renderActions={(s) => (
-              <div className="flex items-center justify-end gap-1.5">
-                <Link
-                  to={`/admin/shipments/${s._id || s.trackingId}`}
-                  className="px-2.5 py-1 text-xs font-semibold text-[#172033] hover:text-[#D97706] bg-white border border-[#D9DEE5] hover:bg-[#F4F6F8] rounded-md transition shadow-xs flex items-center gap-1"
-                >
-                  {['Assigned', 'Picked Up', 'In Transit', 'Out for Delivery'].includes(s.status) && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                  )}
-                  <span>{['Assigned', 'Picked Up', 'In Transit', 'Out for Delivery'].includes(s.status) ? 'Track' : 'View'}</span>
-                </Link>
+        {/* Modals */}
+        {selectedShipment && (
+          <>
+            <AssignCourierModal
+              isOpen={assignModalOpen}
+              onClose={() => {
+                setAssignModalOpen(false);
+                setSelectedShipment(null);
+              }}
+              shipment={selectedShipment}
+              onSuccess={handleShipmentUpdated}
+            />
 
-                {/* Assign / Reassign Courier button (Allowed for Pending or Assigned) */}
-                {['Pending', 'Assigned'].includes(s.status) && (
-                  <button
-                    onClick={() => {
-                      setSelectedShipment(s);
-                      setAssignModalOpen(true);
-                    }}
-                    className={`px-2.5 py-1 text-[11px] font-semibold rounded-md transition shadow-xs cursor-pointer ${
-                      s.courierId || s.status === 'Assigned'
-                        ? 'text-[#172033] bg-[#E1E7EF] hover:bg-[#D0D7E2] border border-[#CBD5E1]'
-                        : 'text-white bg-[#172033] hover:bg-[#0F172A]'
-                    }`}
-                    title={s.courierId || s.status === 'Assigned' ? 'Reassign Courier' : 'Assign Courier'}
-                  >
-                    {s.courierId || s.status === 'Assigned' ? 'Reassign' : 'Assign'}
-                  </button>
-                )}
-
-                {/* Update Status button (if not terminal) */}
-                {!['Delivered', 'Cancelled'].includes(s.status) && (
-                  <button
-                    onClick={() => {
-                      setSelectedShipment(s);
-                      setStatusModalOpen(true);
-                    }}
-                    className="px-2 py-1 text-[11px] font-semibold text-[#D97706] hover:text-[#B45309] bg-amber-50 hover:bg-amber-100 rounded-md transition border border-amber-200 cursor-pointer"
-                    title="Update Status"
-                  >
-                    Status
-                  </button>
-                )}
-              </div>
-            )}
-          />
+            <UpdateStatusModal
+              isOpen={statusModalOpen}
+              onClose={() => {
+                setStatusModalOpen(false);
+                setSelectedShipment(null);
+              }}
+              shipment={selectedShipment}
+              onSuccess={handleShipmentUpdated}
+              role="admin"
+            />
+          </>
         )}
       </div>
-
-      {/* Modals */}
-      {selectedShipment && (
-        <>
-          <AssignCourierModal
-            isOpen={assignModalOpen}
-            onClose={() => {
-              setAssignModalOpen(false);
-              setSelectedShipment(null);
-            }}
-            shipment={selectedShipment}
-            onSuccess={handleShipmentUpdated}
-          />
-
-          <UpdateStatusModal
-            isOpen={statusModalOpen}
-            onClose={() => {
-              setStatusModalOpen(false);
-              setSelectedShipment(null);
-            }}
-            shipment={selectedShipment}
-            onSuccess={handleShipmentUpdated}
-            role="admin"
-          />
-        </>
-      )}
     </DashboardLayout>
   );
 };

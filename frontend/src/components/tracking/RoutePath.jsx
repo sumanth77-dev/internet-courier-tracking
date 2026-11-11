@@ -37,7 +37,7 @@ export const RoutePath = ({
           <Polyline
             positions={fullRoute}
             pathOptions={{
-              color: '#3B82F6',
+              color: '#18A6A0',
               weight: 6,
               opacity: 0.25,
               lineCap: 'round',
@@ -48,9 +48,9 @@ export const RoutePath = ({
           <Polyline
             positions={fullRoute}
             pathOptions={{
-              color: '#1E40AF',
+              color: '#245B78',
               weight: 3.5,
-              opacity: 0.6,
+              opacity: 0.65,
               dashArray: '8, 8',
               lineCap: 'round',
               lineJoin: 'round',
@@ -64,9 +64,9 @@ export const RoutePath = ({
         <Polyline
           positions={travelledPath}
           pathOptions={{
-            color: '#172033',
+            color: '#142B45',
             weight: 5,
-            opacity: 0.9,
+            opacity: 0.95,
             lineCap: 'round',
             lineJoin: 'round',
           }}

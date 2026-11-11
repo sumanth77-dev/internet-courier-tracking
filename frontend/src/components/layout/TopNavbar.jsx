@@ -10,6 +10,8 @@ import {
   Shield,
   Truck,
   Package,
+  Home,
+  Compass,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
@@ -57,22 +59,22 @@ const TopNavbar = ({ onOpenSidebar, title = 'Dashboard' }) => {
     switch (user?.role) {
       case 'admin':
         return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#17243A] text-white">
-            <Shield className="w-3 h-3 text-[#F59E0B]" />
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#3B2C66] text-white">
+            <Shield className="w-3 h-3 text-[#00A6A6]" />
             <span>Admin</span>
           </span>
         );
       case 'courier':
         return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-900 border border-blue-200">
-            <Truck className="w-3 h-3 text-blue-700" />
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#006B70] text-white">
+            <Truck className="w-3 h-3 text-[#00A6A6]" />
             <span>Courier</span>
           </span>
         );
       default:
         return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-900 border border-emerald-200">
-            <Package className="w-3 h-3 text-emerald-700" />
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#145C47] text-white">
+            <Package className="w-3 h-3 text-[#00A6A6]" />
             <span>Customer</span>
           </span>
         );
@@ -89,55 +91,65 @@ const TopNavbar = ({ onOpenSidebar, title = 'Dashboard' }) => {
     : 'U';
 
   return (
-    <header className="h-16 bg-white border-b border-[#E1E7EF] px-4 sm:px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs">
-      <div className="flex items-center gap-3">
-        {/* Mobile menu trigger */}
+    <header className="h-16 bg-white border-b border-[#DCE5EC] px-4 sm:px-6 flex items-center justify-between sticky top-0 z-30 select-none shadow-2xs">
+      <div className="flex items-center gap-3 min-w-0">
+        {/* Mobile / Tablet menu trigger */}
         <button
           onClick={onOpenSidebar}
-          className="p-2 -ml-2 rounded-lg text-[#65748B] hover:text-[#17243A] hover:bg-[#F5F7FA] lg:hidden cursor-pointer transition"
+          className="p-2 -ml-2 rounded-xl text-[#607487] hover:text-[#0B1F33] hover:bg-[#F0F3F7] lg:hidden cursor-pointer transition"
           aria-label="Open navigation menu"
         >
           <Menu className="w-5 h-5" />
         </button>
 
-        <div>
-          <h2 className="text-sm sm:text-base font-bold text-[#17243A] leading-tight">
+        <div className="truncate">
+          <h2 className="text-sm sm:text-base font-bold text-[#142B45] tracking-tight leading-tight truncate">
             {title}
           </h2>
         </div>
       </div>
 
-      <div className="flex items-center gap-3">
-        {/* Role Portal Indicator */}
-        <div className="hidden sm:flex items-center gap-2 px-3 py-1 rounded-lg bg-[#F5F7FA] border border-[#E1E7EF]">
-          <span className="w-2 h-2 rounded-full bg-[#16845B]" />
-          <span className="text-xs font-semibold text-[#17243A] capitalize">
-            {user?.role} Portal
+      <div className="flex items-center gap-2.5 sm:gap-3.5 shrink-0">
+        {/* Role Portal Indicator (Hidden on extra small screens) */}
+        <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#E8EEF4] border border-[#D5DEE7]">
+          <span className="w-2 h-2 rounded-full bg-[#00A6A6] animate-pulse" />
+          <span className="text-xs font-bold text-[#123B5D] capitalize">
+            SkyRoute {user?.role} Portal
           </span>
         </div>
+
+        {/* Public Site Link */}
+        <Link
+          to="/"
+          className="hidden md:inline-flex items-center gap-1.5 text-xs font-semibold text-[#123B5D] hover:text-[#00A6A6] px-3 py-1.5 rounded-xl border border-[#D5DEE7] bg-[#F0F3F7] hover:bg-[#E8EEF4] transition"
+          title="Visit SkyRoute Public Landing Page"
+        >
+          <Home className="w-3.5 h-3.5 text-[#00A6A6]" />
+          <span>Home</span>
+        </Link>
 
         {/* Profile Avatar & Dropdown Menu */}
         <div className="relative" ref={dropdownRef}>
           <button
             onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="flex items-center gap-2 p-1 pl-1.5 pr-2 rounded-xl border border-[#E1E7EF] hover:border-[#17243A]/30 bg-white hover:bg-[#F5F7FA] transition cursor-pointer shadow-xs"
+            className="flex items-center gap-2 p-1 pl-1.5 pr-2.5 rounded-xl border border-[#D5DEE7] hover:border-[#8A9BAA] bg-white hover:bg-[#F0F3F7] transition cursor-pointer shadow-2xs"
             aria-expanded={dropdownOpen}
             aria-haspopup="true"
             aria-label="User account menu"
           >
-            <div className="w-8 h-8 rounded-lg bg-[#17243A] text-white flex items-center justify-center text-xs font-bold shadow-xs">
+            <div className="w-8 h-8 rounded-lg bg-[#0B1F33] text-[#00A6A6] border border-[#176B87]/40 flex items-center justify-center text-xs font-bold shadow-2xs">
               {initials}
             </div>
-            <div className="hidden md:flex flex-col text-left">
-              <span className="text-xs font-bold text-[#17243A] leading-tight truncate max-w-[120px]">
+            <div className="hidden sm:flex flex-col text-left">
+              <span className="text-xs font-bold text-[#142B45] leading-tight truncate max-w-[120px]">
                 {user?.name || 'User'}
               </span>
-              <span className="text-[10px] text-[#65748B] capitalize leading-none">
+              <span className="text-[10px] text-[#607487] capitalize leading-none">
                 {user?.role}
               </span>
             </div>
             <ChevronDown
-              className={`w-3.5 h-3.5 text-[#65748B] transition-transform duration-150 ${
+              className={`w-3.5 h-3.5 text-[#607487] transition-transform duration-150 ${
                 dropdownOpen ? 'rotate-180' : ''
               }`}
             />
@@ -145,56 +157,56 @@ const TopNavbar = ({ onOpenSidebar, title = 'Dashboard' }) => {
 
           {/* Dropdown Popover */}
           {dropdownOpen && (
-            <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl border border-[#E1E7EF] shadow-xl py-2 z-50 animate-in fade-in zoom-in-95 duration-150">
+            <div className="absolute right-0 mt-2 w-64 bg-white rounded-[20px] border border-[#D5DEE7] shadow-xl py-2 z-50 animate-in fade-in zoom-in-95 duration-150">
               {/* User Identity Header */}
-              <div className="px-4 py-2.5 border-b border-[#E1E7EF]/80">
-                <div className="flex items-center justify-between mb-1">
-                  <p className="text-xs font-bold text-[#17243A] truncate">
+              <div className="px-4 py-3 border-b border-[#D5DEE7]">
+                <div className="flex items-center justify-between mb-1.5">
+                  <p className="text-xs font-bold text-[#142B45] truncate">
                     {user?.name || 'Authenticated User'}
                   </p>
                   {getRoleBadge()}
                 </div>
-                <p className="text-[11px] text-[#65748B] truncate">{user?.email || '—'}</p>
+                <p className="text-[11px] text-[#607487] truncate">{user?.email || '—'}</p>
               </div>
 
               {/* Navigation Actions */}
               <div className="py-1">
                 <Link
-                  to={getProfilePath('profile')}
+                  to="/"
                   onClick={() => setDropdownOpen(false)}
-                  className="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-[#17243A] hover:bg-[#F5F7FA] hover:text-[#17243A] transition"
+                  className="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-[#142B45] hover:bg-[#F0F3F7] transition"
                 >
-                  <User className="w-4 h-4 text-[#65748B]" />
-                  <span>Profile</span>
+                  <Home className="w-4 h-4 text-[#00A6A6]" />
+                  <span>SkyRoute Public Home</span>
                 </Link>
 
                 <Link
-                  to={getProfilePath('settings')}
+                  to={getProfilePath('profile')}
                   onClick={() => setDropdownOpen(false)}
-                  className="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-[#17243A] hover:bg-[#F5F7FA] hover:text-[#17243A] transition"
+                  className="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-[#142B45] hover:bg-[#F0F3F7] transition"
                 >
-                  <Settings className="w-4 h-4 text-[#65748B]" />
-                  <span>Account Settings</span>
+                  <User className="w-4 h-4 text-[#607487]" />
+                  <span>Profile & Account</span>
                 </Link>
 
                 <Link
                   to={getProfilePath('password')}
                   onClick={() => setDropdownOpen(false)}
-                  className="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-[#17243A] hover:bg-[#F5F7FA] hover:text-[#17243A] transition"
+                  className="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-[#142B45] hover:bg-[#F0F3F7] transition"
                 >
-                  <KeyRound className="w-4 h-4 text-[#65748B]" />
+                  <KeyRound className="w-4 h-4 text-[#607487]" />
                   <span>Change Password</span>
                 </Link>
               </div>
 
               {/* Sign Out Button */}
-              <div className="border-t border-[#E1E7EF]/80 pt-1 mt-1">
+              <div className="border-t border-[#D5DEE7] pt-1 mt-1">
                 <button
                   type="button"
                   onClick={handleSignOut}
-                  className="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-semibold text-[#C0392B] hover:bg-red-50 transition cursor-pointer"
+                  className="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-semibold text-[#D64B4B] hover:bg-red-50 transition cursor-pointer"
                 >
-                  <LogOut className="w-4 h-4 text-[#C0392B]" />
+                  <LogOut className="w-4 h-4 text-[#D64B4B]" />
                   <span>Sign Out</span>
                 </button>
               </div>

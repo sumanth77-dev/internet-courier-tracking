@@ -376,53 +376,53 @@ export const CreateShipment = () => {
     return (
       <DashboardLayout title="Shipment Booked">
         <div className="max-w-xl mx-auto py-8">
-          <div className="bg-white rounded-2xl border border-[#D9DEE5] p-6 sm:p-8 shadow-sm text-center">
-            <div className="w-14 h-14 rounded-full bg-emerald-50 text-[#15803D] flex items-center justify-center mx-auto mb-4 ring-8 ring-emerald-50/50">
+          <div className="bg-white rounded-2xl border border-[#DCE5EF] p-6 sm:p-8 shadow-2xs text-center">
+            <div className="w-14 h-14 rounded-full bg-[#E7F5F2] text-[#16875D] flex items-center justify-center mx-auto mb-4 border border-[#CCEAE3]">
               <PackageCheck className="w-7 h-7" />
             </div>
 
-            <h1 className="text-xl font-bold text-[#172033] tracking-tight">
+            <h1 className="text-xl font-bold text-[#142B45] tracking-tight">
               Shipment Booked Successfully!
             </h1>
-            <p className="text-xs text-[#667085] mt-1">
+            <p className="text-xs text-[#64748B] mt-1">
               Your pickup has been registered and is pending courier dispatch assignment.
             </p>
 
-            <div className="my-6 p-4 rounded-xl bg-[#F4F6F8] border border-[#D9DEE5]">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#667085] block mb-1">
+            <div className="my-6 p-4 rounded-xl bg-[#EAF2FA] border border-[#CFE1F4]">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#245B78] block mb-1">
                 Generated Tracking ID
               </span>
-              <span className="text-2xl font-mono font-bold text-[#172033] tracking-wider">
+              <span className="text-2xl font-mono font-bold text-[#142B45] tracking-wider">
                 {createdShipment.trackingId}
               </span>
             </div>
 
             {/* Summary Details */}
-            <div className="text-left text-xs space-y-3 mb-6 p-4 rounded-xl border border-[#D9DEE5] bg-white">
-              <div className="flex items-start gap-2.5 pb-2.5 border-b border-[#D9DEE5]/60">
-                <div className="w-4 h-4 rounded-full bg-emerald-50 text-[#15803D] flex items-center justify-center mt-0.5 shrink-0 font-bold text-[10px]">
+            <div className="text-left text-xs space-y-3 mb-6 p-4 rounded-xl border border-[#DCE5EF] bg-white">
+              <div className="flex items-start gap-2.5 pb-2.5 border-b border-[#DCE5EF]">
+                <div className="w-5 h-5 rounded-full bg-[#EAF2FA] text-[#245B78] border border-[#CFE1F4] flex items-center justify-center mt-0.5 shrink-0 font-bold text-[10px]">
                   P
                 </div>
                 <div>
-                  <span className="text-[10px] font-bold uppercase text-[#667085] block">
+                  <span className="text-[10px] font-bold uppercase text-[#64748B] block">
                     Pickup Location
                   </span>
-                  <span className="font-semibold text-[#172033]">
+                  <span className="font-semibold text-[#142B45]">
                     {createdShipment.pickupAddress?.addressLine},{' '}
                     {createdShipment.pickupAddress?.city}
                   </span>
                 </div>
               </div>
 
-              <div className="flex items-start gap-2.5 pb-2.5 border-b border-[#D9DEE5]/60">
-                <div className="w-4 h-4 rounded-full bg-amber-50 text-[#D97706] flex items-center justify-center mt-0.5 shrink-0 font-bold text-[10px]">
+              <div className="flex items-start gap-2.5 pb-2.5 border-b border-[#DCE5EF]">
+                <div className="w-5 h-5 rounded-full bg-[#EAF5F8] text-[#126965] border border-[#CFEAEF] flex items-center justify-center mt-0.5 shrink-0 font-bold text-[10px]">
                   D
                 </div>
                 <div>
-                  <span className="text-[10px] font-bold uppercase text-[#667085] block">
+                  <span className="text-[10px] font-bold uppercase text-[#64748B] block">
                     Drop-off Location
                   </span>
-                  <span className="font-semibold text-[#172033]">
+                  <span className="font-semibold text-[#142B45]">
                     {createdShipment.deliveryAddress?.addressLine},{' '}
                     {createdShipment.deliveryAddress?.city}
                   </span>
@@ -430,8 +430,8 @@ export const CreateShipment = () => {
               </div>
 
               <div className="flex justify-between items-center pt-1">
-                <span className="text-[#667085]">Package & Weight:</span>
-                <span className="font-semibold text-[#172033]">
+                <span className="text-[#64748B]">Package & Weight:</span>
+                <span className="font-semibold text-[#142B45]">
                   {createdShipment.packageDetails?.description} (
                   {createdShipment.packageDetails?.weight} kg)
                 </span>
@@ -441,14 +441,14 @@ export const CreateShipment = () => {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link
                 to={`/customer/shipments/${createdShipment.trackingId}`}
-                className="w-full sm:w-auto px-6 py-2.5 rounded-lg bg-[#172033] hover:bg-[#0F172A] text-white font-semibold text-xs transition shadow-xs flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto px-6 py-2.5 rounded-[11px] bg-[#00A6A6] hover:bg-[#008F95] text-white font-bold text-xs transition shadow-xs flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>Track Live Delivery</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 to="/customer"
-                className="w-full sm:w-auto px-6 py-2.5 rounded-lg bg-white hover:bg-[#F4F6F8] text-[#172033] font-semibold text-xs border border-[#D9DEE5] transition text-center"
+                className="w-full sm:w-auto px-6 py-2.5 rounded-[11px] bg-white hover:bg-[#F0F3F7] text-[#142B45] font-semibold text-xs border border-[#D5DEE7] transition text-center shadow-2xs"
               >
                 Back to Dashboard
               </Link>
@@ -460,26 +460,26 @@ export const CreateShipment = () => {
   }
 
   return (
-    <DashboardLayout title="Book Shipment">
+    <DashboardLayout title="Create Shipment">
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Header with Sample Fill Button */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#D9DEE5]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#E2E8F0]">
           <div>
-            <h1 className="text-xl font-bold text-[#172033] tracking-tight">
-              Interactive Shipment Booking
+            <h1 className="text-xl sm:text-2xl font-black text-[#142B45] tracking-tight">
+              Create New Shipment
             </h1>
-            <p className="text-xs text-[#667085] mt-0.5">
-              Select pickup and delivery places on the map with automatic road routing.
+            <p className="text-xs sm:text-sm text-[#718096] mt-0.5">
+              Select pickup and delivery addresses on the map with automatic road routing.
             </p>
           </div>
 
           <button
             type="button"
             onClick={fillSampleData}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#F4F6F8] hover:bg-[#E2E8F0] text-[#172033] text-xs font-semibold border border-[#D9DEE5] transition cursor-pointer self-start sm:self-auto"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-[11px] bg-[#E8EEF4] hover:bg-[#DCE5EC] text-[#123B5D] text-xs font-bold border border-[#D5DEE7] transition cursor-pointer self-start sm:self-auto shadow-2xs"
             title="Auto-fill sample Bangalore locations for quick testing"
           >
-            <Sparkles className="w-3.5 h-3.5 text-[#D97706]" />
+            <Sparkles className="w-3.5 h-3.5 text-[#00A6A6]" />
             <span>Fill Demo Locations</span>
           </button>
         </div>
@@ -494,25 +494,24 @@ export const CreateShipment = () => {
                 key={s.id}
                 type="button"
                 onClick={() => {
-                  // Only allow clicking steps that are already unlocked
                   if (s.id < currentStep) setCurrentStep(s.id);
                 }}
                 disabled={s.id > currentStep}
-                className={`py-2 px-3 rounded-lg border text-left transition flex items-center gap-2 ${
+                className={`py-2.5 px-3 rounded-xl border text-left transition flex items-center gap-2 ${
                   isCurrent
-                    ? 'border-[#172033] bg-[#172033] text-white shadow-xs'
+                    ? 'border-[#0B1F33] bg-[#0B1F33] text-white shadow-xs'
                     : isCompleted
-                    ? 'border-emerald-200 bg-emerald-50 text-[#15803D] cursor-pointer hover:bg-emerald-100'
-                    : 'border-[#D9DEE5] bg-white text-[#98A2B3] cursor-not-allowed'
+                    ? 'border-[#CCEAE3] bg-[#E7F5F2] text-[#167A56] cursor-pointer hover:bg-[#CCEAE3]/60'
+                    : 'border-[#D5DEE7] bg-[#E8EEF4] text-[#8A9BAA] cursor-not-allowed'
                 }`}
               >
                 <div
                   className={`w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-bold shrink-0 ${
                     isCurrent
-                      ? 'bg-white text-[#172033]'
+                      ? 'bg-[#00A6A6] text-white'
                       : isCompleted
-                      ? 'bg-[#15803D] text-white'
-                      : 'bg-[#F4F6F8] text-[#98A2B3]'
+                      ? 'bg-[#167A56] text-white'
+                      : 'bg-[#D5DEE7] text-[#8A9BAA]'
                   }`}
                 >
                   {isCompleted ? <Check className="w-3 h-3" /> : s.id}
@@ -532,16 +531,16 @@ export const CreateShipment = () => {
         {/* ==================================================== */}
         {currentStep === 1 && (
           <div className="space-y-4">
-            <div className="bg-white rounded-xl border border-[#D9DEE5] p-5 shadow-xs space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-[#D9DEE5]/60">
+            <div className="bg-white rounded-2xl border border-[#CFE1F4] p-5 shadow-2xs space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-[#CFE1F4]">
                 <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 rounded-full bg-emerald-50 text-[#15803D] flex items-center justify-center font-bold text-xs">
+                  <div className="w-6 h-6 rounded-full bg-[#EAF2FA] text-[#245B78] border border-[#CFE1F4] flex items-center justify-center font-bold text-xs">
                     1
                   </div>
-                  <h2 className="text-sm font-bold text-[#172033]">Select Pickup Location</h2>
+                  <h2 className="text-sm font-bold text-[#142B45]">Select Pickup Location</h2>
                 </div>
                 {pickup.confirmed && (
-                  <span className="inline-flex items-center gap-1 text-xs text-[#15803D] font-semibold bg-emerald-50 px-2 py-0.5 rounded-md">
+                  <span className="inline-flex items-center gap-1 text-xs text-[#16875D] font-semibold bg-[#E7F5F2] border border-[#CCEAE3] px-2 py-0.5 rounded-md">
                     <CheckCircle2 className="w-3.5 h-3.5" />
                     Confirmed
                   </span>
@@ -570,20 +569,20 @@ export const CreateShipment = () => {
 
               {/* Resolved Address Details Card */}
               {pickup.latitude ? (
-                <div className="p-4 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] space-y-3">
+                <div className="p-4 rounded-xl bg-[#EAF2FA]/50 border border-[#CFE1F4] space-y-3">
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-start gap-2.5">
-                      <div className="w-7 h-7 rounded-lg bg-emerald-100 text-[#15803D] flex items-center justify-center shrink-0 mt-0.5">
+                      <div className="w-7 h-7 rounded-lg bg-[#245B78] text-white flex items-center justify-center shrink-0 mt-0.5">
                         <MapPin className="w-4 h-4" />
                       </div>
                       <div>
-                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#15803D] block">
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#245B78] block">
                           Selected Pickup Address
                         </span>
-                        <p className="text-sm font-bold text-[#172033] mt-0.5">
+                        <p className="text-sm font-bold text-[#142B45] mt-0.5">
                           {pickup.addressLine || 'Pinned Location'}
                         </p>
-                        <p className="text-xs text-[#667085]">
+                        <p className="text-xs text-[#64748B]">
                           {[pickup.city, pickup.state, pickup.postalCode]
                             .filter(Boolean)
                             .join(', ')}
@@ -594,7 +593,7 @@ export const CreateShipment = () => {
                     <button
                       type="button"
                       onClick={() => setIsEditingPickupAddress(!isEditingPickupAddress)}
-                      className="text-xs text-[#172033] font-semibold hover:underline flex items-center gap-1 shrink-0"
+                      className="text-xs text-[#245B78] font-semibold hover:underline flex items-center gap-1 shrink-0"
                     >
                       <Edit2 className="w-3.5 h-3.5" />
                       <span>{isEditingPickupAddress ? 'Done' : 'Edit Fields'}</span>
@@ -603,9 +602,9 @@ export const CreateShipment = () => {
 
                   {/* Optional address field manual correction accordion */}
                   {isEditingPickupAddress && (
-                    <div className="pt-3 border-t border-[#E2E8F0] grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
+                    <div className="pt-3 border-t border-[#CFE1F4] grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
                       <div className="sm:col-span-3">
-                        <label className="block font-semibold text-[#172033] mb-1">
+                        <label className="block font-semibold text-[#182433] mb-1">
                           Address Line / Street *
                         </label>
                         <input
@@ -614,36 +613,36 @@ export const CreateShipment = () => {
                           onChange={(e) =>
                             setPickup((p) => ({ ...p, addressLine: e.target.value }))
                           }
-                          className="w-full h-9 px-3 rounded-md border border-[#D9DEE5] text-xs bg-white text-[#172033] focus:outline-none focus:border-[#172033]"
+                          className="w-full h-9 px-3 rounded-md border border-[#CFE1F4] text-xs bg-white text-[#182433] focus:outline-none focus:border-[#18A6A0]"
                         />
                       </div>
                       <div>
-                        <label className="block font-semibold text-[#172033] mb-1">City *</label>
+                        <label className="block font-semibold text-[#182433] mb-1">City *</label>
                         <input
                           type="text"
                           value={pickup.city}
                           onChange={(e) => setPickup((p) => ({ ...p, city: e.target.value }))}
-                          className="w-full h-9 px-3 rounded-md border border-[#D9DEE5] text-xs bg-white text-[#172033] focus:outline-none focus:border-[#172033]"
+                          className="w-full h-9 px-3 rounded-md border border-[#CFE1F4] text-xs bg-white text-[#182433] focus:outline-none focus:border-[#18A6A0]"
                         />
                       </div>
                       <div>
-                        <label className="block font-semibold text-[#172033] mb-1">State *</label>
+                        <label className="block font-semibold text-[#182433] mb-1">State *</label>
                         <input
                           type="text"
                           value={pickup.state}
                           onChange={(e) => setPickup((p) => ({ ...p, state: e.target.value }))}
-                          className="w-full h-9 px-3 rounded-md border border-[#D9DEE5] text-xs bg-white text-[#172033] focus:outline-none focus:border-[#172033]"
+                          className="w-full h-9 px-3 rounded-md border border-[#CFE1F4] text-xs bg-white text-[#182433] focus:outline-none focus:border-[#18A6A0]"
                         />
                       </div>
                       <div>
-                        <label className="block font-semibold text-[#172033] mb-1">Postal Code</label>
+                        <label className="block font-semibold text-[#182433] mb-1">Postal Code</label>
                         <input
                           type="text"
                           value={pickup.postalCode}
                           onChange={(e) =>
                             setPickup((p) => ({ ...p, postalCode: e.target.value }))
                           }
-                          className="w-full h-9 px-3 rounded-md border border-[#D9DEE5] text-xs bg-white text-[#172033] focus:outline-none focus:border-[#172033]"
+                          className="w-full h-9 px-3 rounded-md border border-[#CFE1F4] text-xs bg-white text-[#182433] focus:outline-none focus:border-[#18A6A0]"
                         />
                       </div>
                     </div>
@@ -653,7 +652,7 @@ export const CreateShipment = () => {
                     <button
                       type="button"
                       onClick={handleConfirmPickup}
-                      className="px-5 py-2.5 rounded-lg bg-[#15803D] hover:bg-[#166534] text-white font-semibold text-xs transition shadow-xs flex items-center gap-1.5 cursor-pointer"
+                      className="px-5 py-2.5 rounded-[11px] bg-[#00A6A6] hover:bg-[#008F95] text-white font-bold text-xs transition shadow-xs flex items-center gap-1.5 cursor-pointer"
                     >
                       <Check className="w-4 h-4" />
                       <span>Confirm Pickup Location</span>
@@ -661,7 +660,7 @@ export const CreateShipment = () => {
                   </div>
                 </div>
               ) : (
-                <div className="text-center py-6 border border-dashed border-[#D9DEE5] rounded-xl text-xs text-[#667085]">
+                <div className="text-center py-6 border border-dashed border-[#CFE1F4] rounded-xl text-xs text-[#64748B]">
                   Search for an address above or click anywhere on the map to place the pickup pin.
                 </div>
               )}
@@ -674,16 +673,16 @@ export const CreateShipment = () => {
         {/* ==================================================== */}
         {currentStep === 2 && (
           <div className="space-y-4">
-            <div className="bg-white rounded-xl border border-[#D9DEE5] p-5 shadow-xs space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-[#D9DEE5]/60">
+            <div className="bg-white rounded-2xl border border-[#CFEAEF] p-5 shadow-2xs space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-[#CFEAEF]">
                 <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 rounded-full bg-amber-50 text-[#D97706] flex items-center justify-center font-bold text-xs">
+                  <div className="w-6 h-6 rounded-full bg-[#EAF5F8] text-[#126965] border border-[#CFEAEF] flex items-center justify-center font-bold text-xs">
                     2
                   </div>
-                  <h2 className="text-sm font-bold text-[#172033]">Select Drop-off Destination</h2>
+                  <h2 className="text-sm font-bold text-[#142B45]">Select Drop-off Destination</h2>
                 </div>
                 {delivery.confirmed && (
-                  <span className="inline-flex items-center gap-1 text-xs text-[#D97706] font-semibold bg-amber-50 px-2 py-0.5 rounded-md">
+                  <span className="inline-flex items-center gap-1 text-xs text-[#16875D] font-semibold bg-[#E7F5F2] border border-[#CCEAE3] px-2 py-0.5 rounded-md">
                     <CheckCircle2 className="w-3.5 h-3.5" />
                     Confirmed
                   </span>
@@ -713,20 +712,20 @@ export const CreateShipment = () => {
 
               {/* Resolved Drop Address Details Card */}
               {delivery.latitude ? (
-                <div className="p-4 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] space-y-3">
+                <div className="p-4 rounded-xl bg-[#EAF5F8]/50 border border-[#CFEAEF] space-y-3">
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-start gap-2.5">
-                      <div className="w-7 h-7 rounded-lg bg-amber-100 text-[#D97706] flex items-center justify-center shrink-0 mt-0.5">
+                      <div className="w-7 h-7 rounded-lg bg-[#18A6A0] text-white flex items-center justify-center shrink-0 mt-0.5">
                         <MapPin className="w-4 h-4" />
                       </div>
                       <div>
-                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#D97706] block">
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#126965] block">
                           Selected Drop-off Address
                         </span>
-                        <p className="text-sm font-bold text-[#172033] mt-0.5">
+                        <p className="text-sm font-bold text-[#142B45] mt-0.5">
                           {delivery.addressLine || 'Pinned Location'}
                         </p>
-                        <p className="text-xs text-[#667085]">
+                        <p className="text-xs text-[#64748B]">
                           {[delivery.city, delivery.state, delivery.postalCode]
                             .filter(Boolean)
                             .join(', ')}
@@ -737,7 +736,7 @@ export const CreateShipment = () => {
                     <button
                       type="button"
                       onClick={() => setIsEditingDeliveryAddress(!isEditingDeliveryAddress)}
-                      className="text-xs text-[#172033] font-semibold hover:underline flex items-center gap-1 shrink-0"
+                      className="text-xs text-[#126965] font-semibold hover:underline flex items-center gap-1 shrink-0"
                     >
                       <Edit2 className="w-3.5 h-3.5" />
                       <span>{isEditingDeliveryAddress ? 'Done' : 'Edit Fields'}</span>
@@ -746,9 +745,9 @@ export const CreateShipment = () => {
 
                   {/* Optional address field manual correction accordion */}
                   {isEditingDeliveryAddress && (
-                    <div className="pt-3 border-t border-[#E2E8F0] grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
+                    <div className="pt-3 border-t border-[#CFEAEF] grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
                       <div className="sm:col-span-3">
-                        <label className="block font-semibold text-[#172033] mb-1">
+                        <label className="block font-semibold text-[#182433] mb-1">
                           Address Line / Street *
                         </label>
                         <input
@@ -757,36 +756,36 @@ export const CreateShipment = () => {
                           onChange={(e) =>
                             setDelivery((d) => ({ ...d, addressLine: e.target.value }))
                           }
-                          className="w-full h-9 px-3 rounded-md border border-[#D9DEE5] text-xs bg-white text-[#172033] focus:outline-none focus:border-[#172033]"
+                          className="w-full h-9 px-3 rounded-md border border-[#CFEAEF] text-xs bg-white text-[#182433] focus:outline-none focus:border-[#18A6A0]"
                         />
                       </div>
                       <div>
-                        <label className="block font-semibold text-[#172033] mb-1">City *</label>
+                        <label className="block font-semibold text-[#182433] mb-1">City *</label>
                         <input
                           type="text"
                           value={delivery.city}
                           onChange={(e) => setDelivery((d) => ({ ...d, city: e.target.value }))}
-                          className="w-full h-9 px-3 rounded-md border border-[#D9DEE5] text-xs bg-white text-[#172033] focus:outline-none focus:border-[#172033]"
+                          className="w-full h-9 px-3 rounded-md border border-[#CFEAEF] text-xs bg-white text-[#182433] focus:outline-none focus:border-[#18A6A0]"
                         />
                       </div>
                       <div>
-                        <label className="block font-semibold text-[#172033] mb-1">State *</label>
+                        <label className="block font-semibold text-[#182433] mb-1">State *</label>
                         <input
                           type="text"
                           value={delivery.state}
                           onChange={(e) => setDelivery((d) => ({ ...d, state: e.target.value }))}
-                          className="w-full h-9 px-3 rounded-md border border-[#D9DEE5] text-xs bg-white text-[#172033] focus:outline-none focus:border-[#172033]"
+                          className="w-full h-9 px-3 rounded-md border border-[#CFEAEF] text-xs bg-white text-[#182433] focus:outline-none focus:border-[#18A6A0]"
                         />
                       </div>
                       <div>
-                        <label className="block font-semibold text-[#172033] mb-1">Postal Code</label>
+                        <label className="block font-semibold text-[#182433] mb-1">Postal Code</label>
                         <input
                           type="text"
                           value={delivery.postalCode}
                           onChange={(e) =>
                             setDelivery((d) => ({ ...d, postalCode: e.target.value }))
                           }
-                          className="w-full h-9 px-3 rounded-md border border-[#D9DEE5] text-xs bg-white text-[#172033] focus:outline-none focus:border-[#172033]"
+                          className="w-full h-9 px-3 rounded-md border border-[#CFEAEF] text-xs bg-white text-[#182433] focus:outline-none focus:border-[#18A6A0]"
                         />
                       </div>
                     </div>
@@ -796,7 +795,7 @@ export const CreateShipment = () => {
                     <button
                       type="button"
                       onClick={() => setCurrentStep(1)}
-                      className="px-4 py-2 rounded-lg text-xs font-semibold text-[#667085] hover:text-[#172033] transition flex items-center gap-1 cursor-pointer"
+                      className="px-4 py-2 rounded-lg text-xs font-semibold text-[#64748B] hover:text-[#142B45] transition flex items-center gap-1 cursor-pointer"
                     >
                       <ArrowLeft className="w-4 h-4" />
                       <span>Back to Pickup</span>
@@ -805,7 +804,7 @@ export const CreateShipment = () => {
                     <button
                       type="button"
                       onClick={handleConfirmDelivery}
-                      className="px-5 py-2.5 rounded-lg bg-[#D97706] hover:bg-[#B45309] text-white font-semibold text-xs transition shadow-xs flex items-center gap-1.5 cursor-pointer"
+                      className="px-5 py-2.5 rounded-[11px] bg-[#00A6A6] hover:bg-[#008F95] text-white font-bold text-xs transition shadow-xs flex items-center gap-1.5 cursor-pointer"
                     >
                       <Check className="w-4 h-4" />
                       <span>Confirm Drop Location</span>
@@ -813,7 +812,7 @@ export const CreateShipment = () => {
                   </div>
                 </div>
               ) : (
-                <div className="text-center py-6 border border-dashed border-[#D9DEE5] rounded-xl text-xs text-[#667085]">
+                <div className="text-center py-6 border border-dashed border-[#CFEAEF] rounded-xl text-xs text-[#64748B]">
                   Search for destination address above or click on the map to place the drop-off pin.
                 </div>
               )}
@@ -825,17 +824,17 @@ export const CreateShipment = () => {
         {/* STEP 3: PACKAGE DETAILS */}
         {/* ==================================================== */}
         {currentStep === 3 && (
-          <div className="bg-white rounded-xl border border-[#D9DEE5] p-5 shadow-xs space-y-4">
-            <div className="flex items-center gap-2 pb-3 border-b border-[#D9DEE5]/60">
-              <div className="w-6 h-6 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xs">
+          <div className="bg-white rounded-2xl border border-[#DFDAF4] p-5 shadow-2xs space-y-4">
+            <div className="flex items-center gap-2 pb-3 border-b border-[#DFDAF4]">
+              <div className="w-6 h-6 rounded-full bg-[#F1EFFA] text-[#52438F] border border-[#DFDAF4] flex items-center justify-center font-bold text-xs">
                 3
               </div>
-              <h2 className="text-sm font-bold text-[#172033]">Package Information</h2>
+              <h2 className="text-sm font-bold text-[#142B45]">Package Information</h2>
             </div>
 
             <div className="space-y-4 text-xs">
               <div>
-                <label className="block font-semibold text-[#172033] mb-1">
+                <label className="block font-semibold text-[#182433] mb-1">
                   Package Description *
                 </label>
                 <input
@@ -845,13 +844,13 @@ export const CreateShipment = () => {
                     setPackageDetails((p) => ({ ...p, description: e.target.value }))
                   }
                   placeholder="e.g. Legal documents, Laptop accessories, Clothing"
-                  className="w-full h-10 px-3 rounded-lg border border-[#D9DEE5] text-sm text-[#172033] focus:outline-none focus:border-[#172033] focus:ring-1 focus:ring-[#172033]"
+                  className="w-full h-10 px-3 rounded-xl border border-[#DFDAF4] text-sm text-[#182433] focus:outline-none focus:border-[#18A6A0] focus:ring-1 focus:ring-[#18A6A0]"
                   required
                 />
               </div>
 
               <div>
-                <label className="block font-semibold text-[#172033] mb-1">
+                <label className="block font-semibold text-[#182433] mb-1">
                   Weight (in Kilograms) *
                 </label>
                 <input
@@ -863,17 +862,17 @@ export const CreateShipment = () => {
                     setPackageDetails((p) => ({ ...p, weight: e.target.value }))
                   }
                   placeholder="e.g. 1.5"
-                  className="w-full h-10 px-3 rounded-lg border border-[#D9DEE5] text-sm text-[#172033] focus:outline-none focus:border-[#172033] focus:ring-1 focus:ring-[#172033]"
+                  className="w-full h-10 px-3 rounded-xl border border-[#DFDAF4] text-sm text-[#182433] focus:outline-none focus:border-[#18A6A0] focus:ring-1 focus:ring-[#18A6A0]"
                   required
                 />
               </div>
             </div>
 
-            <div className="pt-3 flex items-center justify-between border-t border-[#D9DEE5]/60">
+            <div className="pt-3 flex items-center justify-between border-t border-[#DFDAF4]">
               <button
                 type="button"
                 onClick={() => setCurrentStep(2)}
-                className="px-4 py-2 rounded-lg text-xs font-semibold text-[#667085] hover:text-[#172033] transition flex items-center gap-1 cursor-pointer"
+                className="px-4 py-2 rounded-lg text-xs font-semibold text-[#64748B] hover:text-[#142B45] transition flex items-center gap-1 cursor-pointer"
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span>Back to Drop Location</span>
@@ -882,7 +881,7 @@ export const CreateShipment = () => {
               <button
                 type="button"
                 onClick={handleContinueToReview}
-                className="px-5 py-2.5 rounded-lg bg-[#172033] hover:bg-[#0F172A] text-white font-semibold text-xs transition shadow-xs flex items-center gap-1.5 cursor-pointer"
+                className="px-5 py-2.5 rounded-[11px] bg-[#00A6A6] hover:bg-[#008F95] text-white font-bold text-xs transition shadow-xs flex items-center gap-1.5 cursor-pointer"
               >
                 <span>Review Shipment</span>
                 <ArrowRight className="w-4 h-4" />
@@ -897,31 +896,31 @@ export const CreateShipment = () => {
         {currentStep === 4 && (
           <div className="space-y-5">
             {/* Map Preview with OSRM Road Route */}
-            <div className="bg-white rounded-xl border border-[#D9DEE5] p-5 shadow-xs space-y-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#D9DEE5]/60">
+            <div className="bg-white rounded-2xl border border-[#DCE5EF] p-5 shadow-2xs space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#DCE5EF]">
                 <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 rounded-full bg-emerald-50 text-[#15803D] flex items-center justify-center font-bold text-xs">
+                  <div className="w-6 h-6 rounded-full bg-[#E7F5F2] text-[#16875D] border border-[#CCEAE3] flex items-center justify-center font-bold text-xs">
                     4
                   </div>
-                  <h2 className="text-sm font-bold text-[#172033]">
+                  <h2 className="text-sm font-bold text-[#142B45]">
                     Review Delivery Route & Details
                   </h2>
                 </div>
 
                 {/* Route statistics badge */}
                 {isLoadingRoute ? (
-                  <div className="flex items-center gap-1.5 text-xs text-[#667085]">
+                  <div className="flex items-center gap-1.5 text-xs text-[#64748B]">
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
                     <span>Calculating road route...</span>
                   </div>
                 ) : routeData ? (
-                  <div className="flex items-center gap-3 text-xs">
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-blue-50 text-blue-700 font-semibold border border-blue-100">
+                  <div className="flex items-center gap-2 text-xs">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#EAF5F8] text-[#126965] font-semibold border border-[#CFEAEF]">
                       <Route className="w-3.5 h-3.5" />
                       {routeData.distanceKm} km
                     </span>
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-slate-50 text-[#172033] font-semibold border border-[#D9DEE5]">
-                      <Clock className="w-3.5 h-3.5 text-[#667085]" />
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#FFF4E8] text-[#9A5D12] font-semibold border border-[#FCE3C8]">
+                      <Clock className="w-3.5 h-3.5 text-[#D99024]" />
                       ~{routeData.durationMinutes} mins drive
                     </span>
                   </div>
@@ -929,15 +928,15 @@ export const CreateShipment = () => {
               </div>
 
               {routeError && (
-                <div className="p-3 rounded-lg bg-amber-50 border border-amber-200 text-xs text-amber-800 flex items-center justify-between">
+                <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-800 flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <AlertCircle className="w-4 h-4 text-[#D97706] shrink-0" />
+                    <AlertCircle className="w-4 h-4 text-[#D99024] shrink-0" />
                     <span>{routeError}</span>
                   </div>
                   <button
                     type="button"
                     onClick={fetchRoutePreview}
-                    className="font-semibold underline hover:text-[#B45309] ml-2 cursor-pointer"
+                    className="font-semibold underline hover:text-amber-900 ml-2 cursor-pointer"
                   >
                     Retry
                   </button>
@@ -956,58 +955,58 @@ export const CreateShipment = () => {
               {/* Review Summary Cards */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
                 {/* Pickup summary */}
-                <div className="p-4 rounded-xl border border-[#D9DEE5] bg-[#F8FAFC] relative">
+                <div className="p-4 rounded-xl border border-[#CFE1F4] bg-[#EAF2FA]/60 relative">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#15803D] flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-[#15803D]"></span>
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#245B78] flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-[#245B78]"></span>
                       Origin (Pickup)
                     </span>
                     <button
                       type="button"
                       onClick={() => setCurrentStep(1)}
-                      className="text-xs text-[#172033] font-semibold hover:underline flex items-center gap-1 cursor-pointer"
+                      className="text-xs text-[#245B78] font-semibold hover:underline flex items-center gap-1 cursor-pointer"
                     >
                       <Edit2 className="w-3 h-3" />
                       <span>Edit</span>
                     </button>
                   </div>
-                  <p className="text-xs font-bold text-[#172033]">{pickup.addressLine}</p>
-                  <p className="text-[11px] text-[#667085] mt-0.5">
+                  <p className="text-xs font-bold text-[#142B45]">{pickup.addressLine}</p>
+                  <p className="text-[11px] text-[#64748B] mt-0.5">
                     {[pickup.city, pickup.state, pickup.postalCode].filter(Boolean).join(', ')}
                   </p>
                 </div>
 
                 {/* Drop-off summary */}
-                <div className="p-4 rounded-xl border border-[#D9DEE5] bg-[#F8FAFC] relative">
+                <div className="p-4 rounded-xl border border-[#CFEAEF] bg-[#EAF5F8]/60 relative">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#D97706] flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-[#D97706]"></span>
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#126965] flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-[#18A6A0]"></span>
                       Destination (Drop-off)
                     </span>
                     <button
                       type="button"
                       onClick={() => setCurrentStep(2)}
-                      className="text-xs text-[#172033] font-semibold hover:underline flex items-center gap-1 cursor-pointer"
+                      className="text-xs text-[#126965] font-semibold hover:underline flex items-center gap-1 cursor-pointer"
                     >
                       <Edit2 className="w-3 h-3" />
                       <span>Edit</span>
                     </button>
                   </div>
-                  <p className="text-xs font-bold text-[#172033]">{delivery.addressLine}</p>
-                  <p className="text-[11px] text-[#667085] mt-0.5">
+                  <p className="text-xs font-bold text-[#142B45]">{delivery.addressLine}</p>
+                  <p className="text-[11px] text-[#64748B] mt-0.5">
                     {[delivery.city, delivery.state, delivery.postalCode].filter(Boolean).join(', ')}
                   </p>
                 </div>
 
                 {/* Package summary */}
-                <div className="sm:col-span-2 p-4 rounded-xl border border-[#D9DEE5] bg-white flex items-center justify-between">
+                <div className="sm:col-span-2 p-4 rounded-xl border border-[#DFDAF4] bg-[#F1EFFA]/60 flex items-center justify-between">
                   <div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#667085] block mb-0.5">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#52438F] block mb-0.5">
                       Package Specification
                     </span>
-                    <p className="text-xs font-bold text-[#172033]">
+                    <p className="text-xs font-bold text-[#142B45]">
                       {packageDetails.description}{' '}
-                      <span className="text-[#667085] font-normal">
+                      <span className="text-[#64748B] font-normal">
                         ({packageDetails.weight} kg)
                       </span>
                     </p>
@@ -1015,7 +1014,7 @@ export const CreateShipment = () => {
                   <button
                     type="button"
                     onClick={() => setCurrentStep(3)}
-                    className="text-xs text-[#172033] font-semibold hover:underline flex items-center gap-1 cursor-pointer"
+                    className="text-xs text-[#52438F] font-semibold hover:underline flex items-center gap-1 cursor-pointer"
                   >
                     <Edit2 className="w-3 h-3" />
                     <span>Edit</span>
@@ -1024,12 +1023,12 @@ export const CreateShipment = () => {
               </div>
 
               {/* Submit Button */}
-              <div className="pt-4 flex items-center justify-between border-t border-[#D9DEE5]/60">
+              <div className="pt-4 flex items-center justify-between border-t border-[#DCE5EF]">
                 <button
                   type="button"
                   onClick={() => setCurrentStep(3)}
                   disabled={submitting}
-                  className="px-4 py-2.5 rounded-lg text-xs font-semibold text-[#667085] hover:text-[#172033] transition flex items-center gap-1 cursor-pointer disabled:opacity-50"
+                  className="px-4 py-2.5 rounded-xl text-xs font-semibold text-[#64748B] hover:text-[#142B45] transition flex items-center gap-1 cursor-pointer disabled:opacity-50"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   <span>Back to Package</span>
@@ -1039,7 +1038,7 @@ export const CreateShipment = () => {
                   type="button"
                   onClick={handleCreateShipment}
                   disabled={submitting}
-                  className="px-6 py-3 rounded-lg bg-[#172033] hover:bg-[#0F172A] text-white font-bold text-xs transition shadow-md flex items-center gap-2 cursor-pointer disabled:opacity-60"
+                  className="px-6 py-3 rounded-[11px] bg-[#00A6A6] hover:bg-[#008F95] text-white font-bold text-xs transition shadow-xs flex items-center gap-2 cursor-pointer disabled:opacity-60"
                 >
                   {submitting ? (
                     <>

@@ -88,21 +88,21 @@ const AssignCourierModal = ({ isOpen, onClose, shipment, onSuccess }) => {
           </div>
         )}
 
-        <div className="bg-[#F4F6F8] p-3.5 rounded-lg text-xs space-y-1.5 border border-[#D9DEE5]">
+        <div className="bg-[#F4F6F8] p-4 rounded-xl text-xs space-y-2 border border-[#E2E8F0]">
           <div className="flex justify-between">
-            <span className="text-[#667085]">Destination:</span>
-            <span className="font-semibold text-[#172033]">
+            <span className="text-[#718096]">Destination:</span>
+            <span className="font-semibold text-[#142B45]">
               {shipment?.deliveryAddress?.city || '—'}, {shipment?.deliveryAddress?.state || '—'}
             </span>
           </div>
           <div className="flex justify-between">
-            <span className="text-[#667085]">Current Status:</span>
-            <span className="font-semibold text-[#172033]">{shipment?.status || 'Pending'}</span>
+            <span className="text-[#718096]">Current Status:</span>
+            <span className="font-semibold text-[#142B45]">{shipment?.status || 'Pending'}</span>
           </div>
           {shipment?.courierId && (
-            <div className="flex justify-between pt-1 border-t border-[#D9DEE5]/60">
-              <span className="text-[#667085]">Currently Assigned:</span>
-              <span className="font-semibold text-[#172033]">
+            <div className="flex justify-between pt-1.5 border-t border-[#E2E8F0]">
+              <span className="text-[#718096]">Currently Assigned:</span>
+              <span className="font-semibold text-[#142B45]">
                 {shipment.courierId.name || 'Assigned Courier'}
               </span>
             </div>
@@ -110,13 +110,13 @@ const AssignCourierModal = ({ isOpen, onClose, shipment, onSuccess }) => {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-[#172033] mb-1.5 uppercase tracking-wider">
+          <label className="block text-xs font-bold text-[#142B45] mb-1.5 uppercase tracking-wider">
             {isReassign ? 'Select New Courier' : 'Select Active Courier'}
           </label>
           {loading ? (
-            <div className="py-2 text-xs text-[#667085]">Loading couriers list...</div>
+            <div className="py-2 text-xs text-[#718096]">Loading couriers list...</div>
           ) : couriers.length === 0 ? (
-            <div className="py-2 text-xs text-[#D97706]">
+            <div className="py-2 text-xs text-[#E6A23C]">
               No registered couriers found in system.
             </div>
           ) : (
@@ -124,7 +124,7 @@ const AssignCourierModal = ({ isOpen, onClose, shipment, onSuccess }) => {
               value={selectedCourierId}
               onChange={(e) => setSelectedCourierId(e.target.value)}
               disabled={submitting}
-              className="w-full h-10 px-3 rounded-lg border border-[#D9DEE5] text-sm text-[#172033] bg-white focus:outline-none focus:border-[#172033] focus:ring-1 focus:ring-[#172033] disabled:bg-gray-100"
+              className="w-full h-11 px-3.5 rounded-xl border border-[#E2E8F0] text-sm text-[#182433] bg-white focus:outline-none focus:border-[#18A6A0] focus:ring-2 focus:ring-[#18A6A0]/15 disabled:bg-gray-100 cursor-pointer"
             >
               <option value="">-- Choose a courier --</option>
               {couriers.map((c) => (
@@ -136,19 +136,19 @@ const AssignCourierModal = ({ isOpen, onClose, shipment, onSuccess }) => {
           )}
         </div>
 
-        <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-[#D9DEE5]">
+        <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-[#E2E8F0]">
           <button
             type="button"
             onClick={onClose}
             disabled={submitting}
-            className="px-3.5 py-2 text-xs font-semibold text-[#667085] hover:text-[#172033] hover:bg-[#F4F6F8] rounded-lg transition cursor-pointer disabled:opacity-50"
+            className="px-4 py-2 text-xs font-semibold text-[#718096] hover:text-[#142B45] hover:bg-[#F4F6F8] rounded-xl transition cursor-pointer disabled:opacity-50"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={submitting || loading || couriers.length === 0 || !selectedCourierId}
-            className="px-4 py-2 text-xs font-semibold text-white bg-[#172033] hover:bg-[#0F172A] rounded-lg transition flex items-center gap-1.5 disabled:opacity-50 cursor-pointer shadow-xs"
+            className="px-5 py-2 text-xs font-bold text-white bg-[#142B45] hover:bg-[#245B78] rounded-xl transition flex items-center gap-1.5 disabled:opacity-50 cursor-pointer shadow-xs"
           >
             {submitting ? (
               <>

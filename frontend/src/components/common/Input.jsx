@@ -17,32 +17,32 @@ const Input = ({
       {label && (
         <label
           htmlFor={inputId}
-          className="block text-xs font-semibold text-[#17243A] mb-1"
+          className="block text-xs font-bold text-[#142B45] mb-1.5"
         >
-          {label} {required && <span className="text-[#C0392B]">*</span>}
+          {label} {required && <span className="text-[#DC5353]">*</span>}
         </label>
       )}
       <div className="relative">
         {Icon && (
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#65748B]">
+          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#718096]">
             <Icon className="w-4 h-4" />
           </div>
         )}
         <input
           id={inputId}
-          className={`w-full h-10 px-3.5 ${
-            Icon ? 'pl-9' : ''
-          } rounded-lg border text-sm text-[#17243A] bg-white placeholder-[#65748B]/60 transition focus:outline-none ${
+          className={`w-full h-11 px-3.5 ${
+            Icon ? 'pl-10' : ''
+          } rounded-xl border text-sm text-[#182433] bg-white placeholder-[#718096]/60 transition duration-150 focus:outline-none ${
             error
-              ? 'border-[#C0392B] focus:border-[#C0392B] focus:ring-1 focus:ring-[#C0392B]'
-              : 'border-[#E1E7EF] focus:border-[#17243A] focus:ring-1 focus:ring-[#17243A]'
+              ? 'border-[#DC5353] focus:border-[#DC5353] focus:ring-2 focus:ring-[#DC5353]/15'
+              : 'border-[#E2E8F0] focus:border-[#18A6A0] focus:ring-2 focus:ring-[#18A6A0]/15'
           } ${className}`}
           {...props}
         />
       </div>
-      {error && <p className="mt-1 text-xs text-[#C0392B] font-medium">{error}</p>}
+      {error && <p className="mt-1.5 text-xs text-[#DC5353] font-medium">{error}</p>}
       {helperText && !error && (
-        <p className="mt-1 text-[11px] text-[#65748B]">{helperText}</p>
+        <p className="mt-1 text-[11px] text-[#718096]">{helperText}</p>
       )}
     </div>
   );

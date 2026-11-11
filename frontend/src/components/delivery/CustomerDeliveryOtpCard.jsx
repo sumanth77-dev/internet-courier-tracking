@@ -86,29 +86,29 @@ export const CustomerDeliveryOtpCard = ({ shipment, isOwner = true }) => {
   }
 
   return (
-    <div className="bg-white rounded-xl border border-amber-300 shadow-xs overflow-hidden">
+    <div className="bg-white rounded-2xl border border-amber-300 shadow-2xs overflow-hidden">
       {/* Header */}
-      <div className="px-5 py-3 bg-amber-500/10 border-b border-amber-300/40 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="p-1.5 rounded-lg bg-amber-500/20 text-[#D97706]">
+      <div className="px-5 py-3.5 bg-amber-500/10 border-b border-amber-300/40 flex flex-wrap items-center justify-between gap-2">
+        <div className="flex items-center gap-2.5">
+          <div className="p-2 rounded-xl bg-amber-500/20 text-[#E6A23C]">
             <KeyRound className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="text-xs font-bold text-[#172033] uppercase tracking-wider flex items-center gap-1.5">
+            <h3 className="text-xs font-bold text-[#142B45] uppercase tracking-wider flex items-center gap-1.5">
               <span>Proof of Delivery Verification OTP</span>
-              <span className="px-1.5 py-0.2 rounded-full bg-amber-500 text-white text-[9px] font-bold">
-                DEMO
+              <span className="px-2 py-0.5 rounded-full bg-[#E6A23C] text-white text-[10px] font-bold">
+                SECURE
               </span>
             </h3>
-            <p className="text-[11px] text-[#667085]">
-              Required for courier package handover
+            <p className="text-[11px] text-[#718096]">
+              Required for courier package handover verification
             </p>
           </div>
         </div>
 
         {secondsRemaining > 0 && (
-          <div className="flex items-center gap-1 text-[11px] font-semibold text-[#D97706] bg-amber-100/70 px-2.5 py-1 rounded-full border border-amber-200">
-            <Clock className="w-3 h-3" />
+          <div className="flex items-center gap-1.5 text-xs font-bold text-[#142B45] bg-amber-100/80 px-3 py-1 rounded-full border border-amber-300">
+            <Clock className="w-3.5 h-3.5 text-[#E6A23C]" />
             <span>Valid: {formatTime(secondsRemaining)}</span>
           </div>
         )}
@@ -117,41 +117,42 @@ export const CustomerDeliveryOtpCard = ({ shipment, isOwner = true }) => {
       {/* Body */}
       <div className="p-5 space-y-4">
         {error && (
-          <div className="p-2.5 rounded-lg bg-red-50 border border-red-200 text-xs text-red-700 flex items-start gap-2">
-            <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5 text-red-600" />
+          <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-[#DC5353] flex items-start gap-2">
+            <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
             <span>{error}</span>
           </div>
         )}
 
         {otpData?.otp && secondsRemaining > 0 ? (
-          <div className="space-y-3">
-            <div className="text-center p-4 rounded-xl bg-[#F4F6F8] border border-[#D9DEE5]">
-              <span className="text-xs text-[#667085] font-medium block mb-1">
+          <div className="space-y-3.5">
+            <div className="text-center p-5 rounded-xl bg-[#F4F6F8] border border-[#E2E8F0]">
+              <span className="text-xs text-[#718096] font-semibold block mb-1">
                 Your Delivery Verification OTP
               </span>
-              <div className="flex items-center justify-center gap-2">
-                <span className="font-mono text-3xl sm:text-4xl font-extrabold tracking-widest text-[#172033]">
+              <div className="flex items-center justify-center gap-3">
+                <span className="font-mono text-3xl sm:text-4xl font-black tracking-widest text-[#142B45]">
                   {otpData.otp}
                 </span>
                 <button
                   type="button"
                   onClick={handleCopy}
-                  className="p-2 rounded-lg border border-[#D9DEE5] bg-white hover:bg-gray-50 text-[#172033] transition"
-                  title="Copy OTP"
+                  className="p-2.5 rounded-xl border border-[#E2E8F0] bg-white hover:bg-gray-50 text-[#142B45] transition cursor-pointer shadow-2xs"
+                  title="Copy OTP to clipboard"
+                  aria-label="Copy OTP"
                 >
                   {copied ? (
-                    <Check className="w-4 h-4 text-emerald-600" />
+                    <Check className="w-4 h-4 text-[#16A36A]" />
                   ) : (
-                    <Copy className="w-4 h-4 text-[#667085]" />
+                    <Copy className="w-4 h-4 text-[#718096]" />
                   )}
                 </button>
               </div>
             </div>
 
-            <div className="p-3 rounded-lg bg-amber-50 border border-amber-200 text-xs text-[#263449] flex items-start gap-2">
-              <Info className="w-4 h-4 text-[#D97706] shrink-0 mt-0.5" />
+            <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-xs text-[#182433] flex items-start gap-2.5">
+              <Info className="w-4 h-4 text-[#E6A23C] shrink-0 mt-0.5" />
               <p className="leading-relaxed">
-                <strong>Important:</strong> Provide this 6-digit OTP to the courier when they hand over your package. The courier cannot complete delivery without this OTP.
+                <strong>Important:</strong> Provide this 6-digit OTP to the SkyRoute courier when they arrive at your doorstep. The courier must verify this OTP on their terminal before completing the delivery.
               </p>
             </div>
 
@@ -160,33 +161,33 @@ export const CustomerDeliveryOtpCard = ({ shipment, isOwner = true }) => {
                 type="button"
                 onClick={handleGenerateOtp}
                 disabled={loading}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border border-[#D9DEE5] hover:bg-gray-50 text-[#667085] hover:text-[#172033] transition"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-xl border border-[#E2E8F0] hover:bg-[#F4F6F8] text-[#718096] hover:text-[#142B45] transition cursor-pointer"
               >
-                <RefreshCw className={`w-3 h-3 ${loading ? 'animate-spin' : ''}`} />
+                <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
                 <span>Regenerate OTP</span>
               </button>
             </div>
           </div>
         ) : (
-          <div className="text-center space-y-3 py-2">
-            <p className="text-xs text-[#263449] max-w-md mx-auto leading-relaxed">
-              Your shipment is <strong>Out for Delivery</strong>. Generate your 6-digit delivery OTP below and share it with the courier to securely verify handover.
+          <div className="text-center space-y-3.5 py-3">
+            <p className="text-xs text-[#718096] max-w-md mx-auto leading-relaxed">
+              Your shipment is currently <strong>Out for Delivery</strong>. Generate your 6-digit delivery OTP below and share it with the courier to securely verify handover.
             </p>
 
             <button
               type="button"
               onClick={handleGenerateOtp}
               disabled={loading}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#172033] hover:bg-[#0F172A] text-white text-xs font-semibold shadow-xs transition disabled:opacity-50 cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#142B45] hover:bg-[#245B78] text-white text-xs font-bold shadow-xs transition duration-150 disabled:opacity-50 cursor-pointer"
             >
               {loading ? (
                 <>
-                  <RefreshCw className="w-3.5 h-3.5 animate-spin text-[#D97706]" />
+                  <RefreshCw className="w-3.5 h-3.5 animate-spin text-[#18A6A0]" />
                   <span>Generating Secure OTP...</span>
                 </>
               ) : (
                 <>
-                  <KeyRound className="w-3.5 h-3.5 text-[#D97706]" />
+                  <KeyRound className="w-3.5 h-3.5 text-[#18A6A0]" />
                   <span>Generate Delivery OTP</span>
                 </>
               )}

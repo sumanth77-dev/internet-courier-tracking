@@ -152,18 +152,18 @@ export const ProofOfDeliveryModal = ({
   };
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs overflow-y-auto">
-      <div className="bg-white rounded-2xl border border-[#D9DEE5] shadow-2xl max-w-lg w-full overflow-hidden my-8 animate-in fade-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 bg-[#142B45]/60 backdrop-blur-xs overflow-y-auto">
+      <div className="bg-white rounded-2xl border border-[#E2E8F0] shadow-2xl max-w-lg w-full overflow-hidden my-6 animate-in fade-in zoom-in-95 duration-200">
         {/* Header */}
-        <div className="px-6 py-4 bg-[#172033] text-white flex items-center justify-between">
+        <div className="px-5 sm:px-6 py-4 bg-[#142B45] text-white flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-lg bg-[#D97706]/20 text-[#D97706]">
-              <ShieldCheck className="w-5 h-5 text-[#D97706]" />
+            <div className="p-2 rounded-xl bg-[#245B78] text-[#18A6A0]">
+              <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
               <h2 className="text-sm font-bold text-white">Complete Delivery (POD)</h2>
-              <p className="text-[11px] text-gray-300">
-                Shipment <span className="font-mono font-bold text-amber-400">{shipment.trackingId}</span>
+              <p className="text-[11px] text-slate-300">
+                Shipment <span className="font-mono font-bold text-[#18A6A0]">{shipment.trackingId}</span>
               </p>
             </div>
           </div>
@@ -171,7 +171,7 @@ export const ProofOfDeliveryModal = ({
             type="button"
             onClick={onClose}
             disabled={submitting}
-            className="p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition"
+            className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>

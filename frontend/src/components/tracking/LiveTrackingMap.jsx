@@ -39,7 +39,7 @@ const MapController = ({ centerCoords, zoom, triggerRecenter, onRecenterHandled,
 // Create SVG-based Leaflet DivIcons for Pickup and Delivery pins
 const createAddressIcon = (type = 'pickup') => {
   const isPickup = type === 'pickup';
-  const bgColor = isPickup ? '#15803D' : '#D97706';
+  const bgColor = isPickup ? '#16A36A' : '#18A6A0';
   const label = isPickup ? 'Pickup' : 'Delivery';
 
   return L.divIcon({
@@ -146,7 +146,7 @@ export const LiveTrackingMap = ({
     : trackingPath;
 
   return (
-    <div className="bg-white rounded-xl border border-[#D9DEE5] shadow-xs overflow-hidden flex flex-col">
+    <div className="bg-white rounded-2xl border border-[#E2E8F0] shadow-xs overflow-hidden flex flex-col">
       {/* Header bar */}
       <TrackingHeader
         isLive={isLive}
@@ -204,8 +204,8 @@ export const LiveTrackingMap = ({
                   center={animatedPosition}
                   radius={liveLocation.accuracy}
                   pathOptions={{
-                    color: '#D97706',
-                    fillColor: '#D97706',
+                    color: '#18A6A0',
+                    fillColor: '#18A6A0',
                     fillOpacity: 0.1,
                     weight: 1.5,
                     dashArray: '4, 4',
@@ -223,12 +223,12 @@ export const LiveTrackingMap = ({
             >
               <Popup>
                 <div className="p-1 text-xs">
-                  <div className="font-bold text-[#15803D] flex items-center gap-1.5 mb-1">
+                  <div className="font-bold text-[#16A36A] flex items-center gap-1.5 mb-1">
                     <MapPin className="w-3.5 h-3.5" />
                     <span>Pickup Address (Origin)</span>
                   </div>
-                  <p className="text-[#263449] font-medium">{pickupAddress.addressLine}</p>
-                  <p className="text-[#667085] text-[11px]">
+                  <p className="text-[#182433] font-medium">{pickupAddress.addressLine}</p>
+                  <p className="text-[#718096] text-[11px]">
                     {pickupAddress.city}, {pickupAddress.state} - {pickupAddress.postalCode}
                   </p>
                 </div>
@@ -244,12 +244,12 @@ export const LiveTrackingMap = ({
             >
               <Popup>
                 <div className="p-1 text-xs">
-                  <div className="font-bold text-[#D97706] flex items-center gap-1.5 mb-1">
+                  <div className="font-bold text-[#18A6A0] flex items-center gap-1.5 mb-1">
                     <MapPin className="w-3.5 h-3.5" />
                     <span>Delivery Address (Destination)</span>
                   </div>
-                  <p className="text-[#263449] font-medium">{deliveryAddress.addressLine}</p>
-                  <p className="text-[#667085] text-[11px]">
+                  <p className="text-[#182433] font-medium">{deliveryAddress.addressLine}</p>
+                  <p className="text-[#718096] text-[11px]">
                     {deliveryAddress.city}, {deliveryAddress.state} - {deliveryAddress.postalCode}
                   </p>
                 </div>
@@ -260,12 +260,12 @@ export const LiveTrackingMap = ({
 
         {/* Floating status card if no live location yet */}
         {!animatedPosition && (
-          <div className="absolute top-4 left-4 right-4 sm:right-auto sm:max-w-xs z-[1000] bg-white/95 backdrop-blur-xs p-3 rounded-lg border border-[#D9DEE5] shadow-md text-xs">
-            <div className="flex items-start gap-2">
-              <Info className="w-4 h-4 text-[#D97706] shrink-0 mt-0.5" />
+          <div className="absolute top-4 left-4 right-4 sm:right-auto sm:max-w-xs z-[1000] bg-white/95 backdrop-blur-xs p-3.5 rounded-xl border border-[#E2E8F0] shadow-md text-xs">
+            <div className="flex items-start gap-2.5">
+              <Info className="w-4 h-4 text-[#18A6A0] shrink-0 mt-0.5" />
               <div>
-                <p className="font-semibold text-[#172033]">Waiting for courier's first location</p>
-                <p className="text-[#667085] text-[11px] mt-0.5">
+                <p className="font-semibold text-[#182433]">Waiting for vehicle telemetry</p>
+                <p className="text-[#718096] text-[11px] mt-0.5 leading-relaxed">
                   {fullRoute && fullRoute.length > 0
                     ? 'Road route mapped. The vehicle will appear and smoothly track once coordinates are received.'
                     : 'The map will automatically display and smoothly track the courier vehicle once coordinates are received.'}
@@ -277,14 +277,14 @@ export const LiveTrackingMap = ({
 
         {/* Top-Right Road Telemetry Tag */}
         {routeDistanceKm && (
-          <div className="absolute top-4 right-4 z-[1000] bg-white/95 backdrop-blur-xs px-3 py-1.5 rounded-lg border border-[#D9DEE5] shadow-xs flex items-center gap-3 text-xs">
-            <div className="flex items-center gap-1.5 font-semibold text-[#172033]">
-              <Route className="w-3.5 h-3.5 text-[#D97706]" />
+          <div className="absolute top-4 right-4 z-[1000] bg-white/95 backdrop-blur-xs px-3.5 py-2 rounded-xl border border-[#E2E8F0] shadow-xs flex items-center gap-3 text-xs">
+            <div className="flex items-center gap-1.5 font-semibold text-[#142B45]">
+              <Route className="w-3.5 h-3.5 text-[#18A6A0]" />
               <span>{routeDistanceKm} km</span>
             </div>
             {routeDurationMinutes && (
-              <div className="flex items-center gap-1 text-[#667085] text-[11px] border-l border-[#D9DEE5] pl-2.5">
-                <Clock className="w-3 h-3" />
+              <div className="flex items-center gap-1 text-[#718096] text-[11px] border-l border-[#E2E8F0] pl-2.5">
+                <Clock className="w-3 h-3 text-[#718096]" />
                 <span>~{routeDurationMinutes} min</span>
               </div>
             )}
@@ -293,29 +293,29 @@ export const LiveTrackingMap = ({
       </div>
 
       {/* Footer Info Strip */}
-      <div className="px-4 py-3 bg-[#F4F6F8] border-t border-[#D9DEE5] flex flex-wrap items-center justify-between gap-3 text-xs">
-        <div className="flex items-center gap-2 text-[#263449]">
-          <ShieldCheck className="w-4 h-4 text-emerald-600" />
+      <div className="px-4 py-3 bg-[#F4F6F8] border-t border-[#E2E8F0] flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div className="flex items-center gap-2 text-[#182433]">
+          <ShieldCheck className="w-4 h-4 text-[#16A36A]" />
           <span className="font-medium">
-            {isLive ? 'Courier is actively sharing live road coordinates.' : 'Live GPS telemetry stream.'}
+            {isLive ? 'Courier is actively broadcasting live road coordinates.' : 'Live GPS telemetry stream active.'}
           </span>
         </div>
 
         {animatedPosition && (
-          <div className="flex flex-wrap items-center gap-3 text-[11px] text-[#667085]">
+          <div className="flex flex-wrap items-center gap-3 text-[11px] text-[#718096]">
             <span>
-              Lat: <strong className="text-[#172033] font-mono">{animatedPosition[0].toFixed(6)}</strong>
+              Lat: <strong className="text-[#142B45] font-mono">{animatedPosition[0].toFixed(6)}</strong>
             </span>
             <span>
-              Lng: <strong className="text-[#172033] font-mono">{animatedPosition[1].toFixed(6)}</strong>
+              Lng: <strong className="text-[#142B45] font-mono">{animatedPosition[1].toFixed(6)}</strong>
             </span>
             {liveLocation?.accuracy && (
               <span>
-                GPS accuracy: <strong className="text-[#172033]">±{Math.round(liveLocation.accuracy)} m</strong>
+                GPS accuracy: <strong className="text-[#142B45]">±{Math.round(liveLocation.accuracy)} m</strong>
               </span>
             )}
             <span>
-              Heading: <strong className="text-[#172033]">{Math.round(bearing)}°</strong>
+              Heading: <strong className="text-[#142B45]">{Math.round(bearing)}°</strong>
             </span>
           </div>
         )}
