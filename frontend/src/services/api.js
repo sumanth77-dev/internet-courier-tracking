@@ -1,6 +1,13 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://10.119.68.26:5000/api';
+// Normalize API Base URL:
+// 1. Read VITE_API_URL, fallback to localhost:5000 in dev
+// 2. Strip trailing slashes
+// 3. Ensure it ends with '/api' so that all service calls (/auth/..., /shipments/...) route correctly
+//    even when Vercel environment variable is set without the '/api' suffix
+const rawBase = (import.meta.env.VITE_API_URL || 'http://localhost:5000').trim().replace(/\/+$/, '');
+export const API_ORIGIN = rawBase.replace(/\/api\/?$/, '');
+export const API_BASE_URL = rawBase.endsWith('/api') ? rawBase : `${rawBase}/api`;
 
 const api = axios.create({
   baseURL: API_BASE_URL,

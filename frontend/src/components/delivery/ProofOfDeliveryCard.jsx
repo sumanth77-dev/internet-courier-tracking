@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import api from '../../services/api';
+import api, { API_ORIGIN } from '../../services/api';
 import {
   CheckCircle2,
   ShieldCheck,
@@ -18,12 +18,10 @@ const resolveProofPhotoUrl = (rawUrl) => {
   if (rawUrl.startsWith('http://') || rawUrl.startsWith('https://')) {
     return rawUrl;
   }
-  const rawApiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-  const serverOrigin = rawApiUrl.replace(/\/api\/?$/, '');
   const cleanPath = rawUrl.startsWith('/') ? rawUrl : `/${rawUrl}`;
   const token = localStorage.getItem('authToken');
   const tokenQuery = token ? `?token=${encodeURIComponent(token)}` : '';
-  return `${serverOrigin}${cleanPath}${tokenQuery}`;
+  return `${API_ORIGIN}${cleanPath}${tokenQuery}`;
 };
 
 export const ProofOfDeliveryCard = ({ shipment, initialProof = null }) => {

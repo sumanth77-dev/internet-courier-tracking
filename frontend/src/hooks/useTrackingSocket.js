@@ -1,7 +1,11 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { io } from 'socket.io-client';
 
-const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://10.119.68.26:5000';
+// Normalize socket server URL:
+// 1. Prefer VITE_SOCKET_URL, fallback to VITE_API_URL origin, fallback to localhost:5000 in dev
+// 2. Strip any trailing '/api' and trailing slashes so Socket.IO connects to the root HTTP server
+const rawSocketUrl = (import.meta.env.VITE_SOCKET_URL || import.meta.env.VITE_API_URL || 'http://localhost:5000').trim();
+const SOCKET_URL = rawSocketUrl.replace(/\/api\/?$/, '').replace(/\/+$/, '');
 const THROTTLE_INTERVAL_MS = 2500; // 2.5 seconds throttle to stay comfortably within backend ~1s rate limit
 const ACK_TIMEOUT_MS = 1500; // 1.5s fallback so UI action loops never freeze
 
