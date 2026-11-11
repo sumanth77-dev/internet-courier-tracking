@@ -11,6 +11,7 @@ import {
   User,
   Shield,
   ExternalLink,
+  X,
 } from 'lucide-react';
 
 const Sidebar = ({ onClose, isDrawer = false }) => {
@@ -161,18 +162,34 @@ const Sidebar = ({ onClose, isDrawer = false }) => {
   const RoleIcon = roleMeta.icon;
 
   return (
-    <aside className="w-64 h-full bg-[#0B1F33] border-r border-[#176B87]/30 flex flex-col justify-between shrink-0 select-none text-[#E5EDF5]">
-      <div className="flex flex-col min-h-0">
+    <aside
+      className={`${
+        isDrawer
+          ? 'w-full h-full border-r-0'
+          : 'w-64 h-full border-r border-[#176B87]/30'
+      } bg-[#0B1F33] flex flex-col justify-between shrink-0 select-none text-[#E5EDF5]`}
+    >
+      <div className="flex flex-col min-h-0 flex-1">
         {/* Brand Header */}
-        <div className="h-16 flex items-center px-5 border-b border-[#176B87]/30 bg-[#0B1F33] shrink-0">
+        <div className="h-16 flex items-center justify-between px-4 sm:px-5 border-b border-[#176B87]/30 bg-[#0B1F33] shrink-0">
           <Link
             to="/"
             onClick={onClose}
-            className="flex items-center gap-2 group cursor-pointer hover:opacity-95 transition"
+            className="flex items-center gap-2 group cursor-pointer hover:opacity-95 transition min-w-0"
             title="SkyRoute Home"
           >
             <BrandLogo size="sm" showTagline={true} theme="light" taglineText="Every Delivery. In Sight." />
           </Link>
+          {isDrawer && (
+            <button
+              type="button"
+              onClick={onClose}
+              className="p-1.5 rounded-lg text-[#A8BACB] hover:text-white hover:bg-[#123B5D] transition cursor-pointer shrink-0 -mr-1"
+              aria-label="Close navigation menu"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          )}
         </div>
 
         {/* Navigation Group */}
