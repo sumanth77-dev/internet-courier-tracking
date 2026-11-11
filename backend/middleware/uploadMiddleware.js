@@ -35,6 +35,7 @@ const fileFilter = (req, file, cb) => {
   cb(null, true);
 };
 
+// 5 MB maximum allowed for uploaded file
 const upload = multer({
   storage,
   fileFilter,
@@ -42,6 +43,46 @@ const upload = multer({
     fileSize: 5 * 1024 * 1024, // 5 MB max
   },
 });
+
+/**
+ * Validates actual binary content / magic bytes of uploaded image
+ * Protects against renamed malicious files (e.g. script.js renamed to photo.jpg)
+ */
+const validateImageMagicBytes = (filePath) => {
+  try {
+    const buffer = Buffer.alloc(12);
+    const fd = fs.openSync(filePath, 'r');
+    const bytesRead = fs.readSync(fd, buffer, 0, 12, 0);
+    fs.closeSync(fd);
+
+    if (bytesRead < 4) return false;
+
+    // JPEG: FF D8 FF
+    const isJpeg = buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[2] === 0xff;
+
+    // PNG: 89 50 4E 47 0D 0A 1A 0A
+    const isPng =
+      bytesRead >= 8 &&
+      buffer[0] === 0x89 &&
+      buffer[1] === 0x50 &&
+      buffer[2] === 0x4e &&
+      buffer[3] === 0x47 &&
+      buffer[4] === 0x0d &&
+      buffer[5] === 0x0a &&
+      buffer[6] === 0x1a &&
+      buffer[7] === 0x0a;
+
+    // WebP: RIFF .... WEBP
+    const isWebP =
+      bytesRead >= 12 &&
+      buffer.toString('ascii', 0, 4) === 'RIFF' &&
+      buffer.toString('ascii', 8, 12) === 'WEBP';
+
+    return isJpeg || isPng || isWebP;
+  } catch (err) {
+    return false;
+  }
+};
 
 // Middleware wrapper to return clean JSON error responses instead of HTML error pages
 const handleProofPhotoUpload = (req, res, next) => {
@@ -75,11 +116,31 @@ const handleProofPhotoUpload = (req, res, next) => {
       });
     }
 
+    // Inspect file content magic bytes if file was uploaded
+    if (req.file && req.file.path) {
+      if (!validateImageMagicBytes(req.file.path)) {
+        try {
+          if (fs.existsSync(req.file.path)) {
+            fs.unlinkSync(req.file.path);
+          }
+        } catch (cleanupErr) {
+          console.warn('Failed to delete rejected upload:', cleanupErr.message);
+        }
+
+        return res.status(400).json({
+          success: false,
+          message:
+            'Invalid image content. The uploaded file does not match a valid JPEG, PNG, or WebP binary signature.',
+        });
+      }
+    }
+
     next();
   });
 };
 
 module.exports = {
   handleProofPhotoUpload,
+  validateImageMagicBytes,
   uploadDir,
 };
