@@ -39,9 +39,9 @@ const DashboardLayout = ({ children, title }) => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#F0F3F7] text-[#142B45] flex flex-col lg:flex-row antialiased">
+    <div className="min-h-screen bg-[#F2F0ED] text-[#202020] flex flex-col lg:flex-row antialiased">
       {/* Desktop Sticky Sidebar (Hidden on Mobile/Tablet < 1024px) */}
-      <div className="hidden lg:block h-screen sticky top-0 shrink-0 z-40 w-64 bg-[#0B1F33]">
+      <div className="hidden lg:block h-screen sticky top-0 shrink-0 z-40 w-64 bg-[#171717]">
         <Sidebar isDrawer={false} />
       </div>
 
@@ -50,13 +50,13 @@ const DashboardLayout = ({ children, title }) => {
         <div className="fixed inset-0 z-50 lg:hidden flex" role="dialog" aria-modal="true">
           {/* Smooth Backdrop - Closes drawer on tap */}
           <div
-            className="fixed inset-0 bg-[#0B1F33]/70 backdrop-blur-xs transition-opacity duration-200"
+            className="fixed inset-0 bg-[#171717]/75 backdrop-blur-xs transition-opacity duration-200"
             onClick={() => setMobileSidebarOpen(false)}
             aria-label="Close menu backdrop"
           />
 
           {/* Drawer Panel: Single crisp boundary, responsive width (80-85vw, max 360px), full viewport height */}
-          <div className="relative z-10 w-[82vw] max-w-[360px] h-full h-dvh bg-[#0B1F33] flex flex-col shadow-2xl shadow-black/60 border-r border-[#176B87]/30 overflow-hidden animate-in slide-in-from-left duration-200">
+          <div className="relative z-10 w-[82vw] max-w-[360px] h-full h-dvh bg-[#171717] flex flex-col shadow-2xl shadow-black/80 border-r border-[#303030] overflow-hidden animate-in slide-in-from-left duration-200">
             <Sidebar onClose={() => setMobileSidebarOpen(false)} isDrawer={true} />
           </div>
         </div>

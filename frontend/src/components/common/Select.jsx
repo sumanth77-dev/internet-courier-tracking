@@ -17,17 +17,17 @@ const Select = ({
       {label && (
         <label
           htmlFor={selectId}
-          className="block text-xs font-bold text-[#142B45] mb-1.5"
+          className="block text-xs font-bold text-[#202020] mb-1.5"
         >
-          {label} {required && <span className="text-[#DC5353]">*</span>}
+          {label} {required && <span className="text-[#E45B54]">*</span>}
         </label>
       )}
       <select
         id={selectId}
-        className={`w-full h-11 px-3.5 rounded-xl border text-sm text-[#182433] bg-white transition duration-150 focus:outline-none cursor-pointer ${
+        className={`w-full h-11 px-3.5 rounded-xl border text-sm text-[#202020] bg-white transition duration-150 focus:outline-none cursor-pointer ${
           error
-            ? 'border-[#DC5353] focus:border-[#DC5353] focus:ring-2 focus:ring-[#DC5353]/15'
-            : 'border-[#E2E8F0] focus:border-[#18A6A0] focus:ring-2 focus:ring-[#18A6A0]/15'
+            ? 'border-[#E45B54] focus:border-[#E45B54] focus:ring-2 focus:ring-[#E45B54]/15'
+            : 'border-[#DEDCD8] focus:border-[#FF7547] focus:ring-2 focus:ring-[#FF7547]/15'
         } ${className}`}
         {...props}
       >
@@ -38,7 +38,7 @@ const Select = ({
             </option>
           ))}
       </select>
-      {error && <p className="mt-1.5 text-xs text-[#DC5353] font-medium">{error}</p>}
+      {error && <p className="mt-1.5 text-xs text-[#E45B54] font-medium">{error}</p>}
     </div>
   );
 };

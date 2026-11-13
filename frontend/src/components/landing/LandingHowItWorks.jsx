@@ -4,7 +4,6 @@ import {
   UserCheck,
   Navigation,
   CheckCircle,
-  ArrowRight,
 } from 'lucide-react';
 
 export const LandingHowItWorks = () => {
@@ -48,64 +47,64 @@ export const LandingHowItWorks = () => {
   ];
 
   return (
-    <section id="how-it-works" className="py-16 lg:py-24 bg-[#F0F3F7] border-b border-[#D5DEE7]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="how-it-works" className="py-20 lg:py-28 bg-white border-b border-[#DEDCD8] relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#D5DEE7] mb-3">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#00A6A6]"></span>
-            <span className="text-xs font-bold text-[#142B45] uppercase tracking-wider">
+        <div className="text-center max-w-3xl mx-auto mb-14 lg:mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F2F0ED] border border-[#DEDCD8] mb-3.5 shadow-2xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#FF7547]"></span>
+            <span className="text-xs font-bold text-[#202020] uppercase tracking-wider">
               Workflow Lifecycle
             </span>
           </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#142B45] tracking-tight">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#202020] tracking-tight">
             How SkyRoute Works
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-[#607487] leading-relaxed">
+          <p className="mt-3.5 text-sm sm:text-base text-[#777777] leading-relaxed max-w-2xl mx-auto">
             From initial booking to validated doorstep drop-off, the delivery journey unfolds seamlessly in 4 coordinated steps.
           </p>
         </div>
 
-        {/* 4 Process Steps Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
-          {steps.map((step, idx) => {
+        {/* 4 Process Steps Layout with Dark Charcoal Cards & Coral Orange Indicators */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7 items-stretch">
+          {steps.map((step) => {
             const Icon = step.icon;
             return (
               <div
                 key={step.number}
-                className="bg-white rounded-2xl border border-[#D5DEE7] p-6 relative flex flex-col justify-between shadow-2xs hover:border-[#00A6A6] transition-colors"
+                className="bg-[#242424] text-white rounded-2xl border border-[#383838] p-6 sm:p-7 relative flex flex-col justify-between shadow-md hover:border-[#FF7547] transition duration-200 h-full"
               >
                 <div>
                   {/* Step Number & Icon */}
                   <div className="flex items-center justify-between mb-5">
-                    <span className="text-2xl font-black font-mono text-[#0B1F33]">
+                    <span className="w-10 h-10 rounded-xl bg-[#171717] border border-[#383838] text-[#FF7547] font-black text-sm flex items-center justify-center shadow-xs">
                       {step.number}
                     </span>
-                    <div className="w-10 h-10 rounded-xl bg-[#E8EEF4] text-[#123B5D] flex items-center justify-center">
-                      <Icon className="w-5 h-5 text-[#00A6A6]" />
+                    <div className="w-10 h-10 rounded-xl bg-[#303030] text-[#FF7547] border border-[#414141] flex items-center justify-center shrink-0">
+                      <Icon className="w-5 h-5" />
                     </div>
                   </div>
 
-                  <span className="text-[11px] font-bold text-[#176B87] uppercase tracking-wider block mb-1">
+                  {/* Subtitle & Title */}
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#FF7547] block mb-1">
                     {step.subtitle}
                   </span>
-
-                  <h3 className="text-base font-bold text-[#142B45] mb-2.5">
+                  <h3 className="text-base sm:text-lg font-bold text-white mb-2.5 tracking-tight">
                     {step.title}
                   </h3>
 
-                  <p className="text-xs sm:text-sm text-[#607487] leading-relaxed">
+                  {/* Description */}
+                  <p className="text-xs sm:text-sm text-[#C5C5C5] leading-relaxed mb-4">
                     {step.description}
                   </p>
                 </div>
 
-                <div className="mt-5 pt-3 border-t border-[#D5DEE7] flex items-center justify-between">
-                  <span className="text-[11px] font-semibold text-[#123B5D]">
-                    {step.highlight}
+                {/* Highlight Badge */}
+                <div className="pt-3 border-t border-[#383838] mt-auto">
+                  <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#FF7547] bg-[#FF7547]/10 px-2.5 py-1 rounded-md border border-[#FF7547]/20">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FF7547]"></span>
+                    <span>{step.highlight}</span>
                   </span>
-                  {idx < 3 && (
-                    <ArrowRight className="w-3.5 h-3.5 text-[#8A9BAA] hidden lg:block" />
-                  )}
                 </div>
               </div>
             );

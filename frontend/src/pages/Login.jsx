@@ -101,15 +101,15 @@ const Login = () => {
       {/* Brand Header */}
       <div className="text-center mb-6">
         <div className="flex justify-center mb-2">
-          <BrandLogo size="lg" showTagline={false} />
+          <BrandLogo size="lg" showTagline={false} theme="light" />
         </div>
-        <p className="text-xs text-[#607487] font-medium mt-1">Sign in to your SkyRoute portal</p>
+        <p className="text-xs text-[#929292] font-medium mt-1">Sign in to your SkyRoute portal</p>
       </div>
 
       {/* Shipment Tracking Query Notice */}
       {redirectTrackId && (
-        <div className="mb-4 p-2.5 rounded-xl bg-teal-50 border border-teal-200 flex items-start gap-2 text-xs text-[#142B45]">
-          <MapPin className="w-4 h-4 text-[#00A6A6] shrink-0 mt-0.5" />
+        <div className="mb-4 p-2.5 rounded-xl bg-[#FFF2ED] border border-[#FFD6C9] flex items-start gap-2 text-xs text-[#202020]">
+          <MapPin className="w-4 h-4 text-[#FF7547] shrink-0 mt-0.5" />
           <div className="leading-snug">
             <span className="font-bold">Shipment #{redirectTrackId}: </span>
             Please sign in to securely access live tracking and delivery details.
@@ -119,7 +119,7 @@ const Login = () => {
 
       {/* Portal Selection Tabs */}
       <div className="mb-5">
-        <label className="block text-[11px] font-semibold uppercase tracking-wider text-[#607487] mb-1.5">
+        <label className="block text-[11px] font-bold uppercase tracking-wider text-[#777777] mb-1.5">
           Login as
         </label>
         <div className="grid grid-cols-3 gap-2">
@@ -133,13 +133,13 @@ const Login = () => {
                   setSelectedPortal(portal.id);
                   setError('');
                 }}
-                className={`h-9 px-2 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-1.5 cursor-pointer ${
+                className={`h-9 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer ${
                   isSelected
-                    ? 'bg-[#0B1F33] text-white shadow-xs'
-                    : 'bg-white border border-[#D5DEE7] text-[#607487] hover:bg-[#F0F3F7] hover:text-[#142B45]'
+                    ? 'bg-[#171717] text-white shadow-xs'
+                    : 'bg-white border border-[#DEDCD8] text-[#777777] hover:bg-[#F2F0ED] hover:text-[#202020]'
                 }`}
               >
-                {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-[#00A6A6]"></span>}
+                {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-[#FF7547]"></span>}
                 <span>{portal.label}</span>
               </button>
             );
@@ -149,15 +149,15 @@ const Login = () => {
 
       {/* Error Alert */}
       {error && (
-        <div className="mb-4 p-2.5 rounded-xl bg-red-50 border border-red-200 flex items-start gap-2 text-xs text-[#D64B4B]">
+        <div className="mb-4 p-2.5 rounded-xl bg-[#FDF1F0] border border-[#F8D0CE] flex items-start gap-2 text-xs text-[#E45B54]">
           <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
-          <span className="font-medium">{error}</span>
+          <span className="font-semibold">{error}</span>
         </div>
       )}
 
       {/* Forgot Password Notice */}
       {forgotNotice && (
-        <div className="mb-4 p-2.5 rounded-xl bg-amber-50 border border-amber-200 flex items-start gap-2 text-xs text-[#D99024]">
+        <div className="mb-4 p-2.5 rounded-xl bg-[#FEF7ED] border border-[#FDE3C8] flex items-start gap-2 text-xs text-[#C48429]">
           <HelpCircle className="w-4 h-4 shrink-0 mt-0.5" />
           <span>Password resets are managed by the SkyRoute system administrator.</span>
         </div>
@@ -167,7 +167,7 @@ const Login = () => {
       <form onSubmit={handleSubmit} className="space-y-4" noValidate>
         {/* Email */}
         <div>
-          <label className="block text-xs font-semibold text-[#142B45] mb-1">
+          <label className="block text-xs font-bold text-[#202020] mb-1">
             Email Address
           </label>
           <input
@@ -176,20 +176,20 @@ const Login = () => {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="name@example.com"
             required
-            className="w-full h-11 px-3.5 rounded-xl border border-[#D5DEE7] text-[#142B45] placeholder-[#8A9BAA] text-sm focus:outline-none focus:border-[#00A6A6] focus:ring-1 focus:ring-[#00A6A6] transition bg-white"
+            className="w-full h-11 px-3.5 rounded-xl border border-[#DEDCD8] text-[#202020] placeholder-[#A7A7A7] text-sm focus:outline-none focus:border-[#FF7547] focus:ring-1 focus:ring-[#FF7547] transition bg-white"
           />
         </div>
 
         {/* Password */}
         <div>
           <div className="flex items-center justify-between mb-1">
-            <label className="block text-xs font-semibold text-[#142B45]">
+            <label className="block text-xs font-bold text-[#202020]">
               Password
             </label>
             <button
               type="button"
               onClick={() => setForgotNotice((prev) => !prev)}
-              className="text-xs text-[#00A6A6] hover:text-[#123B5D] font-semibold cursor-pointer"
+              className="text-xs text-[#FF7547] hover:text-[#F06438] font-bold cursor-pointer"
             >
               Forgot password?
             </button>
@@ -201,12 +201,12 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
               required
-              className="w-full h-11 pl-3.5 pr-10 rounded-xl border border-[#D5DEE7] text-[#142B45] placeholder-[#8A9BAA] text-sm focus:outline-none focus:border-[#00A6A6] focus:ring-1 focus:ring-[#00A6A6] transition bg-white"
+              className="w-full h-11 pl-3.5 pr-10 rounded-xl border border-[#DEDCD8] text-[#202020] placeholder-[#A7A7A7] text-sm focus:outline-none focus:border-[#FF7547] focus:ring-1 focus:ring-[#FF7547] transition bg-white"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute inset-y-0 right-0 pr-3 flex items-center text-[#8A9BAA] hover:text-[#142B45] cursor-pointer"
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-[#A7A7A7] hover:text-[#202020] cursor-pointer"
               aria-label={showPassword ? 'Hide password' : 'Show password'}
             >
               {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -214,11 +214,11 @@ const Login = () => {
           </div>
         </div>
 
-        {/* Sign In Button - Bright Teal #00A6A6 */}
+        {/* Sign In Button - Coral Orange #FF7547 */}
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full h-11 rounded-[11px] bg-[#00A6A6] hover:bg-[#008F95] active:scale-[0.99] text-white font-bold text-sm transition duration-150 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer shadow-xs"
+          className="w-full h-11 rounded-xl bg-[#FF7547] hover:bg-[#F06438] active:scale-[0.99] text-white font-bold text-sm transition duration-150 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer shadow-xs"
         >
           {isSubmitting ? (
             <>
@@ -232,11 +232,11 @@ const Login = () => {
       </form>
 
       {/* Switch to Register */}
-      <div className="mt-5 pt-4 border-t border-[#D5DEE7] text-center text-xs text-[#607487]">
+      <div className="mt-5 pt-4 border-t border-[#DEDCD8] text-center text-xs text-[#777777]">
         Don't have an account?{' '}
         <Link
           to="/register"
-          className="font-bold text-[#00A6A6] hover:text-[#0B1F33] transition ml-1"
+          className="font-bold text-[#FF7547] hover:text-[#202020] transition ml-1"
         >
           Register as Customer
         </Link>

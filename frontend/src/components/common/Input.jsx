@@ -17,14 +17,14 @@ const Input = ({
       {label && (
         <label
           htmlFor={inputId}
-          className="block text-xs font-bold text-[#142B45] mb-1.5"
+          className="block text-xs font-bold text-[#202020] mb-1.5"
         >
-          {label} {required && <span className="text-[#DC5353]">*</span>}
+          {label} {required && <span className="text-[#E45B54]">*</span>}
         </label>
       )}
       <div className="relative">
         {Icon && (
-          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#718096]">
+          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#777777]">
             <Icon className="w-4 h-4" />
           </div>
         )}
@@ -32,17 +32,17 @@ const Input = ({
           id={inputId}
           className={`w-full h-11 px-3.5 ${
             Icon ? 'pl-10' : ''
-          } rounded-xl border text-sm text-[#182433] bg-white placeholder-[#718096]/60 transition duration-150 focus:outline-none ${
+          } rounded-xl border text-sm text-[#202020] bg-white placeholder-[#A7A7A7] transition duration-150 focus:outline-none ${
             error
-              ? 'border-[#DC5353] focus:border-[#DC5353] focus:ring-2 focus:ring-[#DC5353]/15'
-              : 'border-[#E2E8F0] focus:border-[#18A6A0] focus:ring-2 focus:ring-[#18A6A0]/15'
+              ? 'border-[#E45B54] focus:border-[#E45B54] focus:ring-2 focus:ring-[#E45B54]/15'
+              : 'border-[#DEDCD8] focus:border-[#FF7547] focus:ring-2 focus:ring-[#FF7547]/15'
           } ${className}`}
           {...props}
         />
       </div>
-      {error && <p className="mt-1.5 text-xs text-[#DC5353] font-medium">{error}</p>}
+      {error && <p className="mt-1.5 text-xs text-[#E45B54] font-medium">{error}</p>}
       {helperText && !error && (
-        <p className="mt-1 text-[11px] text-[#718096]">{helperText}</p>
+        <p className="mt-1 text-[11px] text-[#777777]">{helperText}</p>
       )}
     </div>
   );

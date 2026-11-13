@@ -66,14 +66,14 @@ const AssignedShipments = () => {
           <div className="flex items-center gap-3">
             <Link
               to="/courier"
-              className="p-2.5 rounded-xl border border-[#DCE5EF] bg-white text-[#245B78] hover:text-[#142B45] hover:bg-[#EAF2FA] transition shadow-2xs"
+              className="p-2.5 rounded-xl border border-[#DEDCD8] bg-white text-[#202020] hover:bg-[#F2F0ED] transition shadow-xs"
               aria-label="Back to courier dashboard"
             >
               <ArrowLeft className="w-4 h-4" />
             </Link>
             <div>
-              <h1 className="text-xl font-bold text-[#142B45] tracking-tight">Assigned Deliveries</h1>
-              <p className="text-xs text-[#64748B]">
+              <h1 className="text-xl font-bold text-[#202020] tracking-tight">Assigned Deliveries</h1>
+              <p className="text-xs text-[#777777]">
                 Shipments dispatched to your personal route for collection and delivery.
               </p>
             </div>
@@ -81,9 +81,9 @@ const AssignedShipments = () => {
 
           <button
             onClick={fetchShipments}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-[#142B45] bg-white border border-[#D5DEE7] rounded-xl hover:bg-[#F0F3F7] transition self-start sm:self-auto cursor-pointer shadow-2xs"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-[#202020] bg-white border border-[#DEDCD8] rounded-xl hover:bg-[#F2F0ED] transition self-start sm:self-auto cursor-pointer shadow-xs"
           >
-            <RefreshCw className="w-3.5 h-3.5 text-[#00A6A6]" />
+            <RefreshCw className="w-3.5 h-3.5 text-[#FF7547]" />
             <span>Reload</span>
           </button>
         </div>
@@ -91,25 +91,25 @@ const AssignedShipments = () => {
         {error && <ErrorMessage message={error} onRetry={fetchShipments} />}
 
         {/* Search & Filter Bar */}
-        <div className="bg-white rounded-2xl border border-[#D5DEE7] p-4 sm:p-5 shadow-2xs space-y-3.5">
+        <div className="bg-white rounded-2xl border border-[#DEDCD8] p-4 sm:p-5 shadow-xs space-y-3.5">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
             <div className="relative w-full sm:w-96">
-              <Search className="w-4 h-4 text-[#8A9BAA] absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-[#A7A7A7] absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search Tracking ID, City, Customer..."
-                className="w-full pl-10 pr-4 h-10 text-xs sm:text-sm rounded-xl border border-[#D5DEE7] bg-[#F0F3F7]/60 focus:bg-white focus:outline-none focus:border-[#00A6A6] focus:ring-1 focus:ring-[#00A6A6] text-[#142B45] placeholder-[#8A9BAA] transition"
+                className="w-full pl-10 pr-4 h-10 text-xs sm:text-sm rounded-xl border border-[#DEDCD8] bg-[#F2F0ED] focus:bg-white focus:outline-hidden focus:border-[#FF7547] focus:ring-1 focus:ring-[#FF7547] text-[#202020] placeholder-[#A7A7A7] transition"
               />
             </div>
 
             <div className="flex items-center gap-2 w-full sm:w-auto">
-              <Filter className="w-4 h-4 text-[#8A9BAA] shrink-0" />
+              <Filter className="w-4 h-4 text-[#A7A7A7] shrink-0" />
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="w-full sm:w-auto px-3.5 h-10 text-xs sm:text-sm rounded-xl border border-[#D5DEE7] bg-white text-[#142B45] focus:outline-none focus:border-[#00A6A6] focus:ring-1 focus:ring-[#00A6A6] cursor-pointer transition font-medium"
+                className="w-full sm:w-auto px-3.5 h-10 text-xs sm:text-sm rounded-xl border border-[#DEDCD8] bg-white text-[#202020] focus:outline-hidden focus:border-[#FF7547] focus:ring-1 focus:ring-[#FF7547] cursor-pointer transition font-medium"
               >
                 {STATUS_OPTIONS.map((opt) => (
                   <option key={opt.value} value={opt.value}>
@@ -132,10 +132,10 @@ const AssignedShipments = () => {
                   key={opt.value}
                   type="button"
                   onClick={() => setStatusFilter(opt.value)}
-                  className={`px-3 py-1.5 rounded-lg font-medium whitespace-nowrap transition cursor-pointer text-xs border ${
+                  className={`px-3 py-1.5 rounded-xl font-medium whitespace-nowrap transition cursor-pointer text-xs border ${
                     isActive
-                      ? 'bg-[#0B1F33] text-white border-[#0B1F33] shadow-2xs font-semibold'
-                      : 'bg-[#E8EEF4] text-[#123B5D] hover:bg-white hover:text-[#0B1F33] border-[#D5DEE7]'
+                      ? 'bg-[#171717] text-white border-[#171717] shadow-xs font-semibold'
+                      : 'bg-[#F2F0ED] text-[#202020] hover:bg-white hover:text-[#171717] border-[#DEDCD8]'
                   }`}
                 >
                   {opt.label} ({count})
@@ -147,7 +147,7 @@ const AssignedShipments = () => {
 
         {/* Table / Cards */}
         {loading ? (
-          <div className="bg-white rounded-2xl border border-[#DCE5EF] p-12 shadow-2xs">
+          <div className="bg-white rounded-2xl border border-[#DEDCD8] p-12 shadow-xs">
             <LoadingSpinner message="Retrieving assigned shipments..." />
           </div>
         ) : filteredShipments.length === 0 ? (
@@ -178,15 +178,15 @@ const AssignedShipments = () => {
               <div className="inline-flex items-center justify-end gap-1.5 flex-nowrap whitespace-nowrap">
                 <Link
                   to={`/courier/shipments/${s._id || s.id || s.trackingId}`}
-                  className="h-8 px-3 text-xs font-semibold text-[#142B45] hover:text-[#18A6A0] bg-white border border-[#DCE5EF] hover:bg-[#F0F4F8] rounded-lg transition duration-150 shadow-2xs inline-flex items-center justify-center gap-1.5 whitespace-nowrap"
+                  className="h-8 px-3 text-xs font-semibold text-[#202020] hover:text-[#FF7547] bg-white border border-[#DEDCD8] hover:bg-[#F2F0ED] rounded-xl transition duration-150 shadow-xs inline-flex items-center justify-center gap-1.5 whitespace-nowrap"
                 >
                   View
                 </Link>
                 <Link
                   to={`/courier/simulator?shipmentId=${s._id || s.id || s.trackingId}`}
-                  className="h-8 px-3 text-xs font-semibold text-[#126965] bg-[#EAF5F8] hover:bg-[#CFEAEF] border border-[#CFEAEF] rounded-lg transition duration-150 shadow-2xs inline-flex items-center justify-center gap-1.5 whitespace-nowrap"
+                  className="h-8 px-3 text-xs font-semibold text-[#FF7547] bg-[#FFF2ED] hover:bg-[#FFE5DC] border border-[#FFD6C9] rounded-xl transition duration-150 shadow-xs inline-flex items-center justify-center gap-1.5 whitespace-nowrap"
                 >
-                  <Play className="w-3 h-3 fill-current text-[#18A6A0]" />
+                  <Play className="w-3 h-3 fill-current text-[#FF7547]" />
                   <span>Demo</span>
                 </Link>
               </div>

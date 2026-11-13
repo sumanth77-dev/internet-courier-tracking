@@ -21,7 +21,7 @@ export const LandingPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white text-[#142B45] flex flex-col selection:bg-[#00A6A6]/20 selection:text-[#0B1F33]">
+    <div className="min-h-screen bg-white text-[#202020] flex flex-col selection:bg-[#FF7547]/20 selection:text-[#171717]">
       {/* 1. Header Navigation Bar */}
       <LandingNavbar />
 

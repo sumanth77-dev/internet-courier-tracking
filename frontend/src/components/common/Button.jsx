@@ -2,7 +2,7 @@ import React from 'react';
 
 const Button = ({
   children,
-  variant = 'primary', // 'primary' | 'secondary' | 'accent' | 'danger' | 'ghost'
+  variant = 'primary', // 'primary' | 'secondary' | 'dark' | 'accent' | 'danger' | 'ghost'
   size = 'md', // 'sm' | 'md' | 'lg'
   disabled = false,
   loading = false,
@@ -12,19 +12,21 @@ const Button = ({
   ...props
 }) => {
   const baseStyles =
-    'inline-flex items-center justify-center font-medium rounded-lg transition duration-150 active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer';
+    'inline-flex items-center justify-center font-bold rounded-xl transition duration-150 active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer select-none';
 
   const variants = {
-    primary: 'bg-[#142B45] hover:bg-[#245B78] text-white shadow-xs',
-    accent: 'bg-[#18A6A0] hover:bg-[#18A6A0]/90 text-white shadow-xs',
-    teal: 'bg-[#18A6A0] hover:bg-[#18A6A0]/90 text-white shadow-xs',
-    secondary: 'bg-white hover:bg-[#F5F7FA] text-[#142B45] border border-[#E1E7EF] shadow-xs',
-    danger: 'bg-[#C0392B] hover:bg-[#991B1B] text-white shadow-xs',
-    ghost: 'text-[#65748B] hover:text-[#142B45] hover:bg-[#F5F7FA]',
+    primary: 'bg-[#FF7547] hover:bg-[#F06438] text-white shadow-xs',
+    accent: 'bg-[#FF7547] hover:bg-[#F06438] text-white shadow-xs',
+    teal: 'bg-[#FF7547] hover:bg-[#F06438] text-white shadow-xs',
+    dark: 'bg-[#171717] hover:bg-[#242424] text-white border border-[#303030] shadow-xs',
+    charcoal: 'bg-[#242424] hover:bg-[#303030] text-white border border-[#383838] shadow-xs',
+    secondary: 'bg-white hover:bg-[#E9E7E4] text-[#202020] border border-[#DEDCD8] shadow-xs',
+    danger: 'bg-[#E45B54] hover:bg-[#C74740] text-white shadow-xs',
+    ghost: 'text-[#777777] hover:text-[#202020] hover:bg-[#E9E7E4]',
   };
 
   const sizes = {
-    sm: 'h-8 px-2.5 text-xs gap-1.5',
+    sm: 'h-8 px-3 text-xs gap-1.5',
     md: 'h-10 px-4 text-xs sm:text-sm gap-2',
     lg: 'h-12 px-5 text-sm sm:text-base gap-2.5',
   };

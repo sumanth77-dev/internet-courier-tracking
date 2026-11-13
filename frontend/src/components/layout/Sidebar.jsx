@@ -70,7 +70,6 @@ const Sidebar = ({ onClose, isDrawer = false }) => {
       );
     }
     if (targetPath === '/customer/shipments') {
-      // Must NOT be active on /customer/shipments/create
       if (
         currentPath === '/customer/shipments/create' ||
         currentPath.startsWith('/customer/shipments/create/')
@@ -141,19 +140,22 @@ const Sidebar = ({ onClose, isDrawer = false }) => {
         return {
           label: 'Admin',
           icon: Shield,
-          badgeClass: 'bg-[#543F8C] text-[#DDD6FE] border-[#7C62BC]/40',
+          badgeClass: 'bg-[#303030] text-[#FFFFFF] border-[#414141]',
+          iconColor: 'text-[#FF7547]',
         };
       case 'courier':
         return {
           label: 'Courier',
           icon: Truck,
-          badgeClass: 'bg-[#008F95] text-[#E0F7FA] border-[#00A6A6]/40',
+          badgeClass: 'bg-[#303030] text-[#FFFFFF] border-[#414141]',
+          iconColor: 'text-[#FF7547]',
         };
       default:
         return {
           label: 'Customer',
           icon: Package,
-          badgeClass: 'bg-[#167A56] text-[#D1FAE5] border-[#10B981]/40',
+          badgeClass: 'bg-[#303030] text-[#FFFFFF] border-[#414141]',
+          iconColor: 'text-[#FF7547]',
         };
     }
   };
@@ -166,12 +168,12 @@ const Sidebar = ({ onClose, isDrawer = false }) => {
       className={`${
         isDrawer
           ? 'w-full h-full border-r-0'
-          : 'w-64 h-full border-r border-[#176B87]/30'
-      } bg-[#0B1F33] flex flex-col justify-between shrink-0 select-none text-[#E5EDF5]`}
+          : 'w-64 h-full border-r border-[#303030]'
+      } bg-[#171717] flex flex-col justify-between shrink-0 select-none text-[#FFFFFF]`}
     >
       <div className="flex flex-col min-h-0 flex-1">
         {/* Brand Header */}
-        <div className="h-16 flex items-center justify-between px-4 sm:px-5 border-b border-[#176B87]/30 bg-[#0B1F33] shrink-0">
+        <div className="h-16 flex items-center justify-between px-4 sm:px-5 border-b border-[#303030] bg-[#171717] shrink-0">
           <Link
             to="/"
             onClick={onClose}
@@ -184,7 +186,7 @@ const Sidebar = ({ onClose, isDrawer = false }) => {
             <button
               type="button"
               onClick={onClose}
-              className="p-1.5 rounded-lg text-[#A8BACB] hover:text-white hover:bg-[#123B5D] transition cursor-pointer shrink-0 -mr-1"
+              className="p-1.5 rounded-lg text-[#C5C5C5] hover:text-white hover:bg-[#303030] transition cursor-pointer shrink-0 -mr-1"
               aria-label="Close navigation menu"
             >
               <X className="w-5 h-5" />
@@ -194,7 +196,7 @@ const Sidebar = ({ onClose, isDrawer = false }) => {
 
         {/* Navigation Group */}
         <div className="p-3.5 space-y-1 overflow-y-auto flex-1">
-          <p className="px-3 text-[10px] font-bold uppercase tracking-wider text-[#A8BACB] mb-2">
+          <p className="px-3 text-[10px] font-bold uppercase tracking-wider text-[#929292] mb-2">
             Navigation
           </p>
           <nav className="space-y-1">
@@ -209,20 +211,20 @@ const Sidebar = ({ onClose, isDrawer = false }) => {
                   onClick={onClose}
                   className={`group flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all duration-150 ${
                     isActive
-                      ? 'bg-[#176B87] text-white shadow-xs'
-                      : 'text-[#A8BACB] hover:text-[#E5EDF5] hover:bg-[#123B5D]'
+                      ? 'bg-[#242424] text-white shadow-xs border border-[#383838]'
+                      : 'text-[#C5C5C5] hover:text-white hover:bg-[#242424]'
                   }`}
                 >
                   <div className="flex items-center gap-2.5 truncate">
                     <Icon
                       className={`w-4 h-4 shrink-0 transition-colors ${
-                        isActive ? 'text-[#00A6A6]' : 'text-[#A8BACB] group-hover:text-white'
+                        isActive ? 'text-[#FF7547]' : 'text-[#929292] group-hover:text-white'
                       }`}
                     />
                     <span className="truncate">{item.label}</span>
                   </div>
                   {isActive && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#00A6A6] shrink-0" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FF7547] shrink-0 shadow-[0_0_8px_#FF7547]" />
                   )}
                 </Link>
               );
@@ -230,14 +232,14 @@ const Sidebar = ({ onClose, isDrawer = false }) => {
           </nav>
 
           {/* Quick link to public landing site */}
-          <div className="pt-4 mt-3 border-t border-[#176B87]/30">
+          <div className="pt-4 mt-3 border-t border-[#303030]">
             <Link
               to="/"
               onClick={onClose}
-              className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-[#A8BACB] hover:text-white hover:bg-[#123B5D] transition group"
+              className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium text-[#C5C5C5] hover:text-white hover:bg-[#242424] transition group"
             >
               <span className="flex items-center gap-2">
-                <ExternalLink className="w-3.5 h-3.5 text-[#00A6A6]" />
+                <ExternalLink className="w-3.5 h-3.5 text-[#FF7547]" />
                 <span>SkyRoute Public Home</span>
               </span>
             </Link>
@@ -245,21 +247,21 @@ const Sidebar = ({ onClose, isDrawer = false }) => {
         </div>
       </div>
 
-      {/* User Profile Capsule in Footer - Deep Ocean #123B5D */}
-      <div className="p-3.5 border-t border-[#176B87]/30 bg-[#0B1F33] shrink-0">
-        <div className="flex items-center gap-3 p-2.5 rounded-xl bg-[#123B5D] border border-[#176B87]/40 mb-2.5 shadow-2xs">
-          <div className="w-9 h-9 rounded-xl bg-[#0B1F33] text-[#00A6A6] border border-[#176B87]/50 flex items-center justify-center font-bold text-xs shrink-0 shadow-2xs">
+      {/* User Profile Capsule in Footer */}
+      <div className="p-3.5 border-t border-[#303030] bg-[#171717] shrink-0">
+        <div className="flex items-center gap-3 p-2.5 rounded-xl bg-[#242424] border border-[#383838] mb-2.5 shadow-2xs">
+          <div className="w-9 h-9 rounded-xl bg-[#171717] text-[#FF7547] border border-[#303030] flex items-center justify-center font-bold text-xs shrink-0 shadow-2xs">
             {initials}
           </div>
           <div className="min-w-0 flex-1">
-            <p className="text-xs font-bold text-[#E5EDF5] truncate">
+            <p className="text-xs font-bold text-white truncate">
               {user?.name || 'User'}
             </p>
             <div className="flex items-center gap-1 mt-0.5">
               <span
                 className={`inline-flex items-center gap-1 px-1.5 py-0.2 rounded text-[10px] font-semibold border ${roleMeta.badgeClass}`}
               >
-                <RoleIcon className="w-2.5 h-2.5" />
+                <RoleIcon className={`w-2.5 h-2.5 ${roleMeta.iconColor}`} />
                 <span className="capitalize">{roleMeta.label}</span>
               </span>
             </div>
@@ -268,7 +270,7 @@ const Sidebar = ({ onClose, isDrawer = false }) => {
 
         <button
           onClick={handleLogout}
-          className="w-full flex items-center justify-center gap-2 px-3 py-2 text-xs font-semibold text-[#A8BACB] hover:text-[#D64B4B] bg-[#123B5D] hover:bg-red-950/40 border border-[#176B87]/40 hover:border-red-800/40 rounded-xl transition duration-150 cursor-pointer shadow-2xs"
+          className="w-full flex items-center justify-center gap-2 px-3 py-2 text-xs font-semibold text-[#C5C5C5] hover:text-[#E45B54] bg-[#242424] hover:bg-red-950/30 border border-[#383838] hover:border-red-900/40 rounded-xl transition duration-150 cursor-pointer shadow-2xs"
         >
           <LogOut className="w-3.5 h-3.5" />
           <span>Sign Out</span>

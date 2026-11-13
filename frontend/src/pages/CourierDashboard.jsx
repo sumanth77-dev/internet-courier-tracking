@@ -18,13 +18,10 @@ import {
   RefreshCw,
   Navigation,
   Play,
-  RotateCcw,
   Compass,
-  MapPin,
   Calendar,
   Activity,
   ChevronRight,
-  ShieldCheck,
 } from 'lucide-react';
 
 const CourierDashboard = () => {
@@ -130,23 +127,23 @@ const CourierDashboard = () => {
   return (
     <DashboardLayout title="Courier Dashboard">
       <div className="space-y-6">
-        {/* Deep Ocean Hero Banner */}
-        <div className="bg-[#0B1F33] text-white rounded-[22px] border border-[#176B87]/40 p-5 sm:p-6 shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        {/* Charcoal Hero Banner */}
+        <div className="bg-[#242424] text-white rounded-2xl border border-[#383838] p-5 sm:p-6 shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-start sm:items-center gap-3.5">
-            <div className="w-11 h-11 rounded-xl bg-[#123B5D] text-white border border-[#176B87]/50 flex items-center justify-center shrink-0 shadow-xs">
-              <Truck className="w-5 h-5 text-[#00A6A6]" />
+            <div className="w-11 h-11 rounded-xl bg-[#171717] text-[#FF7547] border border-[#383838] flex items-center justify-center shrink-0 shadow-xs">
+              <Truck className="w-5 h-5 text-[#FF7547]" />
             </div>
             <div>
               <div className="flex items-center gap-2 flex-wrap">
                 <h1 className="text-lg sm:text-xl font-bold text-white tracking-tight">
                   Welcome back, {user?.name || 'Courier Driver'}
                 </h1>
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#145C47] text-[#A7F3D0] border border-[#167A56]/60">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#34D399] animate-pulse"></span>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#EAF7F1] text-[#238259] border border-[#C4E8D8]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#36A879] animate-pulse"></span>
                   Active On Duty
                 </span>
               </div>
-              <p className="text-xs sm:text-sm text-[#DCE5EC] mt-0.5">
+              <p className="text-xs sm:text-sm text-[#C5C5C5] mt-0.5">
                 Manage your assigned delivery route, stream live GPS coordinates, and complete verification.
               </p>
             </div>
@@ -155,7 +152,7 @@ const CourierDashboard = () => {
           <div className="flex items-center gap-2.5 self-start sm:self-auto w-full sm:w-auto">
             <button
               onClick={refreshAll}
-              className="p-2.5 rounded-xl bg-[#123B5D] border border-[#176B87]/60 text-[#DCE5EC] hover:text-white hover:bg-[#176B87] transition cursor-pointer shadow-xs"
+              className="p-2.5 rounded-xl bg-[#171717] border border-[#383838] text-[#C5C5C5] hover:text-white hover:bg-[#303030] transition cursor-pointer shadow-xs"
               title="Refresh Deliveries"
               aria-label="Refresh Deliveries"
             >
@@ -164,7 +161,7 @@ const CourierDashboard = () => {
 
             <Link
               to="/courier/simulator"
-              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-[#00A6A6] hover:bg-[#008F95] text-white text-xs sm:text-sm font-bold rounded-[11px] shadow-sm transition"
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-[#FF7547] hover:bg-[#F06438] text-white text-xs sm:text-sm font-bold rounded-xl shadow-xs transition cursor-pointer"
             >
               <Compass className="w-4 h-4 text-white" />
               <span>GPS Simulator</span>
@@ -178,7 +175,7 @@ const CourierDashboard = () => {
           </div>
         )}
 
-        {/* 5 Summary KPI Cards with Solid Dark Deep Ocean Colors */}
+        {/* 5 Summary KPI Cards */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
           <StatsCard
             title="Assigned"
@@ -221,17 +218,17 @@ const CourierDashboard = () => {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Activity className="w-5 h-5 text-[#18A6A0]" />
+              <Activity className="w-5 h-5 text-[#FF7547]" />
               <div>
-                <h2 className="text-base sm:text-lg font-bold text-[#182433] tracking-tight">
+                <h2 className="text-base sm:text-lg font-bold text-[#202020] tracking-tight">
                   Active Route Deliveries ({activeShipments.length})
                 </h2>
-                <p className="text-xs text-[#718096]">Assigned shipments ready for collection and delivery</p>
+                <p className="text-xs text-[#777777]">Assigned shipments ready for collection and delivery</p>
               </div>
             </div>
             <Link
               to="/courier/shipments"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#18A6A0] hover:text-[#245B78] transition"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#FF7547] hover:text-[#F06438] transition"
             >
               <span>Queue View</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -239,7 +236,7 @@ const CourierDashboard = () => {
           </div>
 
           {loadingActive ? (
-            <div className="bg-white rounded-2xl border border-[#E2E8F0] p-12 shadow-xs">
+            <div className="bg-white rounded-2xl border border-[#DEDCD8] p-12 shadow-xs">
               <LoadingSpinner message="Retrieving assigned deliveries..." />
             </div>
           ) : activeShipments.length === 0 ? (
@@ -263,18 +260,18 @@ const CourierDashboard = () => {
                 return (
                   <div
                     key={shipment._id}
-                    className="bg-white rounded-2xl border border-[#DCE5EF] hover:border-[#18A6A0]/60 p-5 shadow-2xs transition duration-150 flex flex-col justify-between"
+                    className="bg-white rounded-2xl border border-[#DEDCD8] hover:border-[#FF7547]/60 p-5 shadow-xs transition duration-150 flex flex-col justify-between"
                   >
                     <div className="space-y-3.5">
                       {/* Card Header: Tracking ID & Status */}
                       <div className="flex items-start justify-between gap-2">
                         <div className="min-w-0">
-                          <span className="text-[10px] font-semibold text-[#64748B] uppercase tracking-wider block">
+                          <span className="text-[10px] font-semibold text-[#777777] uppercase tracking-wider block">
                             Tracking ID
                           </span>
                           <Link
                             to={`/courier/shipments/${shipment._id}`}
-                            className="font-mono font-bold text-sm text-[#142B45] hover:text-[#18A6A0] transition break-all"
+                            className="font-mono font-bold text-sm text-[#202020] hover:text-[#FF7547] transition break-all"
                           >
                             {shipment.trackingId}
                           </Link>
@@ -283,28 +280,28 @@ const CourierDashboard = () => {
                       </div>
 
                       {/* Route: Origin -> Destination */}
-                      <div className="p-3 bg-[#F0F4F8] rounded-xl border border-[#DCE5EF] text-xs space-y-2">
+                      <div className="p-3 bg-[#F2F0ED] rounded-xl border border-[#DEDCD8] text-xs space-y-2">
                         <div className="flex items-start gap-2">
-                          <div className="w-2 h-2 rounded-full bg-[#142B45] mt-1 shrink-0"></div>
+                          <div className="w-2 h-2 rounded-full bg-[#171717] mt-1 shrink-0"></div>
                           <div>
-                            <span className="text-[10px] text-[#64748B] uppercase block font-semibold">
+                            <span className="text-[10px] text-[#777777] uppercase block font-semibold">
                               Pickup (Origin)
                             </span>
-                            <span className="font-semibold text-[#182433]">
+                            <span className="font-semibold text-[#202020]">
                               {shipment.pickupAddress?.city || 'Origin'}, {shipment.pickupAddress?.state || ''}
                             </span>
                           </div>
                         </div>
 
-                        <div className="border-l border-dashed border-[#CBD5E1] ml-1 pl-3 py-0.5"></div>
+                        <div className="border-l border-dashed border-[#DEDCD8] ml-1 pl-3 py-0.5"></div>
 
                         <div className="flex items-start gap-2">
-                          <div className="w-2 h-2 rounded-full bg-[#18A6A0] mt-1 shrink-0"></div>
+                          <div className="w-2 h-2 rounded-full bg-[#FF7547] mt-1 shrink-0"></div>
                           <div>
-                            <span className="text-[10px] text-[#64748B] uppercase block font-semibold">
+                            <span className="text-[10px] text-[#777777] uppercase block font-semibold">
                               Destination
                             </span>
-                            <span className="font-semibold text-[#182433]">
+                            <span className="font-semibold text-[#202020]">
                               {shipment.deliveryAddress?.city || 'Destination'}, {shipment.deliveryAddress?.state || ''}
                             </span>
                           </div>
@@ -313,26 +310,26 @@ const CourierDashboard = () => {
 
                       {/* Demo / Simulation State if present */}
                       {hasDemo && (
-                        <div className="p-3 bg-[#FFF4E8] rounded-xl border border-[#FCE3C8] text-xs space-y-2">
+                        <div className="p-3 bg-[#FEF7ED] rounded-xl border border-[#FDE3C8] text-xs space-y-2">
                           <div className="flex items-center justify-between">
-                            <span className="inline-flex items-center gap-1 font-bold text-[#9A5D12] text-[11px] uppercase tracking-wide">
-                              <Compass className="w-3.5 h-3.5 text-[#D99024]" />
+                            <span className="inline-flex items-center gap-1 font-bold text-[#C48429] text-[11px] uppercase tracking-wide">
+                              <Compass className="w-3.5 h-3.5 text-[#E9A23B]" />
                               DEMO {isRunning ? '(Broadcasting)' : isPaused ? '(Paused)' : ''}
                             </span>
-                            <span className="font-mono font-bold text-[#9A5D12]">{progress}% complete</span>
+                            <span className="font-mono font-bold text-[#C48429]">{progress}% complete</span>
                           </div>
 
                           {/* Progress Bar */}
-                          <div className="w-full h-1.5 bg-[#FCE3C8] rounded-full overflow-hidden">
+                          <div className="w-full h-1.5 bg-[#FDE3C8] rounded-full overflow-hidden">
                             <div
-                              className="h-full bg-[#D99024] transition-all duration-300 rounded-full"
+                              className="h-full bg-[#E9A23B] transition-all duration-300 rounded-full"
                               style={{ width: `${progress}%` }}
                             />
                           </div>
 
-                          <div className="flex items-center justify-between text-[11px] text-[#7A531A]">
+                          <div className="flex items-center justify-between text-[11px] text-[#777777]">
                             <span>{remainingKm ? `${remainingKm} km remaining` : 'On road route'}</span>
-                            <span className="text-[#64748B]">
+                            <span className="text-[#A7A7A7]">
                               {demoState.lastUpdatedAt
                                 ? new Date(demoState.lastUpdatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
                                 : 'Saved'}
@@ -343,10 +340,10 @@ const CourierDashboard = () => {
                     </div>
 
                     {/* Actions */}
-                    <div className="pt-4 mt-4 border-t border-[#DCE5EF] flex items-center justify-between gap-2 flex-wrap">
+                    <div className="pt-4 mt-4 border-t border-[#DEDCD8] flex items-center justify-between gap-2 flex-wrap">
                       <Link
                         to={`/courier/shipments/${shipment._id}`}
-                        className="px-3 py-1.5 text-xs font-semibold text-[#142B45] hover:text-[#18A6A0] bg-[#F0F4F8] hover:bg-[#EAF2FA] border border-[#DCE5EF] rounded-xl transition shadow-2xs"
+                        className="px-3 py-1.5 text-xs font-semibold text-[#202020] hover:text-[#FF7547] bg-[#F2F0ED] hover:bg-[#E9E7E4] border border-[#DEDCD8] rounded-xl transition shadow-xs"
                       >
                         Details
                       </Link>
@@ -354,9 +351,9 @@ const CourierDashboard = () => {
                       <div className="flex items-center gap-1.5">
                         <Link
                           to={`/courier/simulator?shipmentId=${shipment._id}`}
-                          className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-[#126965] bg-[#EAF5F8] hover:bg-[#CFEAEF] border border-[#CFEAEF] rounded-xl transition shadow-2xs"
+                          className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-[#FF7547] bg-[#FFF2ED] hover:bg-[#FFE5DC] border border-[#FFD6C9] rounded-xl transition shadow-xs"
                         >
-                          <Play className="w-3 h-3 fill-current text-[#18A6A0]" />
+                          <Play className="w-3 h-3 fill-current text-[#FF7547]" />
                           <span>{hasDemo && progress > 0 ? 'Resume' : 'Simulate'}</span>
                         </Link>
 
@@ -365,7 +362,7 @@ const CourierDashboard = () => {
                             setSelectedShipment(shipment);
                             setStatusModalOpen(true);
                           }}
-                          className="px-3 py-1.5 text-xs font-semibold text-white bg-[#142B45] hover:bg-[#245B78] rounded-xl transition cursor-pointer shadow-xs"
+                          className="px-3 py-1.5 text-xs font-semibold text-white bg-[#171717] hover:bg-[#303030] rounded-xl transition cursor-pointer shadow-xs"
                           title="Update status directly"
                         >
                           Advance
@@ -383,18 +380,18 @@ const CourierDashboard = () => {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <CheckCircle className="w-5 h-5 text-[#16A36A]" />
+              <CheckCircle className="w-5 h-5 text-[#36A879]" />
               <div>
-                <h2 className="text-base sm:text-lg font-bold text-[#182433] tracking-tight">
+                <h2 className="text-base sm:text-lg font-bold text-[#202020] tracking-tight">
                   Delivery History ({historyShipments.length})
                 </h2>
-                <p className="text-xs text-[#718096]">Completed and verified shipments in your service log</p>
+                <p className="text-xs text-[#777777]">Completed and verified shipments in your service log</p>
               </div>
             </div>
           </div>
 
           {loadingHistory ? (
-            <div className="bg-white rounded-2xl border border-[#DCE5EF] p-12 shadow-2xs">
+            <div className="bg-white rounded-2xl border border-[#DEDCD8] p-12 shadow-xs">
               <LoadingSpinner message="Retrieving delivery history..." />
             </div>
           ) : historyShipments.length === 0 ? (
@@ -404,12 +401,12 @@ const CourierDashboard = () => {
               description="Completed and delivered shipments will be archived here."
             />
           ) : (
-            <div className="bg-white rounded-2xl border border-[#DCE5EF] overflow-hidden shadow-2xs">
+            <div className="bg-white rounded-2xl border border-[#DEDCD8] overflow-hidden shadow-xs">
               {/* Desktop Table View (>= md) */}
               <div className="hidden md:block overflow-x-auto">
                 <table className="w-full text-left text-xs border-collapse">
                   <thead>
-                    <tr className="bg-[#E9EEF5] text-[#245B78] uppercase text-[11px] font-bold tracking-wider border-b border-[#DCE5EF]">
+                    <tr className="bg-[#E9E7E4] text-[#202020] uppercase text-[11px] font-bold tracking-wider border-b border-[#DEDCD8]">
                       <th className="py-3.5 px-4">Tracking ID</th>
                       <th className="py-3.5 px-4">Route</th>
                       <th className="py-3.5 px-4">Recipient</th>
@@ -418,39 +415,39 @@ const CourierDashboard = () => {
                       <th className="py-3.5 px-4 text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#E2E8F0] text-[#182433]">
+                  <tbody className="divide-y divide-[#DEDCD8] text-[#202020]">
                     {historyShipments.map((s) => {
                       const deliveredTime = s.deliveredAt || s.updatedAt;
                       return (
-                        <tr key={s._id} className="hover:bg-[#F4F6F8]/60 transition">
-                          <td className="py-3.5 px-4 font-mono font-bold text-[#142B45]">
+                        <tr key={s._id} className="hover:bg-[#F2F0ED] transition">
+                          <td className="py-3.5 px-4 font-mono font-bold text-[#202020]">
                             <Link
                               to={`/courier/shipments/${s._id}`}
-                              className="hover:text-[#18A6A0] transition break-all"
+                              className="hover:text-[#FF7547] transition break-all"
                             >
                               {s.trackingId}
                             </Link>
                           </td>
                           <td className="py-3.5 px-4">
-                            <span className="font-semibold text-[#182433]">
+                            <span className="font-semibold text-[#202020]">
                               {s.pickupAddress?.city || 'Origin'}
                             </span>
-                            <span className="mx-1.5 text-[#718096]">→</span>
-                            <span className="font-semibold text-[#182433]">
+                            <span className="mx-1.5 text-[#777777]">→</span>
+                            <span className="font-semibold text-[#202020]">
                               {s.deliveryAddress?.city || 'Destination'}
                             </span>
                           </td>
                           <td className="py-3.5 px-4">
-                            <div className="font-semibold text-[#182433]">
+                            <div className="font-semibold text-[#202020]">
                               {s.customerId?.name || 'Customer'}
                             </div>
-                            <div className="text-[11px] text-[#718096] truncate max-w-[180px]">
+                            <div className="text-[11px] text-[#777777] truncate max-w-[180px]">
                               {s.deliveryAddress?.addressLine}
                             </div>
                           </td>
                           <td className="py-3.5 px-4">
-                            <div className="flex items-center gap-1.5 text-[#718096]">
-                              <Calendar className="w-3.5 h-3.5 text-[#718096]" />
+                            <div className="flex items-center gap-1.5 text-[#777777]">
+                              <Calendar className="w-3.5 h-3.5 text-[#777777]" />
                               <span>{formatDate(deliveredTime)}</span>
                             </div>
                           </td>
@@ -460,7 +457,7 @@ const CourierDashboard = () => {
                           <td className="py-3.5 px-4 text-right">
                             <Link
                               to={`/courier/shipments/${s._id}`}
-                              className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-[#142B45] hover:text-[#18A6A0] bg-white border border-[#E2E8F0] hover:bg-[#F4F6F8] rounded-lg transition shadow-xs"
+                              className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-[#202020] hover:text-[#FF7547] bg-white border border-[#DEDCD8] hover:bg-[#F2F0ED] rounded-xl transition shadow-xs"
                             >
                               <span>Details</span>
                               <ChevronRight className="w-3 h-3" />
@@ -474,7 +471,7 @@ const CourierDashboard = () => {
               </div>
 
               {/* Mobile Card View (< md) */}
-              <div className="md:hidden divide-y divide-[#E2E8F0]">
+              <div className="md:hidden divide-y divide-[#DEDCD8]">
                 {historyShipments.map((s) => {
                   const deliveredTime = s.deliveredAt || s.updatedAt;
                   return (
@@ -483,24 +480,24 @@ const CourierDashboard = () => {
                         <div>
                           <Link
                             to={`/courier/shipments/${s._id}`}
-                            className="font-mono font-bold text-sm text-[#142B45] hover:text-[#18A6A0] transition break-all"
+                            className="font-mono font-bold text-sm text-[#202020] hover:text-[#FF7547] transition break-all"
                           >
                             {s.trackingId}
                           </Link>
-                          <div className="text-xs text-[#718096] mt-0.5">
+                          <div className="text-xs text-[#777777] mt-0.5">
                             {formatDate(deliveredTime)}
                           </div>
                         </div>
                         <StatusBadge status={s.status} size="sm" />
                       </div>
 
-                      <div className="p-2.5 rounded-xl bg-[#F4F6F8] text-xs space-y-1">
-                        <div className="flex items-center gap-1 text-[#182433]">
+                      <div className="p-2.5 rounded-xl bg-[#F2F0ED] text-xs space-y-1">
+                        <div className="flex items-center gap-1 text-[#202020]">
                           <span className="font-semibold">{s.pickupAddress?.city || 'Origin'}</span>
-                          <span className="text-[#718096]">→</span>
+                          <span className="text-[#777777]">→</span>
                           <span className="font-semibold">{s.deliveryAddress?.city || 'Destination'}</span>
                         </div>
-                        <div className="text-[#718096] text-[11px]">
+                        <div className="text-[#777777] text-[11px]">
                           Recipient: {s.customerId?.name || 'Customer'}
                         </div>
                       </div>
@@ -508,7 +505,7 @@ const CourierDashboard = () => {
                       <div className="flex items-center justify-end">
                         <Link
                           to={`/courier/shipments/${s._id}`}
-                          className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-[#142B45] hover:text-[#18A6A0] bg-white border border-[#E2E8F0] rounded-xl transition shadow-xs"
+                          className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-[#202020] hover:text-[#FF7547] bg-white border border-[#DEDCD8] rounded-xl transition shadow-xs"
                         >
                           <span>View Details</span>
                           <ChevronRight className="w-3 h-3" />

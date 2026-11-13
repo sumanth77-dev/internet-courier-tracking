@@ -2,33 +2,35 @@
 @import "tailwindcss";
 
 :root {
-  /* SkyRoute Deep Ocean Official Brand Palette */
-  --midnight-navy: #0B1F33;
-  --deep-ocean: #123B5D;
-  --ocean-blue: #176B87;
-  --deep-teal: #008F95;
-  --bright-teal: #00A6A6;
-  --cool-silver: #DCE5EC;
+  /* SkyRoute Modern Parcel Delivery Official Design Tokens */
+  --primary-black: #171717;
+  --charcoal: #242424;
+  --dark-surface: #303030;
+  --elevated-dark: #383838;
+  --coral-orange: #FF7547;
+  --coral-hover: #F06438;
+  --soft-coral: #FF9878;
 
-  /* Supporting Surfaces */
-  --page-bg: #F0F3F7;
-  --secondary-bg: #E8EEF4;
+  /* Light colors */
+  --page-bg: #F2F0ED;
+  --secondary-bg: #E9E7E4;
   --white-surface: #FFFFFF;
+  --primary-text: #202020;
+  --secondary-text: #777777;
+  --muted-text: #A7A7A7;
+  --border-color: #DEDCD8;
 
-  /* Typography */
-  --primary-text: #142B45;
-  --secondary-text: #607487;
-  --muted-text: #8A9BAA;
-
-  /* Borders & Dividers */
-  --border-color: #D5DEE7;
-  --border-subtle: #E2E8F0;
+  /* Dark-theme text */
+  --primary-text-dark: #FFFFFF;
+  --secondary-text-dark: #C5C5C5;
+  --muted-text-dark: #929292;
+  --dark-border: #414141;
 
   /* Status Tokens */
-  --status-success: #167A56;
-  --status-warning: #D99024;
-  --status-error: #D64B4B;
-  --status-info: #176B87;
+  --status-success: #36A879;
+  --status-warning: #E9A23B;
+  --status-error: #E45B54;
+  --status-info: #6B9FD6;
 
   /* Radius Tokens */
   --radius-panel: 22px;
@@ -47,8 +49,8 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #F0F3F7;
-  color: #142B45;
+  background-color: #F2F0ED;
+  color: #202020;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -67,16 +69,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #E8EEF4;
+  background: #E9E7E4;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #B6C7D6;
+  background: #C5C5C5;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #8A9BAA;
+  background: #929292;
 }
 
 /* Responsive card and map container styling */
@@ -84,7 +86,7 @@ body {
   width: 100%;
   border-radius: 16px;
   overflow: hidden;
-  border: 1px solid #D5DEE7;
+  border: 1px solid #DEDCD8;
 }
 
 /* Safe word break utility for long tracking IDs, addresses and hashes */
@@ -93,17 +95,25 @@ body {
   overflow-wrap: anywhere;
 }
 
-/* Deep Ocean Card Utility */
+/* Modern Parcel Delivery Card Utility */
 .skyroute-card {
   background: #FFFFFF;
-  border: 1px solid #D5DEE7;
+  border: 1px solid #DEDCD8;
   border-radius: 16px;
-  box-shadow: 0 1px 3px 0 rgba(11, 31, 51, 0.04);
+  box-shadow: 0 1px 3px 0 rgba(23, 23, 23, 0.04);
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .skyroute-card:hover {
-  border-color: #B6C7D6;
+  border-color: #C5C5C5;
+}
+
+.skyroute-card-dark {
+  background: #242424;
+  border: 1px solid #383838;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px 0 rgba(23, 23, 23, 0.25);
+  color: #FFFFFF;
 }
 
 /* Leaflet container fixes */

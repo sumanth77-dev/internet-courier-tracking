@@ -5,8 +5,8 @@ import { Eye, UserCheck, RefreshCw } from 'lucide-react';
 const TRACKABLE_STATUSES = ['Assigned', 'Picked Up', 'In Transit', 'Out for Delivery'];
 
 /**
- * Dedicated reusable action container for Admin shipment table rows — Deep Ocean edition.
- * Provides uniform button height (h-8), rounded-[11px] radius, strict no-wrapping,
+ * Dedicated reusable action container for Admin shipment table rows — Modern Parcel Delivery edition.
+ * Provides uniform button height (h-8), rounded-xl radius, strict no-wrapping,
  * and predictable right alignment across all shipment lifecycle states.
  */
 const AdminShipmentActions = ({
@@ -28,16 +28,16 @@ const AdminShipmentActions = ({
       {/* 1. Primary View / Track Action */}
       <Link
         to={`${viewLinkPrefix}/${targetId}`}
-        className={`h-8 px-2.5 sm:px-3 text-xs font-semibold rounded-[11px] transition duration-150 shadow-2xs inline-flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0 ${
+        className={`h-8 px-2.5 sm:px-3 text-xs font-bold rounded-xl transition duration-150 shadow-2xs inline-flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0 ${
           isTrackable
-            ? 'bg-[#E0F7FA] text-[#008F95] hover:bg-[#B2EBF2] border border-[#B2EBF2]'
-            : 'bg-white text-[#142B45] hover:text-[#00A6A6] hover:bg-[#F0F3F7] border border-[#D5DEE7]'
+            ? 'bg-[#FFF2ED] text-[#D95325] hover:bg-[#FFE6DC] border border-[#FFD6C9]'
+            : 'bg-white text-[#202020] hover:text-[#FF7547] hover:bg-[#F2F0ED] border border-[#DEDCD8]'
         }`}
         title={isTrackable ? 'Track live route' : 'View shipment details'}
       >
         {isTrackable ? (
           <>
-            <span className="w-1.5 h-1.5 rounded-full bg-[#00A6A6] animate-pulse shrink-0" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#FF7547] animate-pulse shrink-0" />
             <span>Track</span>
           </>
         ) : (
@@ -53,10 +53,10 @@ const AdminShipmentActions = ({
         <button
           type="button"
           onClick={() => onAssign(shipment)}
-          className={`h-8 px-2.5 sm:px-3 text-xs font-semibold rounded-[11px] transition duration-150 shadow-2xs inline-flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0 cursor-pointer ${
+          className={`h-8 px-2.5 sm:px-3 text-xs font-bold rounded-xl transition duration-150 shadow-2xs inline-flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0 cursor-pointer ${
             isAssigned
-              ? 'bg-[#F1EFFA] text-[#543F8C] hover:bg-[#DFDAF4] border border-[#DFDAF4]'
-              : 'text-white bg-[#0B1F33] hover:bg-[#123B5D] border border-[#0B1F33]'
+              ? 'bg-[#171717] hover:bg-[#242424] text-white border border-[#303030]'
+              : 'text-white bg-[#FF7547] hover:bg-[#F06438] border border-[#FF7547]'
           }`}
           title={isAssigned ? 'Reassign courier' : 'Assign to courier'}
         >
@@ -70,7 +70,7 @@ const AdminShipmentActions = ({
         <button
           type="button"
           onClick={() => onUpdateStatus(shipment)}
-          className="h-8 px-2.5 sm:px-3 text-xs font-semibold text-[#D99024] hover:bg-[#FCE3C8] bg-[#FFF4E8] border border-[#FCE3C8] rounded-[11px] transition duration-150 shadow-2xs inline-flex items-center justify-center gap-1 whitespace-nowrap shrink-0 cursor-pointer"
+          className="h-8 px-2.5 sm:px-3 text-xs font-bold text-[#C48429] hover:bg-[#FDE3C8] bg-[#FEF7ED] border border-[#FDE3C8] rounded-xl transition duration-150 shadow-2xs inline-flex items-center justify-center gap-1 whitespace-nowrap shrink-0 cursor-pointer"
           title="Override shipment status"
         >
           <RefreshCw className="w-3 h-3 shrink-0" />

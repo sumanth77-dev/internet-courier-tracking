@@ -5,8 +5,6 @@ import {
   Users2,
   ShieldCheck,
   CheckCircle2,
-  Cpu,
-  Layers,
 } from 'lucide-react';
 
 export const LandingAbout = () => {
@@ -38,20 +36,20 @@ export const LandingAbout = () => {
   ];
 
   return (
-    <section id="about" className="py-16 lg:py-24 bg-white border-b border-[#D5DEE7]">
+    <section id="about" className="py-16 lg:py-24 bg-white border-b border-[#DEDCD8]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E8EEF4] border border-[#D5DEE7] mb-3">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#00A6A6]"></span>
-            <span className="text-xs font-bold text-[#142B45] uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F2F0ED] border border-[#DEDCD8] mb-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#FF7547]"></span>
+            <span className="text-xs font-bold text-[#202020] uppercase tracking-wider">
               About SkyRoute
             </span>
           </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#142B45] tracking-tight">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#202020] tracking-tight">
             Built for Real-Time Shipment Transparency
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-[#607487] leading-relaxed">
+          <p className="mt-3 text-sm sm:text-base text-[#777777] leading-relaxed">
             SkyRoute is a modern courier tracking and delivery management platform built to provide complete real-time shipment transparency across every stage of parcel transit.
           </p>
         </div>
@@ -63,16 +61,16 @@ export const LandingAbout = () => {
             return (
               <div
                 key={item.title}
-                className="bg-[#F0F3F7] rounded-2xl border border-[#D5DEE7] p-7 flex items-start gap-4 hover:border-[#00A6A6] transition duration-200 shadow-2xs"
+                className="bg-[#F2F0ED] rounded-2xl border border-[#DEDCD8] p-7 flex items-start gap-4 hover:border-[#FF7547] transition duration-200 shadow-2xs"
               >
-                <div className="w-12 h-12 rounded-xl bg-[#0B1F33] text-white flex items-center justify-center shrink-0 shadow-xs">
-                  <Icon className="w-6 h-6 text-[#00A6A6]" />
+                <div className="w-12 h-12 rounded-xl bg-[#171717] text-white flex items-center justify-center shrink-0 shadow-xs border border-[#303030]">
+                  <Icon className="w-6 h-6 text-[#FF7547]" />
                 </div>
                 <div>
-                  <h3 className="text-base font-bold text-[#142B45] mb-1.5">
+                  <h3 className="text-base font-bold text-[#202020] mb-1.5">
                     {item.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-[#607487] leading-relaxed">
+                  <p className="text-xs sm:text-sm text-[#777777] leading-relaxed">
                     {item.description}
                   </p>
                 </div>
@@ -82,17 +80,17 @@ export const LandingAbout = () => {
         </div>
 
         {/* System Summary Banner */}
-        <div className="mt-12 max-w-4xl mx-auto bg-[#0B1F33] text-white rounded-[20px] p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-md">
+        <div className="mt-12 max-w-4xl mx-auto bg-[#171717] text-white rounded-[20px] p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl border border-[#303030]">
           <div className="space-y-1 text-center sm:text-left">
             <h4 className="text-base font-bold text-white">
               Every Delivery. Every Mile. In Sight.
             </h4>
-            <p className="text-xs text-[#DCE5EC]">
+            <p className="text-xs text-[#C5C5C5]">
               From booking and dispatch allocation to live GPS streaming and verified OTP completion.
             </p>
           </div>
-          <div className="flex items-center gap-2 text-xs font-bold text-[#00A6A6] bg-[#123B5D] px-4 py-2 rounded-xl border border-[#176B87] shrink-0">
-            <CheckCircle2 className="w-4 h-4 text-[#00A6A6]" />
+          <div className="flex items-center gap-2 text-xs font-bold text-[#FF7547] bg-[#242424] px-4 py-2 rounded-xl border border-[#383838] shrink-0">
+            <CheckCircle2 className="w-4 h-4 text-[#FF7547]" />
             <span>Operational Integrity Guaranteed</span>
           </div>
         </div>
@@ -102,4 +100,3 @@ export const LandingAbout = () => {
 };
 
 export default LandingAbout;
-

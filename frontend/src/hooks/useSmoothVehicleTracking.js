@@ -42,7 +42,8 @@ const MIN_ANIMATION_DURATION_MS = 1000;
 const DEFAULT_ANIMATION_DURATION_MS = 2500;
 const MAX_ANIMATION_DURATION_MS = 5000;
 const JUMP_DISTANCE_THRESHOLD_METERS = 3000; // Jump without animation if > 3km (GPS teleport/glitch)
-const MIN_DISTANCE_FOR_BEARING_METERS = 1.0; // Min distance to calculate direction change
+const MIN_DISTANCE_FOR_BEARING_METERS = 2.5; // Min distance to calculate direction change (filters stationary jitter)
+const MAX_ACCEPTABLE_ACCURACY_METERS = 150; // Filter out low-accuracy updates if position already established
 
 /**
  * Custom hook for smooth vehicle position and rotation interpolation using requestAnimationFrame
@@ -85,7 +86,17 @@ export const useSmoothVehicleTracking = (incomingLocation) => {
     const newLat = Number(incomingLocation.latitude);
     const newLng = Number(incomingLocation.longitude);
 
-    if (Number.isNaN(newLat) || Number.isNaN(newLng) || newLat < -90 || newLat > 90 || newLng < -180 || newLng > 180) {
+    if (Number.isNaN(newLat) || Number.isNaN(newLng) || newLat < -90 || newLat > 90 || newLng < -180 || newLng > 180 || (Math.abs(newLat) < 0.0001 && Math.abs(newLng) < 0.0001)) {
+      return;
+    }
+
+    // Ignore low-accuracy fixes (> 150m) if an accurate position is already tracked
+    if (
+      incomingLocation.accuracy !== undefined &&
+      incomingLocation.accuracy !== null &&
+      Number(incomingLocation.accuracy) > MAX_ACCEPTABLE_ACCURACY_METERS &&
+      currentPosRef.current
+    ) {
       return;
     }
 

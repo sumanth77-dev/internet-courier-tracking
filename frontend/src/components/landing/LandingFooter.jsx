@@ -22,9 +22,9 @@ export const LandingFooter = () => {
   };
 
   return (
-    <footer id="contact" className="bg-[#0B1F33] text-white border-t border-[#176B87]/30">
+    <footer id="contact" className="bg-[#171717] text-white border-t border-[#303030]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-[#176B87]/40">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-[#303030]">
           {/* Brand Info (col-span-4) */}
           <div className="lg:col-span-4 space-y-4">
             <BrandLogo
@@ -33,11 +33,11 @@ export const LandingFooter = () => {
               theme="light"
               taglineText="Every Delivery. Every Mile. In Sight."
             />
-            <p className="text-xs text-[#DCE5EC] leading-relaxed max-w-sm">
-              SkyRoute is an enterprise-grade real-time courier tracking and delivery management platform engineered for Indian logistics networks, delivering sub-second GPS accuracy and tamper-resistant proof of delivery.
+            <p className="text-xs text-[#C5C5C5] leading-relaxed max-w-sm">
+              SkyRoute is an enterprise-grade real-time courier tracking and delivery management platform engineered for modern logistics networks, delivering sub-second GPS accuracy and tamper-resistant proof of delivery.
             </p>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#123B5D] border border-[#176B87] text-[11px] text-[#00A6A6] font-semibold">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#00A6A6]"></span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#242424] border border-[#383838] text-[11px] text-[#FF7547] font-semibold">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FF7547]"></span>
               <span>100% Cloud-Native Dispatch System</span>
             </div>
           </div>
@@ -47,12 +47,12 @@ export const LandingFooter = () => {
             <h4 className="text-xs font-bold uppercase tracking-wider text-white">
               Platform Navigation
             </h4>
-            <ul className="space-y-2 text-xs text-[#DCE5EC]">
+            <ul className="space-y-2 text-xs text-[#C5C5C5]">
               <li>
                 <a
                   href="#hero"
                   onClick={(e) => handleScrollTo(e, '#hero')}
-                  className="hover:text-[#00A6A6] transition"
+                  className="hover:text-[#FF7547] transition"
                 >
                   Home & Tracking Search
                 </a>
@@ -61,7 +61,7 @@ export const LandingFooter = () => {
                 <a
                   href="#features"
                   onClick={(e) => handleScrollTo(e, '#features')}
-                  className="hover:text-[#00A6A6] transition"
+                  className="hover:text-[#FF7547] transition"
                 >
                   Features & Capabilities
                 </a>
@@ -70,7 +70,7 @@ export const LandingFooter = () => {
                 <a
                   href="#how-it-works"
                   onClick={(e) => handleScrollTo(e, '#how-it-works')}
-                  className="hover:text-[#00A6A6] transition"
+                  className="hover:text-[#FF7547] transition"
                 >
                   How It Works
                 </a>
@@ -79,7 +79,7 @@ export const LandingFooter = () => {
                 <a
                   href="#live-preview"
                   onClick={(e) => handleScrollTo(e, '#live-preview')}
-                  className="hover:text-[#00A6A6] transition"
+                  className="hover:text-[#FF7547] transition"
                 >
                   Interactive Live Tracking Map
                 </a>
@@ -88,7 +88,7 @@ export const LandingFooter = () => {
                 <a
                   href="#benefits"
                   onClick={(e) => handleScrollTo(e, '#benefits')}
-                  className="hover:text-[#00A6A6] transition"
+                  className="hover:text-[#FF7547] transition"
                 >
                   Benefits for Teams & Customers
                 </a>
@@ -97,7 +97,7 @@ export const LandingFooter = () => {
                 <a
                   href="#about"
                   onClick={(e) => handleScrollTo(e, '#about')}
-                  className="hover:text-[#00A6A6] transition"
+                  className="hover:text-[#FF7547] transition"
                 >
                   About SkyRoute
                 </a>
@@ -110,38 +110,38 @@ export const LandingFooter = () => {
             <h4 className="text-xs font-bold uppercase tracking-wider text-white">
               Role Portals
             </h4>
-            <ul className="space-y-2 text-xs text-[#DCE5EC]">
+            <ul className="space-y-2 text-xs text-[#C5C5C5]">
               <li>
                 <Link
                   to="/customer"
-                  className="hover:text-[#00A6A6] transition flex items-center gap-1.5"
+                  className="hover:text-[#FF7547] transition flex items-center gap-1.5"
                 >
-                  <Package className="w-3.5 h-3.5 text-[#00A6A6]" />
+                  <Package className="w-3.5 h-3.5 text-[#FF7547]" />
                   <span>Customer Portal</span>
                 </Link>
               </li>
               <li>
                 <Link
                   to="/courier"
-                  className="hover:text-[#00A6A6] transition flex items-center gap-1.5"
+                  className="hover:text-[#FF7547] transition flex items-center gap-1.5"
                 >
-                  <Truck className="w-3.5 h-3.5 text-[#00A6A6]" />
+                  <Truck className="w-3.5 h-3.5 text-[#FF7547]" />
                   <span>Courier Portal</span>
                 </Link>
               </li>
               <li>
                 <Link
                   to="/admin"
-                  className="hover:text-[#00A6A6] transition flex items-center gap-1.5"
+                  className="hover:text-[#FF7547] transition flex items-center gap-1.5"
                 >
-                  <Shield className="w-3.5 h-3.5 text-[#00A6A6]" />
+                  <Shield className="w-3.5 h-3.5 text-[#FF7547]" />
                   <span>Admin Console</span>
                 </Link>
               </li>
               <li className="pt-1">
                 <Link
                   to="/login"
-                  className="text-white hover:text-[#00A6A6] font-semibold transition"
+                  className="text-white hover:text-[#FF7547] font-semibold transition"
                 >
                   Sign In →
                 </Link>
@@ -149,7 +149,7 @@ export const LandingFooter = () => {
               <li>
                 <Link
                   to="/register"
-                  className="text-[#00A6A6] hover:underline font-semibold transition"
+                  className="text-[#FF7547] hover:underline font-semibold transition"
                 >
                   Register Account →
                 </Link>
@@ -162,20 +162,20 @@ export const LandingFooter = () => {
             <h4 className="text-xs font-bold uppercase tracking-wider text-white">
               Contact & Dispatch HQ
             </h4>
-            <div className="space-y-2.5 text-xs text-[#DCE5EC]">
+            <div className="space-y-2.5 text-xs text-[#C5C5C5]">
               <div className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-[#00A6A6] shrink-0 mt-0.5" />
+                <MapPin className="w-4 h-4 text-[#FF7547] shrink-0 mt-0.5" />
                 <span>
                   SkyRoute Operations Center<br />
                   100 Feet Road, Indiranagar, Bengaluru, Karnataka 560038
                 </span>
               </div>
               <div className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-[#00A6A6] shrink-0" />
+                <Mail className="w-4 h-4 text-[#FF7547] shrink-0" />
                 <span className="font-mono">support@skyroute.in</span>
               </div>
               <div className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-[#00A6A6] shrink-0" />
+                <Phone className="w-4 h-4 text-[#FF7547] shrink-0" />
                 <span>+91 (80) 4567-8900</span>
               </div>
             </div>
@@ -183,14 +183,14 @@ export const LandingFooter = () => {
         </div>
 
         {/* Bottom Copyright & System Notice */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-[#8A9BAA] gap-3">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-[#929292] gap-3">
           <p>© {currentYear} SkyRoute. All rights reserved.</p>
           <div className="flex items-center gap-6">
-            <span className="text-[11px] text-[#DCE5EC]">
+            <span className="text-[11px] text-[#C5C5C5]">
               Every Delivery. Every Mile. In Sight.
             </span>
-            <span className="text-[11px] text-[#8A9BAA] border-l border-[#176B87] pl-6 hidden sm:inline">
-              Deep Ocean Architecture
+            <span className="text-[11px] text-[#929292] border-l border-[#383838] pl-6 hidden sm:inline">
+              Modern Logistics Architecture
             </span>
           </div>
         </div>

@@ -1,51 +1,55 @@
 import React from 'react';
 
 /**
- * SkyRoute Deep Ocean Status Badge.
- * High-legibility status badge with dedicated border, matching text, and glowing status dot.
+ * SkyRoute Modern Parcel Delivery Status Badge.
+ * Follows the official semantic status color tokens:
+ * - Success: #36A879
+ * - Warning: #E9A23B
+ * - Error: #E45B54
+ * - Information / Route: #6B9FD6 / #FF7547
  */
 const STATUS_CONFIG = {
   Pending: {
-    bg: 'bg-[#FFF4E8]',
-    text: 'text-[#D99024]',
-    border: 'border-[#FCE3C8]',
-    dot: 'bg-[#D99024]',
+    bg: 'bg-[#FEF7ED]',
+    text: 'text-[#C48429]',
+    border: 'border-[#FDE3C8]',
+    dot: 'bg-[#E9A23B]',
   },
   Assigned: {
-    bg: 'bg-[#F1EFFA]',
-    text: 'text-[#543F8C]',
-    border: 'border-[#DFDAF4]',
-    dot: 'bg-[#543F8C]',
+    bg: 'bg-[#F2F0ED]',
+    text: 'text-[#202020]',
+    border: 'border-[#DEDCD8]',
+    dot: 'bg-[#777777]',
   },
   'Picked Up': {
-    bg: 'bg-[#E8EEF4]',
-    text: 'text-[#176B87]',
-    border: 'border-[#D5DEE7]',
-    dot: 'bg-[#176B87]',
+    bg: 'bg-[#EFF5FB]',
+    text: 'text-[#4A81BC]',
+    border: 'border-[#CCE0F3]',
+    dot: 'bg-[#6B9FD6]',
   },
   'In Transit': {
-    bg: 'bg-[#E0F7FA]',
-    text: 'text-[#008F95]',
-    border: 'border-[#B2EBF2]',
-    dot: 'bg-[#00A6A6]',
+    bg: 'bg-[#FFF2ED]',
+    text: 'text-[#D95325]',
+    border: 'border-[#FFD6C9]',
+    dot: 'bg-[#FF7547]',
   },
   'Out for Delivery': {
-    bg: 'bg-[#FFF0DC]',
-    text: 'text-[#D99024]',
-    border: 'border-[#F9D6B3]',
-    dot: 'bg-[#D99024]',
+    bg: 'bg-[#FFF2ED]',
+    text: 'text-[#D95325]',
+    border: 'border-[#FFD6C9]',
+    dot: 'bg-[#FF7547]',
   },
   Delivered: {
-    bg: 'bg-[#E7F5F2]',
-    text: 'text-[#167A56]',
-    border: 'border-[#CCEAE3]',
-    dot: 'bg-[#167A56]',
+    bg: 'bg-[#EAF7F1]',
+    text: 'text-[#238259]',
+    border: 'border-[#C4E8D8]',
+    dot: 'bg-[#36A879]',
   },
   Cancelled: {
-    bg: 'bg-[#FDF2F2]',
-    text: 'text-[#D64B4B]',
-    border: 'border-[#F8D2D2]',
-    dot: 'bg-[#D64B4B]',
+    bg: 'bg-[#FDF1F0]',
+    text: 'text-[#C74740]',
+    border: 'border-[#F8D0CE]',
+    dot: 'bg-[#E45B54]',
   },
 };
 

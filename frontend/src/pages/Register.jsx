@@ -97,24 +97,24 @@ const Register = () => {
       {/* Brand Header */}
       <div className="text-center mb-5">
         <div className="flex justify-center mb-2">
-          <BrandLogo size="lg" showTagline={false} />
+          <BrandLogo size="lg" showTagline={false} theme="light" />
         </div>
-        <h1 className="text-base font-bold text-[#142B45] tracking-tight">
+        <h1 className="text-base font-bold text-[#F5F5F5] tracking-tight">
           Create Customer Account
         </h1>
-        <p className="text-xs text-[#607487] mt-1">Start dispatching and tracking your shipments with SkyRoute.</p>
+        <p className="text-xs text-[#929292] mt-1">Start dispatching and tracking your shipments with SkyRoute.</p>
       </div>
 
       {/* Role Note */}
-      <p className="text-[11px] text-[#123B5D] bg-[#E8EEF4] border border-[#D5DEE7] rounded-xl px-3 py-1.5 mb-4 text-center">
+      <p className="text-[11px] text-[#C0C0C0] bg-[#1C1C1C] border border-[#353535] rounded-xl px-3 py-1.5 mb-4 text-center font-medium">
         Customer accounts register here. Courier and Admin credentials are provisioned by SkyRoute dispatch operations.
       </p>
 
       {/* Error Alert */}
       {error && (
-        <div className="mb-4 p-2.5 rounded-xl bg-red-50 border border-red-200 flex items-start gap-2 text-xs text-[#D64B4B]">
+        <div className="mb-4 p-2.5 rounded-xl bg-[#FDF1F0] border border-[#F8D0CE] flex items-start gap-2 text-xs text-[#E45B54]">
           <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
-          <span className="font-medium">{error}</span>
+          <span className="font-semibold">{error}</span>
         </div>
       )}
 
@@ -122,7 +122,7 @@ const Register = () => {
       <form onSubmit={handleSubmit} className="space-y-3.5" noValidate>
         {/* Full Name */}
         <div>
-          <label className="block text-xs font-semibold text-[#142B45] mb-1">
+          <label className="block text-xs font-bold text-[#202020] mb-1">
             Full Name
           </label>
           <input
@@ -132,13 +132,13 @@ const Register = () => {
             onChange={handleChange}
             placeholder="Sumanth Kumar"
             required
-            className="w-full h-10 px-3.5 rounded-xl border border-[#D5DEE7] text-[#142B45] placeholder-[#8A9BAA] text-sm focus:outline-none focus:border-[#00A6A6] focus:ring-1 focus:ring-[#00A6A6] transition bg-white"
+            className="w-full h-10 px-3.5 rounded-xl border border-[#DEDCD8] text-[#202020] placeholder-[#A7A7A7] text-sm focus:outline-none focus:border-[#FF7547] focus:ring-1 focus:ring-[#FF7547] transition bg-white"
           />
         </div>
 
         {/* Email */}
         <div>
-          <label className="block text-xs font-semibold text-[#142B45] mb-1">
+          <label className="block text-xs font-bold text-[#202020] mb-1">
             Email Address
           </label>
           <input
@@ -148,13 +148,13 @@ const Register = () => {
             onChange={handleChange}
             placeholder="name@example.com"
             required
-            className="w-full h-10 px-3.5 rounded-xl border border-[#D5DEE7] text-[#142B45] placeholder-[#8A9BAA] text-sm focus:outline-none focus:border-[#00A6A6] focus:ring-1 focus:ring-[#00A6A6] transition bg-white"
+            className="w-full h-10 px-3.5 rounded-xl border border-[#DEDCD8] text-[#202020] placeholder-[#A7A7A7] text-sm focus:outline-none focus:border-[#FF7547] focus:ring-1 focus:ring-[#FF7547] transition bg-white"
           />
         </div>
 
         {/* Phone */}
         <div>
-          <label className="block text-xs font-semibold text-[#142B45] mb-1">
+          <label className="block text-xs font-bold text-[#202020] mb-1">
             Phone Number
           </label>
           <input
@@ -164,7 +164,7 @@ const Register = () => {
             onChange={handleChange}
             placeholder="9876543210"
             required
-            className="w-full h-10 px-3.5 rounded-xl border border-[#D5DEE7] text-[#142B45] placeholder-[#8A9BAA] text-sm focus:outline-none focus:border-[#00A6A6] focus:ring-1 focus:ring-[#00A6A6] transition bg-white"
+            className="w-full h-10 px-3.5 rounded-xl border border-[#DEDCD8] text-[#202020] placeholder-[#A7A7A7] text-sm focus:outline-none focus:border-[#FF7547] focus:ring-1 focus:ring-[#FF7547] transition bg-white"
           />
         </div>
 
@@ -172,7 +172,7 @@ const Register = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {/* Password */}
           <div>
-            <label className="block text-xs font-semibold text-[#142B45] mb-1">
+            <label className="block text-xs font-bold text-[#202020] mb-1">
               Password
             </label>
             <div className="relative">
@@ -183,12 +183,12 @@ const Register = () => {
                 onChange={handleChange}
                 placeholder="Min 6 chars"
                 required
-                className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-[#D5DEE7] text-[#142B45] placeholder-[#8A9BAA] text-xs sm:text-sm focus:outline-none focus:border-[#00A6A6] focus:ring-1 focus:ring-[#00A6A6] transition bg-white"
+                className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-[#DEDCD8] text-[#202020] placeholder-[#A7A7A7] text-xs sm:text-sm focus:outline-none focus:border-[#FF7547] focus:ring-1 focus:ring-[#FF7547] transition bg-white"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 pr-2.5 flex items-center text-[#8A9BAA] hover:text-[#142B45] cursor-pointer"
+                className="absolute inset-y-0 right-0 pr-2.5 flex items-center text-[#A7A7A7] hover:text-[#202020] cursor-pointer"
                 aria-label={showPassword ? 'Hide password' : 'Show password'}
               >
                 {showPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
@@ -198,7 +198,7 @@ const Register = () => {
 
           {/* Confirm Password */}
           <div>
-            <label className="block text-xs font-semibold text-[#142B45] mb-1">
+            <label className="block text-xs font-bold text-[#202020] mb-1">
               Confirm Password
             </label>
             <div className="relative">
@@ -209,12 +209,12 @@ const Register = () => {
                 onChange={handleChange}
                 placeholder="Re-enter"
                 required
-                className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-[#D5DEE7] text-[#142B45] placeholder-[#8A9BAA] text-xs sm:text-sm focus:outline-none focus:border-[#00A6A6] focus:ring-1 focus:ring-[#00A6A6] transition bg-white"
+                className="w-full h-10 pl-3.5 pr-8 rounded-xl border border-[#DEDCD8] text-[#202020] placeholder-[#A7A7A7] text-xs sm:text-sm focus:outline-none focus:border-[#FF7547] focus:ring-1 focus:ring-[#FF7547] transition bg-white"
               />
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute inset-y-0 right-0 pr-2.5 flex items-center text-[#8A9BAA] hover:text-[#142B45] cursor-pointer"
+                className="absolute inset-y-0 right-0 pr-2.5 flex items-center text-[#A7A7A7] hover:text-[#202020] cursor-pointer"
                 aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
               >
                 {showConfirmPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
@@ -223,11 +223,11 @@ const Register = () => {
           </div>
         </div>
 
-        {/* Submit Button - Bright Teal #00A6A6 */}
+        {/* Submit Button - Coral Orange #FF7547 */}
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full h-11 mt-1 rounded-[11px] bg-[#00A6A6] hover:bg-[#008F95] active:scale-[0.99] text-white font-bold text-sm transition duration-150 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer shadow-xs"
+          className="w-full h-11 mt-1 rounded-xl bg-[#FF7547] hover:bg-[#F06438] active:scale-[0.99] text-white font-bold text-sm transition duration-150 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer shadow-xs"
         >
           {isSubmitting ? (
             <>
@@ -241,11 +241,11 @@ const Register = () => {
       </form>
 
       {/* Switch to Login */}
-      <div className="mt-5 pt-4 border-t border-[#D5DEE7] text-center text-xs text-[#607487]">
+      <div className="mt-5 pt-4 border-t border-[#DEDCD8] text-center text-xs text-[#777777]">
         Already have an account?{' '}
         <Link
           to="/login"
-          className="font-bold text-[#00A6A6] hover:text-[#0B1F33] transition ml-1"
+          className="font-bold text-[#FF7547] hover:text-[#202020] transition ml-1"
         >
           Sign In
         </Link>

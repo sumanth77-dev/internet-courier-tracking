@@ -93,21 +93,21 @@ export const ProofOfDeliveryCard = ({ shipment, initialProof = null }) => {
 
   return (
     <>
-      <div className="bg-white rounded-xl border border-emerald-300 shadow-xs overflow-hidden">
+      <div className="bg-white rounded-2xl border border-[#DEDCD8] shadow-xs overflow-hidden">
         {/* Header */}
-        <div className="px-5 py-3.5 bg-emerald-500/10 border-b border-emerald-300/40 flex items-center justify-between">
+        <div className="px-5 py-3.5 bg-[#EAF7F1] border-b border-[#C4E8D8] flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="p-1.5 rounded-lg bg-emerald-500/20 text-emerald-700">
+            <div className="p-1.5 rounded-lg bg-[#36A879]/15 text-[#238259]">
               <ShieldCheck className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-xs font-bold text-[#172033] uppercase tracking-wider flex items-center gap-1.5">
+              <h3 className="text-xs font-bold text-[#202020] uppercase tracking-wider flex items-center gap-1.5">
                 <span>Proof of Delivery (POD)</span>
-                <span className="px-2 py-0.5 rounded-full bg-[#16845B] text-white text-[10px] font-bold">
+                <span className="px-2 py-0.5 rounded-full bg-[#36A879] text-white text-[10px] font-bold">
                   VERIFIED
                 </span>
               </h3>
-              <p className="text-[11px] text-[#65748B]">
+              <p className="text-[11px] text-[#777777]">
                 Verified with customer OTP & package delivery photo
               </p>
             </div>
@@ -117,34 +117,34 @@ export const ProofOfDeliveryCard = ({ shipment, initialProof = null }) => {
         {/* Content Body */}
         <div className="p-5">
           {loading ? (
-            <div className="py-8 text-center text-xs text-[#65748B] flex flex-col items-center justify-center gap-2">
-              <div className="w-6 h-6 border-2 border-[#17243A] border-t-transparent rounded-full animate-spin"></div>
+            <div className="py-8 text-center text-xs text-[#777777] flex flex-col items-center justify-center gap-2">
+              <div className="w-6 h-6 border-2 border-[#171717] border-t-[#FF7547] rounded-full animate-spin"></div>
               <span>Loading delivery proof details...</span>
             </div>
           ) : proof ? (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {/* Photo Column */}
               <div className="md:col-span-1 space-y-1.5">
-                <span className="text-xs font-bold text-[#17243A] block">
+                <span className="text-xs font-bold text-[#202020] block">
                   Package Handover Photo
                 </span>
                 {photoSrc ? (
-                  <div className="relative rounded-xl border border-[#E1E7EF] overflow-hidden group aspect-4/3 bg-[#F5F7FA] flex items-center justify-center shadow-xs">
+                  <div className="relative rounded-xl border border-[#DEDCD8] overflow-hidden group aspect-4/3 bg-[#F2F0ED] flex items-center justify-center shadow-xs">
                     {imageLoading && !imageError && (
-                      <div className="absolute inset-0 flex items-center justify-center bg-[#F5F7FA] text-[#65748B] text-xs">
-                        <span className="w-5 h-5 border-2 border-[#17243A] border-t-transparent rounded-full animate-spin"></span>
+                      <div className="absolute inset-0 flex items-center justify-center bg-[#F2F0ED] text-[#777777] text-xs">
+                        <span className="w-5 h-5 border-2 border-[#171717] border-t-[#FF7547] rounded-full animate-spin"></span>
                       </div>
                     )}
                     {imageError ? (
-                      <div className="p-4 text-center text-xs text-[#65748B] space-y-2">
-                        <ImageIcon className="w-8 h-8 text-[#65748B]/60 mx-auto" />
-                        <p className="text-[11px] text-[#C0392B] font-medium">
+                      <div className="p-4 text-center text-xs text-[#777777] space-y-2">
+                        <ImageIcon className="w-8 h-8 text-[#A7A7A7] mx-auto" />
+                        <p className="text-[11px] text-[#E45B54] font-medium">
                           Unable to load delivery photo
                         </p>
                         <button
                           type="button"
                           onClick={handleRetryImage}
-                          className="px-2.5 py-1 text-[11px] font-semibold bg-white border border-[#E1E7EF] hover:bg-[#F5F7FA] rounded-md transition shadow-xs cursor-pointer"
+                          className="px-2.5 py-1 text-[11px] font-semibold bg-white border border-[#DEDCD8] hover:bg-[#F2F0ED] rounded-md transition shadow-xs cursor-pointer text-[#202020]"
                         >
                           Retry Loading
                         </button>
@@ -166,16 +166,16 @@ export const ProofOfDeliveryCard = ({ shipment, initialProof = null }) => {
                         />
                         <div
                           onClick={() => setModalOpen(true)}
-                          className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white gap-1.5 text-xs font-semibold cursor-pointer"
+                          className="absolute inset-0 bg-[#171717]/60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white gap-1.5 text-xs font-semibold cursor-pointer backdrop-blur-[2px]"
                         >
-                          <ExternalLink className="w-4 h-4" />
+                          <ExternalLink className="w-4 h-4 text-[#FF7547]" />
                           <span>Enlarge Photo</span>
                         </div>
                       </>
                     )}
                   </div>
                 ) : (
-                  <div className="rounded-xl border border-dashed border-[#E1E7EF] p-6 text-center text-xs text-[#65748B]">
+                  <div className="rounded-xl border border-dashed border-[#DEDCD8] p-6 text-center text-xs text-[#777777] bg-[#F2F0ED]/50">
                     No photo uploaded
                   </div>
                 )}
@@ -184,53 +184,53 @@ export const ProofOfDeliveryCard = ({ shipment, initialProof = null }) => {
               {/* Details Column */}
               <div className="md:col-span-2 space-y-3 text-xs">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className="p-3 rounded-lg bg-[#F5F7FA] border border-[#E1E7EF]">
-                    <span className="text-[#65748B] text-[11px] block mb-0.5 flex items-center gap-1">
-                      <Calendar className="w-3 h-3 text-[#F59E0B]" />
+                  <div className="p-3 rounded-xl bg-[#F2F0ED] border border-[#DEDCD8]">
+                    <span className="text-[#777777] text-[11px] block mb-0.5 flex items-center gap-1 font-medium">
+                      <Calendar className="w-3 h-3 text-[#E9A23B]" />
                       <span>Delivered Timestamp</span>
                     </span>
-                    <span className="font-semibold text-[#17243A]">
+                    <span className="font-semibold text-[#202020]">
                       {formatDeliveredDate(proof.deliveredAt || shipment.deliveredAt)}
                     </span>
                   </div>
 
-                  <div className="p-3 rounded-lg bg-[#F5F7FA] border border-[#E1E7EF]">
-                    <span className="text-[#65748B] text-[11px] block mb-0.5 flex items-center gap-1">
-                      <FileCheck className="w-3 h-3 text-[#16845B]" />
+                  <div className="p-3 rounded-xl bg-[#F2F0ED] border border-[#DEDCD8]">
+                    <span className="text-[#777777] text-[11px] block mb-0.5 flex items-center gap-1 font-medium">
+                      <FileCheck className="w-3 h-3 text-[#36A879]" />
                       <span>Verification Method</span>
                     </span>
-                    <span className="font-semibold text-[#16845B] flex items-center gap-1">
-                      <CheckCircle2 className="w-3.5 h-3.5" />
+                    <span className="font-semibold text-[#238259] flex items-center gap-1">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#36A879]" />
                       <span>Customer OTP Confirmed</span>
                     </span>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className="p-3 rounded-lg bg-[#F5F7FA] border border-[#E1E7EF]">
-                    <span className="text-[#65748B] text-[11px] block mb-0.5 flex items-center gap-1">
-                      <User className="w-3 h-3 text-[#65748B]" />
+                  <div className="p-3 rounded-xl bg-[#F2F0ED] border border-[#DEDCD8]">
+                    <span className="text-[#777777] text-[11px] block mb-0.5 flex items-center gap-1 font-medium">
+                      <User className="w-3 h-3 text-[#777777]" />
                       <span>Recipient Name</span>
                     </span>
-                    <span className="font-semibold text-[#17243A]">
+                    <span className="font-semibold text-[#202020]">
                       {proof.recipientName || shipment?.customerId?.name || 'Customer'}
                     </span>
                   </div>
 
-                  <div className="p-3 rounded-lg bg-[#F5F7FA] border border-[#E1E7EF]">
-                    <span className="text-[#65748B] text-[11px] block mb-0.5 flex items-center gap-1">
-                      <Users className="w-3 h-3 text-[#65748B]" />
+                  <div className="p-3 rounded-xl bg-[#F2F0ED] border border-[#DEDCD8]">
+                    <span className="text-[#777777] text-[11px] block mb-0.5 flex items-center gap-1 font-medium">
+                      <Users className="w-3 h-3 text-[#777777]" />
                       <span>Recipient Relationship</span>
                     </span>
-                    <span className="font-semibold text-[#17243A]">
+                    <span className="font-semibold text-[#202020]">
                       {proof.recipientType || 'Customer'}
                     </span>
                   </div>
                 </div>
 
                 {proof.confirmation && (
-                  <div className="p-2.5 rounded-lg bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-[#16845B] shrink-0" />
+                  <div className="p-3 rounded-xl bg-[#EAF7F1] border border-[#C4E8D8] text-xs text-[#238259] flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#36A879] shrink-0" />
                     <span>
                       Courier confirmed: Handed over package directly to recipient.
                     </span>
@@ -239,7 +239,7 @@ export const ProofOfDeliveryCard = ({ shipment, initialProof = null }) => {
               </div>
             </div>
           ) : (
-            <div className="p-4 rounded-lg bg-gray-50 border border-[#E1E7EF] text-xs text-[#65748B] text-center">
+            <div className="p-4 rounded-xl bg-[#F2F0ED] border border-[#DEDCD8] text-xs text-[#777777] text-center">
               Delivery has been completed for this shipment.
             </div>
           )}
@@ -249,19 +249,19 @@ export const ProofOfDeliveryCard = ({ shipment, initialProof = null }) => {
       {/* Lightbox Modal */}
       {modalOpen && photoSrc && (
         <div
-          className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/80 backdrop-blur-xs"
+          className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-[#171717]/80 backdrop-blur-sm"
           onClick={() => setModalOpen(false)}
         >
           <div
-            className="relative max-w-3xl w-full max-h-[90vh] bg-[#17243A] rounded-2xl overflow-hidden flex flex-col items-center p-3 shadow-2xl"
+            className="relative max-w-3xl w-full max-h-[90vh] bg-[#242424] border border-[#383838] rounded-2xl overflow-hidden flex flex-col items-center p-3 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="w-full flex items-center justify-between pb-2 border-b border-white/10 mb-2 px-2 text-white">
-              <span className="text-xs font-semibold">Proof of Delivery — Package Photo</span>
+            <div className="w-full flex items-center justify-between pb-2.5 border-b border-[#383838] mb-2 px-2 text-white">
+              <span className="text-xs font-semibold text-white">Proof of Delivery — Package Photo</span>
               <button
                 type="button"
                 onClick={() => setModalOpen(false)}
-                className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition cursor-pointer"
+                className="p-1.5 rounded-lg bg-[#303030] hover:bg-[#383838] text-[#C5C5C5] hover:text-white transition cursor-pointer"
                 aria-label="Close photo preview"
               >
                 <X className="w-4 h-4" />

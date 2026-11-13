@@ -12,9 +12,9 @@ const ProtectedRoute = ({ allowedRoles, children }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#F4F6F8]">
-        <div className="w-10 h-10 border-3 border-[#142B45] border-t-[#18A6A0] rounded-full animate-spin"></div>
-        <p className="mt-3 text-xs font-semibold text-[#245B78]">Restoring SkyRoute session...</p>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#F2F0ED]">
+        <div className="w-10 h-10 border-3 border-[#171717] border-t-[#FF7547] rounded-full animate-spin"></div>
+        <p className="mt-3 text-xs font-semibold text-[#777777]">Restoring SkyRoute session...</p>
       </div>
     );
   }

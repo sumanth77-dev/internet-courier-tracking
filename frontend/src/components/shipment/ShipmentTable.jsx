@@ -3,13 +3,11 @@ import { Link } from 'react-router-dom';
 import StatusBadge from '../common/StatusBadge';
 import {
   ChevronRight,
-  MapPin,
   Calendar,
   User as UserIcon,
   Truck,
   ArrowRight,
   Eye,
-  Navigation,
 } from 'lucide-react';
 
 const ShipmentTable = ({
@@ -37,11 +35,11 @@ const ShipmentTable = ({
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-[#D5DEE7] overflow-hidden shadow-2xs">
+    <div className="bg-white rounded-2xl border border-[#DEDCD8] overflow-hidden shadow-2xs">
       {/* Desktop / Laptop Table View */}
       <div className="hidden lg:block overflow-x-auto">
-        <table className="w-full min-w-[1050px] text-left text-xs sm:text-sm text-[#142B45] border-collapse">
-          <thead className="bg-[#E8EEF4] border-b border-[#D5DEE7] text-[11px] font-bold text-[#123B5D] uppercase tracking-wider select-none">
+        <table className="w-full min-w-[1050px] text-left text-xs sm:text-sm text-[#202020] border-collapse">
+          <thead className="bg-[#E9E7E4] border-b border-[#DEDCD8] text-[11px] font-bold text-[#202020] uppercase tracking-wider select-none">
             <tr>
               <th className="px-5 py-3.5 min-w-[160px]">Tracking ID</th>
               <th className="px-5 py-3.5 min-w-[190px]">Route</th>
@@ -52,7 +50,7 @@ const ShipmentTable = ({
               <th className="px-5 py-3.5 min-w-[220px] text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#D5DEE7] font-normal">
+          <tbody className="divide-y divide-[#DEDCD8] font-normal">
             {shipments.map((s) => {
               const trackingId = s.trackingId || s.id;
               const origin = s.pickupAddress?.city || 'Origin';
@@ -61,12 +59,12 @@ const ShipmentTable = ({
               const courierName = s.courierId?.name || s.courier?.name || (s.courierId ? 'Assigned' : 'Unassigned');
 
               return (
-                <tr key={s._id || s.id} className="hover:bg-[#F0F3F7] transition-colors duration-100 group">
+                <tr key={s._id || s.id} className="hover:bg-[#F2F0ED] transition-colors duration-100 group">
                   {/* Tracking ID */}
                   <td className="px-5 py-3.5 min-w-[160px] whitespace-nowrap align-middle">
                     <Link
                       to={`${viewLinkPrefix}/${trackingId}`}
-                      className="font-mono font-bold text-[#142B45] hover:text-[#00A6A6] transition-colors inline-block"
+                      className="font-mono font-bold text-[#202020] hover:text-[#FF7547] transition-colors inline-block"
                       title={trackingId}
                     >
                       {trackingId}
@@ -75,18 +73,18 @@ const ShipmentTable = ({
 
                   {/* Route */}
                   <td className="px-5 py-3.5 min-w-[190px] whitespace-nowrap align-middle">
-                    <div className="flex items-center gap-1.5 text-xs font-medium text-[#142B45]">
-                      <span className="text-[#607487] max-w-[95px] truncate" title={origin}>{origin}</span>
-                      <ArrowRight className="w-3.5 h-3.5 text-[#00A6A6] shrink-0" />
-                      <span className="font-semibold text-[#142B45] max-w-[115px] truncate" title={destination}>{destination}</span>
+                    <div className="flex items-center gap-1.5 text-xs font-medium text-[#202020]">
+                      <span className="text-[#777777] max-w-[95px] truncate" title={origin}>{origin}</span>
+                      <ArrowRight className="w-3.5 h-3.5 text-[#FF7547] shrink-0" />
+                      <span className="font-semibold text-[#202020] max-w-[115px] truncate" title={destination}>{destination}</span>
                     </div>
                   </td>
 
                   {/* Customer (Optional) */}
                   {showCustomer && (
-                    <td className="px-5 py-3.5 min-w-[140px] whitespace-nowrap align-middle text-[#142B45] font-medium">
+                    <td className="px-5 py-3.5 min-w-[140px] whitespace-nowrap align-middle text-[#202020] font-medium">
                       <div className="flex items-center gap-1.5 max-w-[130px] truncate" title={customerName}>
-                        <UserIcon className="w-3.5 h-3.5 text-[#607487] shrink-0" />
+                        <UserIcon className="w-3.5 h-3.5 text-[#777777] shrink-0" />
                         <span className="truncate">{customerName}</span>
                       </div>
                     </td>
@@ -94,14 +92,14 @@ const ShipmentTable = ({
 
                   {/* Courier (Optional) */}
                   {showCourier && (
-                    <td className="px-5 py-3.5 min-w-[150px] whitespace-nowrap align-middle text-[#142B45]">
+                    <td className="px-5 py-3.5 min-w-[150px] whitespace-nowrap align-middle text-[#202020]">
                       {s.courierId || s.courier ? (
                         <div className="flex items-center gap-1.5 max-w-[140px] truncate" title={courierName}>
-                          <Truck className="w-3.5 h-3.5 text-[#00A6A6] shrink-0" />
-                          <span className="font-semibold text-[#142B45] truncate">{courierName}</span>
+                          <Truck className="w-3.5 h-3.5 text-[#FF7547] shrink-0" />
+                          <span className="font-semibold text-[#202020] truncate">{courierName}</span>
                         </div>
                       ) : (
-                        <span className="text-[#8A9BAA] text-xs italic">Unassigned</span>
+                        <span className="text-[#A7A7A7] text-xs italic">Unassigned</span>
                       )}
                     </td>
                   )}
@@ -112,7 +110,7 @@ const ShipmentTable = ({
                   </td>
 
                   {/* Date */}
-                  <td className="px-5 py-3.5 min-w-[100px] text-[#607487] text-xs whitespace-nowrap align-middle">
+                  <td className="px-5 py-3.5 min-w-[100px] text-[#777777] text-xs whitespace-nowrap align-middle">
                     {formatDate(s.createdAt)}
                   </td>
 
@@ -123,7 +121,7 @@ const ShipmentTable = ({
                     ) : (
                       <Link
                         to={`${viewLinkPrefix}/${trackingId}`}
-                        className="h-8 px-3 text-xs font-semibold text-[#142B45] hover:text-[#00A6A6] bg-white border border-[#D5DEE7] hover:bg-[#F0F3F7] rounded-[11px] transition duration-150 shadow-2xs inline-flex items-center justify-center gap-1.5 whitespace-nowrap"
+                        className="h-8 px-3 text-xs font-semibold text-[#202020] hover:text-[#FF7547] bg-white border border-[#DEDCD8] hover:bg-[#F2F0ED] rounded-xl transition duration-150 shadow-2xs inline-flex items-center justify-center gap-1.5 whitespace-nowrap"
                       >
                         <Eye className="w-3.5 h-3.5 opacity-70" />
                         <span>View</span>
@@ -139,7 +137,7 @@ const ShipmentTable = ({
       </div>
 
       {/* Mobile & Tablet Card Layout (Optimized for <1024px) */}
-      <div className="lg:hidden divide-y divide-[#D5DEE7]">
+      <div className="lg:hidden divide-y divide-[#DEDCD8]">
         {shipments.map((s) => {
           const trackingId = s.trackingId || s.id;
           const origin = s.pickupAddress ? `${s.pickupAddress.city || ''}, ${s.pickupAddress.state || ''}` : 'Origin';
@@ -148,12 +146,12 @@ const ShipmentTable = ({
           const courierName = s.courierId?.name || s.courier?.name || (s.courierId ? 'Assigned' : 'Unassigned');
 
           return (
-            <div key={s._id || s.id} className="p-4 sm:p-5 space-y-3.5 hover:bg-[#F0F3F7]/50 transition">
+            <div key={s._id || s.id} className="p-4 sm:p-5 space-y-3.5 hover:bg-[#F2F0ED]/50 transition">
               {/* Card Header: Tracking ID + Status */}
               <div className="flex items-center justify-between gap-2">
                 <Link
                   to={`${viewLinkPrefix}/${trackingId}`}
-                  className="font-mono font-bold text-sm text-[#142B45] hover:text-[#00A6A6] transition break-all"
+                  className="font-mono font-bold text-sm text-[#202020] hover:text-[#FF7547] transition break-all"
                 >
                   {trackingId}
                 </Link>
@@ -161,56 +159,56 @@ const ShipmentTable = ({
               </div>
 
               {/* Route Summary */}
-              <div className="p-3 rounded-xl bg-[#F0F3F7] border border-[#D5DEE7] text-xs space-y-1.5">
+              <div className="p-3 rounded-xl bg-[#F2F0ED] border border-[#DEDCD8] text-xs space-y-1.5">
                 <div className="flex items-start gap-2">
-                  <div className="w-2 h-2 rounded-full bg-[#607487] shrink-0 mt-1" />
+                  <div className="w-2 h-2 rounded-full bg-[#777777] shrink-0 mt-1" />
                   <div className="min-w-0">
-                    <span className="text-[10px] font-bold uppercase text-[#607487] block leading-none mb-0.5">Pickup</span>
-                    <span className="font-medium text-[#142B45] break-words">{origin}</span>
+                    <span className="text-[10px] font-bold uppercase text-[#777777] block leading-none mb-0.5">Pickup</span>
+                    <span className="font-medium text-[#202020] break-words">{origin}</span>
                   </div>
                 </div>
 
-                <div className="ml-1 w-0.5 h-3 bg-[#B6C7D6]" />
+                <div className="ml-1 w-0.5 h-3 bg-[#DEDCD8]" />
 
                 <div className="flex items-start gap-2">
-                  <div className="w-2 h-2 rounded-full bg-[#00A6A6] shrink-0 mt-1" />
+                  <div className="w-2 h-2 rounded-full bg-[#FF7547] shrink-0 mt-1" />
                   <div className="min-w-0">
-                    <span className="text-[10px] font-bold uppercase text-[#00A6A6] block leading-none mb-0.5">Drop-off</span>
-                    <span className="font-semibold text-[#142B45] break-words">{destination}</span>
+                    <span className="text-[10px] font-bold uppercase text-[#FF7547] block leading-none mb-0.5">Drop-off</span>
+                    <span className="font-semibold text-[#202020] break-words">{destination}</span>
                   </div>
                 </div>
               </div>
 
               {/* Metadata Grid */}
-              <div className="grid grid-cols-2 gap-2 text-xs text-[#607487]">
+              <div className="grid grid-cols-2 gap-2 text-xs text-[#777777]">
                 <div className="flex items-center gap-1.5 truncate">
-                  <Calendar className="w-3.5 h-3.5 text-[#607487] shrink-0" />
+                  <Calendar className="w-3.5 h-3.5 text-[#777777] shrink-0" />
                   <span className="truncate">{formatDate(s.createdAt)}</span>
                 </div>
 
                 {showCourier && (
                   <div className="flex items-center gap-1.5 truncate justify-end">
-                    <Truck className="w-3.5 h-3.5 text-[#00A6A6] shrink-0" />
-                    <span className="font-semibold text-[#142B45] truncate">{courierName}</span>
+                    <Truck className="w-3.5 h-3.5 text-[#FF7547] shrink-0" />
+                    <span className="font-semibold text-[#202020] truncate">{courierName}</span>
                   </div>
                 )}
 
                 {showCustomer && (
                   <div className="flex items-center gap-1.5 truncate justify-end">
-                    <UserIcon className="w-3.5 h-3.5 text-[#607487] shrink-0" />
+                    <UserIcon className="w-3.5 h-3.5 text-[#777777] shrink-0" />
                     <span className="truncate">{customerName}</span>
                   </div>
                 )}
               </div>
 
               {/* Actions Container */}
-              <div className="pt-3 border-t border-[#D5DEE7] flex items-center justify-end gap-2 flex-wrap">
+              <div className="pt-3 border-t border-[#DEDCD8] flex items-center justify-end gap-2 flex-wrap">
                 {renderActions ? (
                   renderActions(s)
                 ) : (
                   <Link
                     to={`${viewLinkPrefix}/${trackingId}`}
-                    className="h-8 px-4 text-xs font-bold text-white bg-[#0B1F33] hover:bg-[#123B5D] rounded-[11px] transition duration-150 shadow-xs inline-flex items-center justify-center gap-1.5 w-full sm:w-auto"
+                    className="h-8 px-4 text-xs font-bold text-white bg-[#171717] hover:bg-[#242424] rounded-xl transition duration-150 shadow-xs inline-flex items-center justify-center gap-1.5 w-full sm:w-auto"
                   >
                     <Eye className="w-3.5 h-3.5" />
                     <span>View Shipment Details</span>

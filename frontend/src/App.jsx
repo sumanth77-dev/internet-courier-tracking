@@ -35,8 +35,8 @@ const DashboardRedirect = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#F4F6F8]">
-        <div className="w-9 h-9 border-3 border-[#142B45] border-t-transparent rounded-full animate-spin"></div>
+      <div className="min-h-screen flex items-center justify-center bg-[#101010]">
+        <div className="w-9 h-9 border-3 border-[#FF7547] border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }

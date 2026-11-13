@@ -18,7 +18,6 @@ import {
   Search,
   Compass,
   RefreshCw,
-  Sparkles,
 } from 'lucide-react';
 
 const CustomerDashboard = () => {
@@ -69,12 +68,12 @@ const CustomerDashboard = () => {
   return (
     <DashboardLayout title="Customer Dashboard">
       <div className="space-y-6">
-        {/* Welcome Hero Banner — Midnight Navy #0B1F33 */}
-        <div className="bg-[#0B1F33] text-white rounded-[22px] border border-[#176B87]/40 p-5 sm:p-6 shadow-md relative overflow-hidden">
+        {/* Welcome Hero Banner — Charcoal #242424 */}
+        <div className="bg-[#242424] text-white rounded-2xl border border-[#383838] p-5 sm:p-6 shadow-md relative overflow-hidden">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
             <div className="space-y-1.5">
-              <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[#123B5D] border border-[#176B87]/60">
-                <span className="w-2 h-2 rounded-full bg-[#00A6A6] animate-pulse"></span>
+              <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[#171717] border border-[#383838]">
+                <span className="w-2 h-2 rounded-full bg-[#FF7547] animate-pulse"></span>
                 <span className="text-[11px] font-bold text-white uppercase tracking-wider">
                   SkyRoute Express Client
                 </span>
@@ -82,7 +81,7 @@ const CustomerDashboard = () => {
               <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight">
                 Welcome back, {user?.name || 'Customer'}
               </h1>
-              <p className="text-xs sm:text-sm text-[#DCE5EC] max-w-xl leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#C5C5C5] max-w-xl leading-relaxed">
                 Track deliveries in real time, generate one-time verification passwords (OTP), and book new consignments across India.
               </p>
             </div>
@@ -92,7 +91,7 @@ const CustomerDashboard = () => {
               <button
                 type="button"
                 onClick={fetchMyShipments}
-                className="p-2.5 rounded-xl border border-[#176B87]/60 bg-[#123B5D] hover:bg-[#176B87] text-[#DCE5EC] hover:text-white transition cursor-pointer shadow-xs"
+                className="p-2.5 rounded-xl border border-[#383838] bg-[#171717] hover:bg-[#303030] text-[#C5C5C5] hover:text-white transition cursor-pointer shadow-xs"
                 title="Refresh shipments"
                 aria-label="Refresh shipments"
               >
@@ -101,7 +100,7 @@ const CustomerDashboard = () => {
 
               <Link
                 to="/customer/shipments/create"
-                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#00A6A6] hover:bg-[#008F95] text-white text-xs sm:text-sm font-bold rounded-[11px] shadow-sm transition duration-150 cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#FF7547] hover:bg-[#F06438] text-white text-xs sm:text-sm font-bold rounded-xl shadow-xs transition duration-150 cursor-pointer"
               >
                 <Plus className="w-4 h-4 text-white" />
                 <span>Create Shipment</span>
@@ -110,21 +109,21 @@ const CustomerDashboard = () => {
           </div>
 
           {/* Quick Track Search Strip */}
-          <div className="mt-5 pt-4 border-t border-[#176B87]/40 relative z-10">
+          <div className="mt-5 pt-4 border-t border-[#383838] relative z-10">
             <form onSubmit={handleQuickTrack} className="flex flex-col sm:flex-row gap-2 max-w-lg">
               <div className="relative flex-1">
-                <Search className="w-4 h-4 text-[#8A9BAA] absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <Search className="w-4 h-4 text-[#929292] absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
                   value={quickTrackingId}
                   onChange={(e) => setQuickTrackingId(e.target.value)}
                   placeholder="Quick lookup by Tracking ID..."
-                  className="w-full h-10 pl-9 pr-3 text-xs rounded-xl border border-[#176B87]/60 bg-[#071524] text-white placeholder-[#8A9BAA] focus:outline-none focus:border-[#00A6A6] focus:ring-1 focus:ring-[#00A6A6] transition font-medium font-mono"
+                  className="w-full h-10 pl-9 pr-3 text-xs rounded-xl border border-[#383838] bg-[#171717] text-white placeholder-[#929292] focus:outline-hidden focus:border-[#FF7547] focus:ring-1 focus:ring-[#FF7547] transition font-medium font-mono"
                 />
               </div>
               <button
                 type="submit"
-                className="h-10 px-4 rounded-[11px] bg-[#00A6A6] hover:bg-[#008F95] text-white text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer shadow-xs shrink-0"
+                className="h-10 px-4 rounded-xl bg-[#FF7547] hover:bg-[#F06438] text-white text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer shadow-xs shrink-0"
               >
                 <Compass className="w-3.5 h-3.5 text-white" />
                 <span>Track Now</span>
@@ -137,7 +136,7 @@ const CustomerDashboard = () => {
           <ErrorMessage message={error} onRetry={fetchMyShipments} />
         )}
 
-        {/* 4 Summary Metrics KPI Grid with Solid Dark Deep Ocean Colors */}
+        {/* 4 Summary Metrics KPI Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
           <StatsCard
             title="Total Shipments"
@@ -173,17 +172,17 @@ const CustomerDashboard = () => {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-base sm:text-lg font-bold text-[#142B45] tracking-tight">
+              <h2 className="text-base sm:text-lg font-bold text-[#202020] tracking-tight">
                 Recent Shipments
               </h2>
-              <p className="text-xs text-[#607487]">
+              <p className="text-xs text-[#777777]">
                 Live tracking and status updates for your latest consignments
               </p>
             </div>
             {shipments.length > 0 && (
               <Link
                 to="/customer/shipments"
-                className="inline-flex items-center gap-1 text-xs font-bold text-[#00A6A6] hover:text-[#123B5D] transition"
+                className="inline-flex items-center gap-1 text-xs font-bold text-[#FF7547] hover:text-[#F06438] transition"
               >
                 <span>View All ({shipments.length})</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -192,7 +191,7 @@ const CustomerDashboard = () => {
           </div>
 
           {loading ? (
-            <div className="bg-white rounded-2xl border border-[#D5DEE7] p-12 text-center shadow-2xs">
+            <div className="bg-white rounded-2xl border border-[#DEDCD8] p-12 text-center shadow-2xs">
               <LoadingSpinner message="Retrieving your shipments..." />
             </div>
           ) : shipments.length === 0 ? (

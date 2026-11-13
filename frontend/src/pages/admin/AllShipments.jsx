@@ -87,14 +87,14 @@ const AllShipments = () => {
           <div className="flex items-center gap-3">
             <Link
               to="/admin"
-              className="p-2.5 rounded-xl border border-[#D5DEE7] bg-white text-[#123B5D] hover:text-[#0B1F33] hover:bg-[#E8EEF4] transition shadow-2xs"
+              className="p-2.5 rounded-xl border border-[#DEDCD8] bg-white text-[#202020] hover:bg-[#F2F0ED] transition shadow-xs"
               aria-label="Back to admin dashboard"
             >
               <ArrowLeft className="w-4 h-4" />
             </Link>
             <div>
-              <h1 className="text-xl font-bold text-[#142B45] tracking-tight">All Platform Shipments</h1>
-              <p className="text-xs text-[#607487]">
+              <h1 className="text-xl font-bold text-[#202020] tracking-tight">All Platform Shipments</h1>
+              <p className="text-xs text-[#777777]">
                 Master registry of all consignments, status updates, and courier dispatches.
               </p>
             </div>
@@ -102,9 +102,9 @@ const AllShipments = () => {
 
           <button
             onClick={fetchAllShipments}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-[#142B45] bg-white border border-[#D5DEE7] rounded-xl hover:bg-[#F0F3F7] transition self-start sm:self-auto cursor-pointer shadow-2xs"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-[#202020] bg-white border border-[#DEDCD8] rounded-xl hover:bg-[#F2F0ED] transition self-start sm:self-auto cursor-pointer shadow-xs"
           >
-            <RefreshCw className="w-3.5 h-3.5 text-[#00A6A6]" />
+            <RefreshCw className="w-3.5 h-3.5 text-[#FF7547]" />
             <span>Reload</span>
           </button>
         </div>
@@ -112,27 +112,27 @@ const AllShipments = () => {
         {error && <ErrorMessage message={error} onRetry={fetchAllShipments} />}
 
         {/* Filters and Search Bar */}
-        <div className="bg-white rounded-2xl border border-[#D5DEE7] p-4 sm:p-5 shadow-2xs space-y-3.5">
+        <div className="bg-white rounded-2xl border border-[#DEDCD8] p-4 sm:p-5 shadow-xs space-y-3.5">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
             {/* Search */}
             <div className="relative w-full sm:w-96">
-              <Search className="w-4 h-4 text-[#8A9BAA] absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-[#A7A7A7] absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search Tracking ID, City, Customer, Courier..."
-                className="w-full pl-10 pr-4 h-10 text-xs sm:text-sm rounded-xl border border-[#D5DEE7] bg-[#F0F3F7]/60 focus:bg-white focus:outline-none focus:border-[#00A6A6] focus:ring-1 focus:ring-[#00A6A6] text-[#142B45] placeholder-[#8A9BAA] transition"
+                className="w-full pl-10 pr-4 h-10 text-xs sm:text-sm rounded-xl border border-[#DEDCD8] bg-[#F2F0ED] focus:bg-white focus:outline-hidden focus:border-[#FF7547] focus:ring-1 focus:ring-[#FF7547] text-[#202020] placeholder-[#A7A7A7] transition"
               />
             </div>
 
             {/* Status Dropdown */}
             <div className="flex items-center gap-2 w-full sm:w-auto">
-              <Filter className="w-4 h-4 text-[#8A9BAA] shrink-0" />
+              <Filter className="w-4 h-4 text-[#A7A7A7] shrink-0" />
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="w-full sm:w-auto px-3.5 h-10 text-xs sm:text-sm rounded-xl border border-[#D5DEE7] bg-white text-[#142B45] focus:outline-none focus:border-[#00A6A6] focus:ring-1 focus:ring-[#00A6A6] cursor-pointer transition font-medium"
+                className="w-full sm:w-auto px-3.5 h-10 text-xs sm:text-sm rounded-xl border border-[#DEDCD8] bg-white text-[#202020] focus:outline-hidden focus:border-[#FF7547] focus:ring-1 focus:ring-[#FF7547] cursor-pointer transition font-medium"
               >
                 {STATUS_FILTERS.map((f) => (
                   <option key={f.value} value={f.value}>
@@ -155,10 +155,10 @@ const AllShipments = () => {
                   key={f.value}
                   type="button"
                   onClick={() => setStatusFilter(f.value)}
-                  className={`px-3 py-1.5 rounded-lg font-medium whitespace-nowrap transition cursor-pointer text-xs border ${
+                  className={`px-3 py-1.5 rounded-xl font-medium whitespace-nowrap transition cursor-pointer text-xs border ${
                     isActive
-                      ? 'bg-[#0B1F33] text-white border-[#0B1F33] shadow-2xs font-semibold'
-                      : 'bg-[#E8EEF4] text-[#123B5D] hover:bg-white hover:text-[#0B1F33] border-[#D5DEE7]'
+                      ? 'bg-[#171717] text-white border-[#171717] shadow-xs font-semibold'
+                      : 'bg-[#F2F0ED] text-[#202020] hover:bg-white hover:text-[#171717] border-[#DEDCD8]'
                   }`}
                 >
                   {f.label} ({count})
@@ -170,7 +170,7 @@ const AllShipments = () => {
 
         {/* Shipments List */}
         {loading ? (
-          <div className="bg-white rounded-2xl border border-[#D5DEE7] p-12 shadow-2xs">
+          <div className="bg-white rounded-2xl border border-[#DEDCD8] p-12 shadow-xs">
             <LoadingSpinner message="Retrieving shipments..." />
           </div>
         ) : filteredShipments.length === 0 ? (

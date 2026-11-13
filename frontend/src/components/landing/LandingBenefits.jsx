@@ -4,13 +4,6 @@ import {
   Truck,
   Shield,
   CheckCircle2,
-  TrendingUp,
-  MapPin,
-  Clock,
-  Camera,
-  Smartphone,
-  BarChart3,
-  FileCheck,
 } from 'lucide-react';
 
 export const LandingBenefits = () => {
@@ -29,7 +22,6 @@ export const LandingBenefits = () => {
         'Interactive address pinpointing for accurate driver routing',
         'Immediate digital Proof of Delivery with photo inspection',
       ],
-      color: '#18A6A0',
     },
     {
       role: 'For Couriers',
@@ -45,7 +37,6 @@ export const LandingBenefits = () => {
         'Fast mobile photo capture for delivery proof documentation',
         'Real-time OTP verification check ensuring successful drop-offs',
       ],
-      color: '#245B78',
     },
     {
       role: 'For Administrators',
@@ -61,25 +52,24 @@ export const LandingBenefits = () => {
         'Complete photo and OTP verification logs for dispute resolution',
         'High-reliability Socket.IO WebSocket streams for sub-second fleet monitoring',
       ],
-      color: '#142B45',
     },
   ];
 
   return (
-    <section id="benefits" className="py-16 lg:py-24 bg-[#F0F3F7] border-b border-[#D5DEE7]">
+    <section id="benefits" className="py-16 lg:py-24 bg-[#F2F0ED] border-b border-[#DEDCD8]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#D5DEE7] mb-3">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#00A6A6]"></span>
-            <span className="text-xs font-bold text-[#142B45] uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#DEDCD8] mb-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#FF7547]"></span>
+            <span className="text-xs font-bold text-[#202020] uppercase tracking-wider">
               Tailored Value
             </span>
           </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#142B45] tracking-tight">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#202020] tracking-tight">
             Built for Every Stakeholder
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-[#607487] leading-relaxed">
+          <p className="mt-3 text-sm sm:text-base text-[#777777] leading-relaxed">
             Discover how SkyRoute delivers superior coordination, visibility, and accountability across the entire logistics chain.
           </p>
         </div>
@@ -91,42 +81,42 @@ export const LandingBenefits = () => {
             return (
               <div
                 key={item.role}
-                className="bg-white rounded-2xl border border-[#D5DEE7] p-7 flex flex-col justify-between shadow-2xs hover:border-[#00A6A6] transition duration-200"
+                className="bg-white rounded-2xl border border-[#DEDCD8] p-7 flex flex-col justify-between shadow-2xs hover:border-[#FF7547] transition duration-200"
               >
                 <div>
                   {/* Role Header */}
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-[#0B1F33] text-white flex items-center justify-center shadow-xs">
-                      <Icon className="w-6 h-6 text-[#00A6A6]" />
+                    <div className="w-12 h-12 rounded-xl bg-[#171717] text-white flex items-center justify-center shadow-xs border border-[#303030]">
+                      <Icon className="w-6 h-6 text-[#FF7547]" />
                     </div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-[#E8EEF4] border border-[#D5DEE7] text-[#123B5D]">
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-[#F2F0ED] border border-[#DEDCD8] text-[#202020]">
                       {item.badge}
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-[#142B45] mb-1">
+                  <h3 className="text-xl font-bold text-[#202020] mb-1">
                     {item.role}
                   </h3>
-                  <p className="text-xs font-semibold text-[#00A6A6] mb-3">
+                  <p className="text-xs font-bold text-[#FF7547] mb-3">
                     {item.tagline}
                   </p>
-                  <p className="text-xs sm:text-sm text-[#607487] leading-relaxed mb-6">
+                  <p className="text-xs sm:text-sm text-[#777777] leading-relaxed mb-6">
                     {item.description}
                   </p>
 
                   {/* Checklist */}
-                  <div className="space-y-3 pt-4 border-t border-[#D5DEE7]">
+                  <div className="space-y-3 pt-4 border-t border-[#DEDCD8]">
                     {item.benefits.map((benefit, i) => (
-                      <div key={i} className="flex items-start gap-2.5 text-xs text-[#142B45]">
-                        <CheckCircle2 className="w-4 h-4 text-[#00A6A6] shrink-0 mt-0.5" />
+                      <div key={i} className="flex items-start gap-2.5 text-xs text-[#202020]">
+                        <CheckCircle2 className="w-4 h-4 text-[#FF7547] shrink-0 mt-0.5" />
                         <span className="leading-snug">{benefit}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="mt-8 pt-4 border-t border-[#D5DEE7] text-center">
-                  <span className="text-[11px] font-bold text-[#123B5D] uppercase tracking-wider">
+                <div className="mt-8 pt-4 border-t border-[#DEDCD8] text-center">
+                  <span className="text-[11px] font-bold text-[#777777] uppercase tracking-wider">
                     SkyRoute Verified System
                   </span>
                 </div>
@@ -140,4 +130,3 @@ export const LandingBenefits = () => {
 };
 
 export default LandingBenefits;
-
